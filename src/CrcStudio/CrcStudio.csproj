@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4CA4B0CA-C401-4DA2-AC7B-B5AD98941147}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CrcStudio</RootNamespace>
+    <AssemblyName>CrcStudio</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.AvalonEdit">
+      <HintPath>..\..\lib\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BuildProcess\BackupFilesHandler.cs" />
+    <Compile Include="BuildProcess\BaksmaliHandler.cs" />
+    <Compile Include="BuildProcess\DecodeHandler.cs" />
+    <Compile Include="BuildProcess\DeOdexHandler.cs" />
+    <Compile Include="BuildProcess\EncodeHandler.cs" />
+    <Compile Include="BuildProcess\ModPlugIn.cs" />
+    <Compile Include="BuildProcess\ModPlugInHandler.cs" />
+    <Compile Include="BuildProcess\ProcessHandlerFactory.cs" />
+    <Compile Include="BuildProcess\ProcessingOptions.cs" />
+    <Compile Include="BuildProcess\RePackPngHandler.cs" />
+    <Compile Include="BuildProcess\SignApkHandler.cs" />
+    <Compile Include="BuildProcess\SmaliBaksmaliBase.cs" />
+    <Compile Include="BuildProcess\SmaliHandler.cs" />
+    <Compile Include="BuildProcess\UnPackHandler.cs" />
+    <Compile Include="BuildProcess\UpdateZipHandler.cs" />
+    <Compile Include="BuildProcess\ZipAlignHandler.cs" />
+    <Compile Include="Controls\AvalonEditContainer.cs" />
+    <Compile Include="Controls\ITabStripItemControl.cs" />
+    <Compile Include="Controls\OutputWindow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\OutputWindow.Designer.cs">
+      <DependentUpon>OutputWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProjectPropertiesEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ProjectPropertiesEditor.Designer.cs">
+      <DependentUpon>ProjectPropertiesEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SolutionExplorer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SolutionExplorer.Designer.cs">
+      <DependentUpon>SolutionExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PropertiesEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PropertiesEditor.Designer.cs">
+      <DependentUpon>PropertiesEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SolutionPropertiesEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SolutionPropertiesEditor.Designer.cs">
+      <DependentUpon>SolutionPropertiesEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TabStripItemFactory.cs" />
+    <Compile Include="Controls\ProjectTreeNode.cs" />
+    <Compile Include="Controls\ToolWindow.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ToolWindowDesigner.cs" />
+    <Compile Include="Controls\TreeNodeColors.cs" />
+    <Compile Include="Controls\TreeViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Forms\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainFormSettings.cs" />
+    <Compile Include="Forms\OptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OptionsForm.Designer.cs">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BuildProcess\BackgroundFileHandler.cs" />
+    <Compile Include="BuildProcess\ExecuteProgram.cs" />
+    <Compile Include="BuildProcess\IFileHandler.cs" />
+    <Compile Include="BuildProcess\OptiPngHandler.cs" />
+    <Compile Include="Forms\ProcessOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProcessOptionsForm.Designer.cs">
+      <DependentUpon>ProcessOptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ProjectWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProjectWizard.Designer.cs">
+      <DependentUpon>ProjectWizard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\QuestionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\QuestionForm.Designer.cs">
+      <DependentUpon>QuestionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Messages\FileMessageConsumer.cs" />
+    <Compile Include="Messages\IMessageConsumer.cs" />
+    <Compile Include="Messages\MessageContent.cs" />
+    <Compile Include="Messages\MessageEngine.cs" />
+    <Compile Include="Messages\MessageEnums.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Project\BinaryFile.cs" />
+    <Compile Include="Project\CrcsProject.cs" />
+    <Compile Include="Project\CrcsProjectEventArgs.cs" />
+    <Compile Include="Project\CrcsSettings.cs" />
+    <Compile Include="Project\CrcsSolution.cs" />
+    <Compile Include="Project\MissingItem.cs" />
+    <Compile Include="Project\ProjectFolder.cs" />
+    <Compile Include="Project\ProjectItemBase.cs" />
+    <Compile Include="Project\SerializeToFileAttribute.cs" />
+    <Compile Include="Project\IProjectFile.cs" />
+    <Compile Include="Project\ProjectTools.cs" />
+    <Compile Include="Project\ProjectToolType.cs" />
+    <Compile Include="Project\SignApkCertificate.cs" />
+    <Compile Include="Project\SolutionProperties.cs" />
+    <Compile Include="Project\TextFile.cs" />
+    <Compile Include="Project\ApkFile.cs" />
+    <Compile Include="Project\CompositFile.cs" />
+    <Compile Include="Project\IProjectItem.cs" />
+    <Compile Include="Project\JarFile.cs" />
+    <Compile Include="Project\ProjectFileBase.cs" />
+    <Compile Include="Project\ProjectProperties.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\ArgumentValidation.cs" />
+    <Compile Include="Utility\ArgumentValidationExtender.cs" />
+    <Compile Include="Utility\EncodingExtensions.cs" />
+    <Compile Include="Utility\FileUtility.cs" />
+    <Compile Include="Utility\FolderUtility.cs" />
+    <Compile Include="Utility\IconHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utility\IconListManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utility\MruMenuManager.cs" />
+    <Compile Include="Utility\PropFileUtility.cs" />
+    <EmbeddedResource Include="Controls\OutputWindow.resx">
+      <DependentUpon>OutputWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ProjectPropertiesEditor.resx">
+      <DependentUpon>ProjectPropertiesEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SolutionExplorer.resx">
+      <DependentUpon>SolutionExplorer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PropertiesEditor.resx">
+      <DependentUpon>PropertiesEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SolutionPropertiesEditor.resx">
+      <DependentUpon>SolutionPropertiesEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OptionsForm.resx">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProcessOptionsForm.resx">
+      <DependentUpon>ProcessOptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProjectWizard.resx">
+      <DependentUpon>ProjectWizard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\QuestionForm.resx">
+      <DependentUpon>QuestionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CrcStudio.TabControl\CrcStudio.TabControl.csproj">
+      <Project>{7D131BF8-7329-44F8-B072-12B19A178255}</Project>
+      <Name>CrcStudio.TabControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CrcStudio.Zip\CrcStudio.Zip.csproj">
+      <Project>{6DAB6DAF-D776-4A3B-A01D-69271D95582F}</Project>
+      <Name>CrcStudio.Zip</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>md $(TargetDir)Tools
+copy $(SolutionDir)..\tools $(TargetDir)Tools
+</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
