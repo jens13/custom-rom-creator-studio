@@ -26,5 +26,6 @@ namespace CrcStudio.Project
 
         string RelativePath { get; }
         CrcsProject Project { get; }
+        bool IsDeleted { get; set; }
     }
 }

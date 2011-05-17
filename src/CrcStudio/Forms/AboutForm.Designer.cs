@@ -58,11 +58,11 @@ namespace CrcStudio.Forms
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.LinkArea = new System.Windows.Forms.LinkArea(0, 28);
+            this.linkLabel2.LinkArea = new System.Windows.Forms.LinkArea(0, 27);
             this.linkLabel2.Location = new System.Drawing.Point(41, 9);
             this.linkLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(288, 225);
+            this.linkLabel2.Size = new System.Drawing.Size(288, 243);
             this.linkLabel2.TabIndex = 1;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = resources.GetString("linkLabel2.Text");
@@ -73,7 +73,7 @@ namespace CrcStudio.Forms
             // linkLabel3
             // 
             this.linkLabel3.AutoSize = true;
-            this.linkLabel3.Location = new System.Drawing.Point(25, 238);
+            this.linkLabel3.Location = new System.Drawing.Point(25, 253);
             this.linkLabel3.Name = "linkLabel3";
             this.linkLabel3.Size = new System.Drawing.Size(320, 19);
             this.linkLabel3.TabIndex = 2;
@@ -91,7 +91,7 @@ namespace CrcStudio.Forms
             this.Controls.Add(this.linkLabel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutForm";

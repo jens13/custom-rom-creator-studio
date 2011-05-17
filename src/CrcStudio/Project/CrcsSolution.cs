@@ -133,6 +133,11 @@ namespace CrcStudio.Project
         [Browsable(false)]
         public CrcsProject Project { get { return null; } }
 
+        [Browsable(false)]
+        public bool IsDeleted { get { return false; } set {  } }
+
+        [Browsable(false)]
+        public bool ShowExcludedItems { get; set; }
 
         public void Rename(string newFileName)
         {
@@ -366,6 +371,8 @@ namespace CrcStudio.Project
                 _rememberedFiles.Add(path,
                                      (attr != null && attr.Value.Equals("true", StringComparison.OrdinalIgnoreCase)));
             }
+            var xelement = xdoc.Descendants("ShowExcludedItems").FirstOrDefault();
+            ShowExcludedItems = xelement == null ? true : bool.Parse(xelement.Value);
         }
 
         public void OpenRememberdFiles(Func<string, IProjectFile> openFileMethod)
@@ -409,6 +416,7 @@ namespace CrcStudio.Project
             {
                 root.Add(openFiles);
             }
+            root.Add(new XElement("ShowExcludedItems", ShowExcludedItems));
             root.Save(FileSystemPath + ".user");
         }
 

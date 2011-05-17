@@ -51,27 +51,25 @@ namespace CrcStudio.Forms
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-            if (DialogResult == DialogResult.OK)
+            if (DialogResult != DialogResult.OK) return;
+            if (Directory.Exists(SourceLocation))
             {
-                if (Directory.Exists(SourceLocation))
+                if (Directory.Exists(ProjectLocation))
                 {
-                    if (Directory.Exists(ProjectLocation))
+                    DialogResult result = MessageBox.Show(this,
+                                                          "Project folder already exists\r\nDo you want to owerwrite it?",
+                                                          "Create project", MessageBoxButtons.YesNoCancel);
+                    if (result == DialogResult.Cancel)
                     {
-                        DialogResult result = MessageBox.Show(this,
-                                                              "Project folder already exists\r\nDo you want to owerwrite it?",
-                                                              "Create project", MessageBoxButtons.YesNoCancel);
-                        if (result == DialogResult.Cancel)
-                        {
-                            e.Cancel = true;
-                            return;
-                        }
-                        if (result == DialogResult.No)
-                        {
-                            return;
-                        }
+                        e.Cancel = true;
+                        return;
                     }
-                    CopySourceFilesToTargetLocation = Directory.Exists(SourceLocation);
+                    if (result == DialogResult.No)
+                    {
+                        return;
+                    }
                 }
+                CopySourceFilesToTargetLocation = true;
             }
         }
 

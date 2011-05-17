@@ -85,6 +85,7 @@ namespace CrcStudio.Forms
             solutionExplorer.ExpandTreeNodes(_solution.PathsForExpandedTreeNodes);
             _solution.OpenRememberdFiles(OpenFile);
             _recentSolutions.Add(fileSystemPath);
+            menuMainViewShowExcluded.Checked = _solution.ShowExcludedItems;
             SetTitle();
         }
 
@@ -665,7 +666,7 @@ namespace CrcStudio.Forms
             try
             {
                 menuMainViewShowExcluded.Checked = !menuMainViewShowExcluded.Checked;
-                solutionExplorer.ShowExcludedItems = menuMainViewShowExcluded.Checked;
+                if (_solution != null) _solution.ShowExcludedItems = menuMainViewShowExcluded.Checked;
                 solutionExplorer.Refresh();
             }
             catch (Exception ex)

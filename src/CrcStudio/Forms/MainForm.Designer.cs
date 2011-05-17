@@ -499,7 +499,6 @@ namespace CrcStudio.Forms
             this.solutionExplorer.Location = new System.Drawing.Point(0, 0);
             this.solutionExplorer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.solutionExplorer.Name = "solutionExplorer";
-            this.solutionExplorer.ShowExcludedItems = true;
             this.solutionExplorer.Size = new System.Drawing.Size(326, 543);
             this.solutionExplorer.TabIndex = 0;
             // 

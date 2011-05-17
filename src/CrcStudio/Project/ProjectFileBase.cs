@@ -76,6 +76,8 @@ namespace CrcStudio.Project
         [Browsable(false)]
         public virtual bool IsDirty { get { return false; } }
 
+        [Browsable(false)]
+        public bool IsDeleted { get; set; }
 
         public void Rename(string newFileName)
         {

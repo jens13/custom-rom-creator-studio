@@ -43,8 +43,6 @@ namespace CrcStudio.Controls
             }
         }
 
-        public bool ShowExcludedItems { get; set; }
-
         [Browsable(false)]
         public CrcsProject SelectedProject { get { return SelectedNode == null ? null : SelectedNode.ProjectItem.Project; } }
 
@@ -312,7 +310,7 @@ namespace CrcStudio.Controls
             CrcsProject rsproj = GetProject(rootNode);
             var folderStack = new Stack<ProjectTreeNode>();
             folderStack.Push(rootNode);
-
+            int index = 1;
             while (folderStack.Count > 0)
             {
                 ProjectTreeNode childNode;
@@ -326,9 +324,9 @@ namespace CrcStudio.Controls
                     bool isFolderIncluded = rsproj.IsFolderIncluded(subFolder);
 
                     childNode = node.Nodes.OfType<ProjectTreeNode>().FirstOrDefault(x => x.Text == name);
-                    if (!isFolderIncluded && !ShowExcludedItems && childNode != null)
+                    if (!isFolderIncluded && !ShowExcludedItems)
                     {
-                        RemoveNode(childNode);
+                        if (childNode != null) RemoveNode(childNode);
                         continue;
                     }
                     if (childNode == null)
@@ -336,29 +334,30 @@ namespace CrcStudio.Controls
                         childNode = new ProjectTreeNode(new ProjectFolder(subFolder, isFolderIncluded, rsproj),
                                                         _iconManager);
                         _nodes.Add(childNode);
-                        node.Nodes.Add(childNode);
+                        node.Nodes.Insert(index, childNode);
                     }
                     else
                     {
                         childNode.IsIncluded = isFolderIncluded;
                         childNode.RefreshIcon();
                     }
+                    index++;
                     folderStack.Push(childNode);
                 }
                 foreach (IProjectItem projectFile in rsproj.GetProjectFiles(fileSystemPath))
                 {
                     childNode = projectFile.TreeNode;
 
-                    if (!projectFile.IsIncluded && !ShowExcludedItems && childNode != null)
+                    if (!projectFile.IsIncluded && (!ShowExcludedItems || projectFile.IsDeleted))
                     {
-                        RemoveNode(childNode);
+                        if (childNode != null) RemoveNode(childNode);
                         continue;
                     }
                     if (childNode == null)
                     {
                         childNode = new ProjectTreeNode(projectFile, _iconManager);
                         _nodes.Add(childNode);
-                        node.Nodes.Add(childNode);
+                        node.Nodes.Insert(index, childNode);
                     }
                     else
                     {
@@ -368,6 +367,7 @@ namespace CrcStudio.Controls
                         }
                         childNode.RefreshIcon();
                     }
+                    index++;
                     if (!projectFile.IsIncluded) continue;
                     var compositFile = projectFile as CompositFile;
                     if (compositFile == null) continue;
@@ -419,8 +419,11 @@ namespace CrcStudio.Controls
                         RemoveNode(apkFile.ResourceTreeNode);
                     }
                 }
+                index = 0;
             }
         }
+
+        protected bool ShowExcludedItems { get { return _solution == null ? true : _solution.ShowExcludedItems; } }
 
         private void RemoveChildNodes(ProjectTreeNode node, bool onlyCollapsed = false)
         {
@@ -762,11 +765,9 @@ namespace CrcStudio.Controls
             {
                 if (node.ProjectItem != null)
                 {
-                    var proj = node.ProjectItem as CrcsProject;
-                    if (proj != null)
+                    if (node.ProjectItem.Project != null)
                     {
-                        MainForm.CloseOpenFiles(proj.GetOpenFiles());
-                        if (_solution.RemoveProject(proj))
+                        if (node.ProjectItem.Project.RemoveMissingItem(node.FileSystemPath))
                         {
                             RemoveNode(node);
                             Refresh();
@@ -774,10 +775,23 @@ namespace CrcStudio.Controls
                     }
                     else
                     {
-                        if (_solution.RemoveMissingProject(node.FileSystemPath))
+                        var proj = node.ProjectItem as CrcsProject;
+                        if (proj != null)
                         {
-                            RemoveNode(node);
-                            Refresh();
+                            MainForm.CloseOpenFiles(proj.GetOpenFiles());
+                            if (_solution.RemoveProject(proj))
+                            {
+                                RemoveNode(node);
+                                Refresh();
+                            }
+                        }
+                        else
+                        {
+                            if (_solution.RemoveMissingProject(node.FileSystemPath))
+                            {
+                                RemoveNode(node);
+                                Refresh();
+                            }
                         }
                     }
                 }

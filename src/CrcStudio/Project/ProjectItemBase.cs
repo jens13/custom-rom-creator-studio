@@ -57,6 +57,9 @@ namespace CrcStudio.Project
         [Browsable(false)]
         public string RelativePath { get { return Project == null ? Name : Project.GetProjectRelativePath(this); } }
 
+        [Browsable(false)]
+        public bool IsDeleted { get; set; }
+        
         #endregion
 
         private void SetValuesFromFileSystemPath(string fileSystemPath)

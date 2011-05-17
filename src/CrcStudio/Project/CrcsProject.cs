@@ -492,6 +492,31 @@ namespace CrcStudio.Project
 
         public IProjectFile AddFile(string fileSystemPath, bool included, bool ignoreDecompileErrors)
         {
+            IProjectFile file = CreatNewFile(fileSystemPath, included, ignoreDecompileErrors);
+            if (file == null) return null;
+            _items.Add(file);
+            if (_initialized && included) _isDirty = true;
+            return file;
+        }
+        public IProjectFile InsertFile(string fileSystemPath, bool included, bool ignoreDecompileErrors)
+        {
+            IProjectFile file = CreatNewFile(fileSystemPath, included, ignoreDecompileErrors);
+            if (file == null) return null;
+            int index = _items.FindIndex(x => string.Compare(fileSystemPath, x.FileSystemPath, StringComparison.OrdinalIgnoreCase) < 0);
+            if (index < 0)
+            {
+                _items.Add(file);
+            }
+            else
+            {
+                _items.Insert(index, file);
+            }
+            if (_initialized && included) _isDirty = true;
+            return file;
+        }
+
+        private IProjectFile CreatNewFile(string fileSystemPath, bool included, bool ignoreDecompileErrors)
+        {
             string extension = (Path.GetExtension(fileSystemPath) ?? "").ToUpperInvariant();
             IProjectFile file = null;
             switch (extension)
@@ -530,8 +555,6 @@ namespace CrcStudio.Project
                     compositFile.AddAdditionalDependencies(_additionalDependencies[name]);
                 }
             }
-            _items.Add(file);
-            if (_initialized && included) _isDirty = true;
             return file;
         }
 
@@ -792,10 +815,21 @@ namespace CrcStudio.Project
             _fileSystemWatcher.BeginInit();
             _fileSystemWatcher.Created += FileSystemWatcherCreated;
             _fileSystemWatcher.Renamed += FileSystemWatcherRenamed;
+            _fileSystemWatcher.Deleted += FileSystemWatcherDeleted;
             _fileSystemWatcher.IncludeSubdirectories = true;
             _fileSystemWatcher.NotifyFilter = NotifyFilters.DirectoryName | NotifyFilters.FileName;
             _fileSystemWatcher.EnableRaisingEvents = true;
             _fileSystemWatcher.EndInit();
+        }
+
+        private void FileSystemWatcherDeleted(object sender, FileSystemEventArgs e)
+        {
+            if (e.FullPath.IndexOf(@"\.rsproj", StringComparison.OrdinalIgnoreCase) >= 0) return;
+            IProjectFile file = GetProjectFile(e.FullPath);
+            if (file != null)
+            {
+                file.IsDeleted = true;
+            }
         }
 
         private void FileSystemWatcherRenamed(object sender, RenamedEventArgs e)
@@ -808,7 +842,15 @@ namespace CrcStudio.Project
         private void FileSystemWatcherCreated(object sender, FileSystemEventArgs e)
         {
             if (e.FullPath.IndexOf(@"\.rsproj", StringComparison.OrdinalIgnoreCase) >= 0) return;
-            AddFile(e.FullPath, false, false);
+            IProjectFile file = GetProjectFile(e.FullPath);
+            if (file != null)
+            {
+                file.IsDeleted = false;
+            }
+            else
+            {
+                InsertFile(e.FullPath, false, false);
+            }
         }
 
         private void Dispose(bool disposing)
@@ -831,6 +873,14 @@ namespace CrcStudio.Project
         ~CrcsProject()
         {
             Dispose(false);
+        }
+
+        public bool RemoveMissingItem(string fileSystemPath)
+        {
+            var item = GetItem(fileSystemPath);
+            if (item == null) return false;
+            _items.Remove(item);
+            return true;
         }
     }
 }
