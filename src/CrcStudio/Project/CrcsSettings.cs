@@ -51,7 +51,14 @@ namespace CrcStudio.Project
 
         public IEnumerable<string> OnlyStoreFileTypes { get { return _onlyStoreFileTypes; } }
 
-        public string ToolsFolder { get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tools"); } }
+        public string ToolsFolder { get { return FindTools(AppDomain.CurrentDomain.BaseDirectory); } }
+
+        private string FindTools(string baseDirectory)
+        {
+            var folders = Directory.GetDirectories(baseDirectory, "tools*");
+            if (folders.Length > 0) return Path.Combine(baseDirectory, folders[0]);
+            return Path.Combine(baseDirectory, "tools");
+        }
 
         public static CrcsSettings Current { get { return _current; } }
 
