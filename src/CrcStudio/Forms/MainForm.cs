@@ -37,7 +37,7 @@ namespace CrcStudio.Forms
             panelMain.MinimumSize = new Size(PanelMinWidth, PanelMinHeight);
             panelRight.MinimumSize = new Size(PanelMinWidth, PanelMinHeight);
             panelBottom.MinimumSize = new Size(PanelMinWidth, PanelMinHeight);
-            _settings = Settings.Default.MainFormSettings ?? new MainFormSettings(Bounds);
+            _settings = CrcsSettings.LoadSettingsFile<MainFormSettings>() ?? new MainFormSettings(Bounds);
             SetTitle();
         }
 
@@ -1015,7 +1015,7 @@ namespace CrcStudio.Forms
         {
             _settings.Bounds = WindowState == FormWindowState.Normal ? Bounds : RestoreBounds;
             _settings.WindowState = WindowState;
-            Settings.Default.MainFormSettings = _settings;
+            CrcsSettings.SaveSettingsFile(_settings);
             Settings.Default.Save();
             base.OnClosed(e);
             MessageEngine.DetachConsumer(outputWindow);

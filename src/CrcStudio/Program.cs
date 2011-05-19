@@ -30,19 +30,33 @@ namespace CrcStudio
             //IDE looks for a single .sln file that references the project. If no such single
             //.sln file exists, then the IDE creates an unsaved solution with a default .sln
             //file name that has the same base name as the project file.
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            var form = new MainForm();
-            LogFileName = Settings.Default.LogFileName;
-            if (string.IsNullOrWhiteSpace(LogFileName))
-                LogFileName = Path.Combine(CrcsSettings.Current.AppDataPath, "Logfiles",
-                                           Application.ProductName + ".log");
-            MessageEngine.AttachConsumer(new FileMessageConsumer(LogFileName, Settings.Default.LogFileMaxSize,
-                                                                 Settings.Default.LogFileDateTimeFormat));
-            MessageEngine.Initialize(form);
-            MessageEngine.AddInformation(null, "Application started");
-            Application.Run(form);
+            try
+            {
+                LogFileName = Settings.Default.LogFileName;
+                if (string.IsNullOrWhiteSpace(LogFileName))
+                {
+                    LogFileName = Path.Combine(CrcsSettings.Current.AppDataPath, "Logfiles", Application.ProductName + ".log");
+                }
+                MessageEngine.AttachConsumer(new FileMessageConsumer(LogFileName, Settings.Default.LogFileMaxSize, Settings.Default.LogFileDateTimeFormat));
+                if (!File.Exists(CrcsSettings.Current.JavaFile)) MessageBox.Show("Java was not found by the application\r\nIf it is not insalled install it.\r\nIf it is installed, you can set the path manually in the file CrcStudio.exe.config");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            try
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                var form = new MainForm();
+                MessageEngine.Initialize(form);
+                MessageEngine.AddInformation(null, "Application started");
+                Application.Run(form);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

@@ -273,7 +273,7 @@
   <PropertyGroup>
     <PostBuildEvent>md $(TargetDir)Tools
 copy $(SolutionDir)..\tools $(TargetDir)Tools
-</PostBuildEvent>
+copy $(SolutionDir)..\notice.txt $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

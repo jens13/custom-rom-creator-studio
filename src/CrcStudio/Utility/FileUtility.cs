@@ -144,9 +144,23 @@ namespace CrcStudio.Utility
 
         public static void MoveFile(string soureFileName, string destFileName)
         {
-            if (!File.Exists(soureFileName)) return;
+            if (soureFileName == null) throw new ArgumentNullException("soureFileName");
+            if (destFileName == null) throw new ArgumentNullException("destFileName");
             DeleteFile(destFileName);
-            File.Move(soureFileName, destFileName);
+            int attempts = 0;
+            while (File.Exists(soureFileName) && attempts < 10)
+            {
+                try
+                {
+                    attempts++;
+                    if (File.Exists(soureFileName)) File.Move(soureFileName, destFileName);
+                }
+                catch (IOException)
+                {
+                    Thread.Sleep(0);
+                }
+            }
+            
         }
 
         public static bool CanEdit(string filePath)

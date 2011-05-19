@@ -6,8 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using CrcStudio.BuildProcess;
+using CrcStudio.Forms;
 
 namespace CrcStudio.Project
 {
@@ -15,20 +18,19 @@ namespace CrcStudio.Project
     {
         // Files
         private static readonly CrcsSettings _current = new CrcsSettings();
-        private readonly string _appDataPath;
         private readonly Dictionary<string, List<ModPlugIn>> _modPlugIns = new Dictionary<string, List<ModPlugIn>>();
         private readonly List<string> _onlyStoreFileTypes = new List<string>();
 
         private CrcsSettings()
         {
-            _appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                                        Application.ProductName);
-            if (!Directory.Exists(_appDataPath)) Directory.CreateDirectory(_appDataPath);
+            AppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Application.ProductName);
+            if (!Directory.Exists(AppDataPath)) Directory.CreateDirectory(AppDataPath);
+            AppDataSettingsPath = Path.Combine(AppDataPath, "Settings");
+            if (!Directory.Exists(AppDataSettingsPath)) Directory.CreateDirectory(AppDataSettingsPath);
             JavaFile = FindJava();
             WinMergeFile = FindWinMerge();
 
-            ApkToolFrameWorkFolder = Path.Combine(Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%"),
-                                                  "apktool", "framework");
+            ApkToolFrameWorkFolder = Path.Combine(Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%") ?? "", "apktool", "framework");
 
             CompressionRate = 9;
 
@@ -37,7 +39,8 @@ namespace CrcStudio.Project
             LoadPlugIns();
         }
 
-        public string AppDataPath { get { return _appDataPath; } }
+        public string AppDataPath { get; private set; }
+        public string AppDataSettingsPath { get; private set; }
 
         public string JavaFile { get; private set; }
         public string WinMergeFile { get; private set; }
@@ -106,15 +109,20 @@ namespace CrcStudio.Project
 
         private string FindJava()
         {
-            string javaFolder = Path.Combine(Environment.GetEnvironmentVariable("ProgramW6432"), "Java");
-            string javaFolderX86 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
-                                                "Java");
+            var findJava = Properties.Settings.Default.JavaPath.Trim();
+            if (File.Exists(findJava)) return findJava;
+            string javaFolder = Environment.GetEnvironmentVariable("ProgramW6432");
+            string javaFolderX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+            if (javaFolder == null) javaFolder = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+
             string javaBin = null;
             FileVersionInfo javaVersion = null;
             foreach (string folder in new[] {javaFolder, javaFolderX86})
             {
-                if (!Directory.Exists(folder)) continue;
-                foreach (string java in Directory.GetDirectories(folder))
+                if (folder == null) continue;
+                var combine = Path.Combine(folder, "Java");
+                if (!Directory.Exists(combine)) continue;
+                foreach (string java in Directory.GetDirectories(combine))
                 {
                     string bin = Path.Combine(java, @"bin\java.exe");
                     if (File.Exists(bin))
@@ -139,18 +147,41 @@ namespace CrcStudio.Project
 
         private string FindWinMerge()
         {
-            string winMergeFolder = Path.Combine(Environment.GetEnvironmentVariable("ProgramW6432") ?? "", "WinMerge");
-            string winMergeFolderX86 = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "WinMerge");
-            foreach (string folder in new[] {winMergeFolder, winMergeFolderX86})
+            return FindProgramFilesFile(Path.Combine("WinMerge", "winmergeu.exe")) ?? FindProgramFilesFile(Path.Combine("WinMerge", "winmerge.exe"));
+        }
+        private string FindProgramFilesFile(string path)
+        {
+            string programFiles = Environment.GetEnvironmentVariable("ProgramW6432");
+            string programFilesX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+            if (programFiles == null) programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+            foreach (string folder in new[] { programFiles, programFilesX86 })
             {
-                if (!Directory.Exists(folder)) continue;
-                string bin = Path.Combine(folder, @"winmergeu.exe");
-                if (File.Exists(bin)) return bin;
-                bin = Path.Combine(folder, @"winmerge.exe");
-                if (File.Exists(bin)) return bin;
+                if (folder == null) continue;
+                string file = Path.Combine(folder,path);
+                if (File.Exists(file)) return file;
             }
             return null;
         }
+        public static T LoadSettingsFile<T>() where T : class 
+        {
+            string settingsFile = Path.Combine(Current.AppDataSettingsPath, typeof(T).Name + ".config");
+            if (!File.Exists(settingsFile)) return null;
+            using (var reader = new StreamReader(settingsFile, Encoding.UTF8))
+            {
+                var serializer = new XmlSerializer(typeof(T));
+                return (T) serializer.Deserialize(reader);
+            }
+        }
+
+        public static void SaveSettingsFile<T>(T obj) where T : class 
+        {
+            string settingsFile = Path.Combine(Current.AppDataSettingsPath, typeof(T).Name + ".config");
+            using (var writer = new StreamWriter(settingsFile, false, Encoding.UTF8))
+            {
+                var serializer = new XmlSerializer(typeof(T));
+                serializer.Serialize(writer, obj);
+            }
+        }
+
     }
 }

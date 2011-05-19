@@ -23,21 +23,23 @@ namespace CrcStudio.Project
         private string _smaliVersion;
         private string _updateZipName;
         private string _zipAlignVersion;
+        private bool _javaExists;
 
         public SolutionProperties(CrcsSolution solution)
         {
             _solution = solution;
+            _javaExists = !string.IsNullOrWhiteSpace(CrcsSettings.Current.JavaFile);
             _tools.Refresh(CrcsSettings.Current.ToolsFolder);
         }
 
         [SerializeToFile(false)]
-        public bool CanDecompile { get { return !string.IsNullOrWhiteSpace(BaksmaliFile); } }
+        public bool CanDecompile { get { return _javaExists && !string.IsNullOrWhiteSpace(BaksmaliFile); } }
 
         [SerializeToFile(false)]
-        public bool CanRecompile { get { return !string.IsNullOrWhiteSpace(SmaliFile); } }
+        public bool CanRecompile { get { return _javaExists && !string.IsNullOrWhiteSpace(SmaliFile); } }
 
         [SerializeToFile(false)]
-        public bool CanDecodeAndEncode { get { return !string.IsNullOrWhiteSpace(ApkToolFile); } }
+        public bool CanDecodeAndEncode { get { return _javaExists && !string.IsNullOrWhiteSpace(ApkToolFile); } }
 
         [SerializeToFile(false)]
         public bool CanOptimizePng { get { return !string.IsNullOrWhiteSpace(OptiPngFile); } }
@@ -46,7 +48,7 @@ namespace CrcStudio.Project
         public bool CanZipAlign { get { return !string.IsNullOrWhiteSpace(ZipAlignFile); } }
 
         [SerializeToFile(false)]
-        public bool CanSign { get { return !string.IsNullOrWhiteSpace(SignApkFile) && Certificate != null; } }
+        public bool CanSign { get { return _javaExists && !string.IsNullOrWhiteSpace(SignApkFile) && Certificate != null; } }
 
         public string ApkToolVersion
         {

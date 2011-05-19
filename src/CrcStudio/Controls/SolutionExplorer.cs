@@ -220,9 +220,18 @@ namespace CrcStudio.Controls
             int selectedFilesCount = SelectedItems.OfType<CompositFile>().Count();
             return count == selectedFilesCount;
         }
+        public bool CanDecompileSelectedTreeNodes()
+        {
+            if (!_solution.Properties.CanDecompile) return false;
+            int count = SelectedNodes.Count();
+            if (count == 0) return false;
+            int selectedFilesCount = SelectedItems.OfType<CompositFile>().Count();
+            return count == selectedFilesCount;
+        }
 
         public bool CanRecompileSelectedTreeNodes()
         {
+            if (!_solution.Properties.CanRecompile) return false;
             int count = SelectedNodes.Count();
             if (count == 0) return false;
             int selectedFilesCount = SelectedItems.OfType<CompositFile>().Where(x => x.IsDeCompiled).Count();
@@ -231,6 +240,7 @@ namespace CrcStudio.Controls
 
         public bool CanDecodeSelectedTreeNodes()
         {
+            if (!_solution.Properties.CanDecodeAndEncode) return false;
             int count = SelectedNodes.Count();
             if (count == 0) return false;
             int selectedFilesCount = SelectedItems.OfType<ApkFile>().Count();
@@ -239,6 +249,7 @@ namespace CrcStudio.Controls
 
         public bool CanEncodeSelectedTreeNodes()
         {
+            if (!_solution.Properties.CanDecodeAndEncode) return false;
             int count = SelectedNodes.Count();
             if (count == 0) return false;
             int selectedFilesCount = SelectedItems.OfType<ApkFile>().Where(x => x.IsDeCoded).Count();
@@ -628,6 +639,7 @@ namespace CrcStudio.Controls
             bool canDecodeSelectedTreeNodes = CanDecodeSelectedTreeNodes();
             bool canEncodeSelectedTreeNodes = CanEncodeSelectedTreeNodes();
             bool canRecompileSelectedTreeNodes = CanRecompileSelectedTreeNodes();
+            bool canDecompileSelectedTreeNodes = CanDecompileSelectedTreeNodes();
 
             menuProjectOpen.Visible = canOpenSelectedTreeNodes;
 
@@ -637,11 +649,10 @@ namespace CrcStudio.Controls
             menuProjectExcludeFromProject.Visible = canExcludeSelectedTreeNodes;
 
             barVisible = canIncludeSelectedTreeNodes || canExcludeSelectedTreeNodes || barVisible;
-            bool bar2Visible = canProcessSelectedTreeNodes || canDecodeSelectedTreeNodes || canEncodeSelectedTreeNodes ||
-                               canRecompileSelectedTreeNodes;
+            bool bar2Visible = canProcessSelectedTreeNodes || canDecodeSelectedTreeNodes || canEncodeSelectedTreeNodes || canRecompileSelectedTreeNodes || canDecompileSelectedTreeNodes;
             menuProjectBar2.Visible = bar2Visible && barVisible;
             menuProjectProcess.Visible = canProcessSelectedTreeNodes;
-            menuProjectDecompile.Visible = canProcessSelectedTreeNodes;
+            menuProjectDecompile.Visible = canDecompileSelectedTreeNodes;
             menuProjectRecompile.Visible = canRecompileSelectedTreeNodes;
             menuProjectOptimizePng.Visible = canDecodeSelectedTreeNodes;
             menuProjectDecode.Visible = canDecodeSelectedTreeNodes;

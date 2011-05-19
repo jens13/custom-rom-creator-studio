@@ -65,7 +65,8 @@ namespace CrcStudio.Messages
         public void CreateLogFile()
         {
             if (_textWriterTraceListener != null) _textWriterTraceListener.Close();
-            if (new FileInfo(_fileName).LastWriteTime.Date != DateTime.Now.Date)
+            var fileInfo = new FileInfo(_fileName);
+            if (fileInfo.Exists && fileInfo.LastWriteTime.Date != DateTime.Now.Date)
             {
                 RenameOldLogFiles(_fileName);
             }
@@ -94,15 +95,7 @@ namespace CrcStudio.Messages
                 newFile = Path.Combine(folder, string.Format("{0}_{1}{2}", fileName, cnt, ext));
                 cnt++;
             }
-            try
-            {
-                File.Move(file, newFile);
-            }
-            catch (Exception)
-            {
-                Thread.Sleep(0);
-                File.Move(file, newFile);
-            }
+            FileUtility.MoveFile(file, newFile);
         }
 
         private void Dispose(bool disposing)

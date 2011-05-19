@@ -23,50 +23,39 @@ namespace CrcStudio.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::CrcStudio.Forms.MainFormSettings MainFormSettings {
-            get {
-                return ((global::CrcStudio.Forms.MainFormSettings)(this["MainFormSettings"]));
-            }
-            set {
-                this["MainFormSettings"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string LogFileName {
             get {
                 return ((string)(this["LogFileName"]));
             }
-            set {
-                this["LogFileName"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int LogFileMaxSize {
             get {
                 return ((int)(this["LogFileMaxSize"]));
             }
-            set {
-                this["LogFileMaxSize"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("yyyy-MM-dd HH:mm:ss")]
         public string LogFileDateTimeFormat {
             get {
                 return ((string)(this["LogFileDateTimeFormat"]));
             }
-            set {
-                this["LogFileDateTimeFormat"] = value;
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string JavaPath {
+            get {
+                return ((string)(this["JavaPath"]));
             }
         }
     }
