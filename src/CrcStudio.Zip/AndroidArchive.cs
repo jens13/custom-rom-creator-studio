@@ -82,7 +82,16 @@ namespace CrcStudio.Zip
             return Add(file, entryName,
                        _storeFileTypes.Contains(extension) ? CompressionType.Store : CompressionType.Deflate);
         }
-
+        internal override void MergeZipFile(ZipFile archive, bool overwrite)
+        {
+            var manifest = overwrite ? _entries.FirstOrDefault(x => x.Name.Equals("AndroidManifest.xml", StringComparison.OrdinalIgnoreCase)) : null;
+            base.MergeZipFile(archive, overwrite);
+            if (manifest != null)
+            {
+                _entries.RemoveAll(x => x.Name.Equals("AndroidManifest.xml", StringComparison.OrdinalIgnoreCase));
+                _entries.Add(manifest);
+            }
+        }
         public void ForceRearrangeEntries()
         {
             _isDirty = true;

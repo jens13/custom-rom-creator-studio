@@ -15,6 +15,7 @@ namespace CrcStudio.Zip
         public const uint CentralEndRecordSignature = 0x06054b50;
 
         private readonly string _archiveFile;
+        private readonly bool _readOnly;
         protected readonly List<ZipEntry> _entries = new List<ZipEntry>();
         private Stream _archiveStream;
         private uint _centralDirectoryOffset;
@@ -33,13 +34,16 @@ namespace CrcStudio.Zip
         private int _useDataDescriptorSignature = -1;
         private int _useUtf8Encoding = -1;
 
-        public ZipFile(string file, FileAccess access = FileAccess.ReadWrite)
+        private List<ZipFile> _mergeArchives = new List<ZipFile>();
+
+        public ZipFile(string file, bool readOnly = false)
         {
             _archiveFile = file;
+            _readOnly = readOnly;
             var fileInfo = new FileInfo(file);
             if (fileInfo.Exists && fileInfo.Length < 22) throw new IOException("File is to small to be a zip archive");
             _isNew = !fileInfo.Exists;
-            if (access == FileAccess.Read)
+            if (_readOnly)
             {
                 _archiveStream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.Read);
             }
@@ -56,7 +60,7 @@ namespace CrcStudio.Zip
         }
 
         public Stream BaseStream { get { return _archiveStream; } }
-        public IEnumerable<ZipEntry> Entries { get { return _entries; } }
+        public IEnumerable<ZipEntry> Entries { get { return _entries.ToArray(); } }
         private bool _allowReplacingEntries;
         public bool AllowReplacingEntries 
         { 
@@ -183,6 +187,7 @@ namespace CrcStudio.Zip
 
         public void Delete(string entryName)
         {
+            if (_readOnly) throw new Exception("ZipFile is readonly, delete can not be executed");
             if (_isNew) throw new Exception("Can not delete from new archive");
             ZipEntry zipEntry = Find(ZipEntry.NormalizeName(entryName));
             if (zipEntry != null)
@@ -195,7 +200,7 @@ namespace CrcStudio.Zip
 
         public static bool Contains(string archive, string entryName)
         {
-            using (var zf = new ZipFile(archive, FileAccess.Read))
+            using (var zf = new ZipFile(archive, true))
             {
                 return (zf.Find(ZipEntry.NormalizeName(entryName)) != null);
             }
@@ -203,7 +208,7 @@ namespace CrcStudio.Zip
 
         public static void ExtractAll(string archive, string folder, bool overwrite)
         {
-            using (var zf = new ZipFile(archive, FileAccess.Read))
+            using (var zf = new ZipFile(archive, true))
             {
                 zf.ExtractAll(folder, overwrite);
             }
@@ -335,12 +340,13 @@ namespace CrcStudio.Zip
 
         public void Flush()
         {
+            if (_readOnly) throw new Exception("ZipFile is readonly, merge can not be executed");
             InternalFlush(false);
         }
 
         protected virtual void InternalFlush(bool closeStream)
         {
-            if (_isNew)
+            if (_isNew && _mergeArchives.Count == 0)
             {
                 if (AllowReplacingEntries)
                 {
@@ -362,7 +368,7 @@ namespace CrcStudio.Zip
                     _archiveStream.Position = 0;
                 }
             }
-            else if (!_isChanged)
+            else if (!_isChanged && _mergeArchives.Count == 0)
             {
                 _archiveStream.Seek(_centralDirectoryOffset, SeekOrigin.Begin);
                 foreach (ZipEntry entry in _entries.Where(x => x.IsDirty))
@@ -386,6 +392,7 @@ namespace CrcStudio.Zip
                 string tempFile = Path.Combine(Path.GetDirectoryName(_archiveFile) ?? Path.GetTempPath(),
                                                Guid.NewGuid() + ".zipfile");
                 WriteToFile(tempFile);
+                CloseMergeFiles();
                 _archiveStream.Close();
                 _archiveStream = null;
                 try
@@ -406,6 +413,39 @@ namespace CrcStudio.Zip
             _isNew = false;
             _isChanged = false;
             _isDirty = false;
+        }
+
+        private void CloseMergeFiles()
+        {
+            foreach (var mergeFile in _mergeArchives)
+            {
+                mergeFile.Close();
+            }
+        }
+
+        public void MergeZipFile(string file, bool overwrite)
+        {
+            if (_readOnly) throw new Exception("ZipFile is readonly, merge can not be executed");
+            if (_mergeArchives.FirstOrDefault(x => x._archiveFile.Equals(file, StringComparison.OrdinalIgnoreCase)) != null) return;
+            var zf = new ZipFile(file, true);
+            _mergeArchives.Add(zf);
+            MergeZipFile(zf, overwrite);
+        }
+
+        internal virtual void MergeZipFile(ZipFile archive, bool overwrite)
+        {
+            if (overwrite)
+            {
+                _entries.RemoveAll(x => archive.Entries.FirstOrDefault(y => y.Name.Equals(x.Name, StringComparison.OrdinalIgnoreCase)) != null);
+                _entries.AddRange(archive.Entries);
+                _isDirty = archive._entries.Count != 0;
+            }
+            else
+            {
+                var zipEntries = archive.Entries.Where(x => _entries.FirstOrDefault(y => y.Name.Equals(x.Name, StringComparison.OrdinalIgnoreCase)) == null).ToArray();
+                _isDirty = zipEntries.Length != 0;
+                _entries.AddRange(zipEntries);
+            }
         }
 
         public static void DeleteFile(string file)

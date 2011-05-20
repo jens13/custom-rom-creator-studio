@@ -836,8 +836,7 @@ namespace CrcStudio.Forms
             ShowProgressBarAndCancel();
 
             var worker = new BackgroundFileHandler(WorkerCompletedCallback);
-            worker.SetFileHandlers(ProcessHandlerFactory.CreateFileHandlers(optionsForm.ProcessingOptions,
-                                                                            _solution.Properties));
+            worker.SetFileHandlers(ProcessHandlerFactory.CreateFileHandlers(optionsForm.ProcessingOptions, _solution.Properties));
 
             AddBackGroundWorker(worker);
             worker.Start(files);

@@ -50,21 +50,21 @@ namespace CrcStudio.Controls
         public ProjectTreeNode SelectedNode { get { return SelectedNodes.FirstOrDefault(); } }
 
         [Browsable(false)]
-        public IEnumerable<IProjectItem> SelectedItems { get { return SelectedNodes.Where(x => x.ProjectItem != null).Select(x => x.ProjectItem); } }
+        public IEnumerable<IProjectItem> SelectedItems { get { return SelectedNodes.Where(x => x.ProjectItem != null).Select(x => x.ProjectItem).ToArray(); } }
 
         [Browsable(false)]
-        public IEnumerable<IProjectFile> SelectedFiles { get { return SelectedNodes.Where(x => x.ProjectItem != null).Select(x => x.ProjectItem).OfType<IProjectFile>(); } }
+        public IEnumerable<IProjectFile> SelectedFiles { get { return SelectedNodes.Where(x => x.ProjectItem != null).Select(x => x.ProjectItem).OfType<IProjectFile>().ToArray(); } }
 
         [Browsable(false)]
-        public IEnumerable<ProjectTreeNode> SelectedNodes { get { return treeViewSolution.SelectedNodes.OfType<ProjectTreeNode>(); } }
+        public IEnumerable<ProjectTreeNode> SelectedNodes { get { return treeViewSolution.SelectedNodes.OfType<ProjectTreeNode>().ToArray(); } }
 
         [Browsable(false)]
         public IEnumerable<ProjectTreeNode> ProjectNodes
         {
             get
             {
-                if (_solutionNode == null) return new List<ProjectTreeNode>();
-                return _solutionNode.Nodes.OfType<ProjectTreeNode>();
+                if (_solutionNode == null) return new ProjectTreeNode[0];
+                return _solutionNode.Nodes.OfType<ProjectTreeNode>().ToArray();
             }
         }
 
@@ -513,19 +513,19 @@ namespace CrcStudio.Controls
         {
             return
                 _nodes.Select(x => x.ProjectItem).OfType<IProjectFile>().Where(x => x.IsOpen).Select(
-                    x => x.FileSystemPath);
+                    x => x.FileSystemPath).ToArray();
         }
 
         public IEnumerable<string> GetExpandedTreeNodes()
         {
-            return _nodes.Where(x => x.IsExpanded).Select(x => x.FileSystemPath);
+            return _nodes.Where(x => x.IsExpanded).Select(x => x.FileSystemPath).ToArray();
         }
 
         public IEnumerable<string> GetExpandedTreeNodes(CrcsProject project)
         {
             return
                 _nodes.Where(x => x.IsExpanded && ReferenceEquals(x.ProjectItem.Project, project)).Select(
-                    x => x.FileSystemPath);
+                    x => x.FileSystemPath).ToArray();
         }
 
         public void ExpandTreeNodes(IEnumerable<string> fileSystemPaths)

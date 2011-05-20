@@ -113,7 +113,7 @@ namespace CrcStudio.Controls
 
         public IEnumerable<TreeNode> SelectedNodes
         {
-            get { return (_selectedNodes); }
+            get { return (_selectedNodes.ToArray()); }
             set
             {
                 RemoveHighlighting();

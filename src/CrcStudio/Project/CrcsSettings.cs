@@ -52,7 +52,7 @@ namespace CrcStudio.Project
         // Others
         public int CompressionRate { get; set; }
 
-        public IEnumerable<string> OnlyStoreFileTypes { get { return _onlyStoreFileTypes; } }
+        public IEnumerable<string> OnlyStoreFileTypes { get { return _onlyStoreFileTypes.ToArray(); } }
 
         public string ToolsFolder { get { return FindTools(AppDomain.CurrentDomain.BaseDirectory); } }
 

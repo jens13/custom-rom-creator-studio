@@ -43,7 +43,7 @@ namespace CrcStudio.Project
             get
             {
                 if (_pathsForExpandedTreeNodes == null) return new List<string>();
-                List<string> list = _pathsForExpandedTreeNodes;
+                string[] list = _pathsForExpandedTreeNodes.ToArray();
                 _pathsForExpandedTreeNodes = null;
                 return list;
             }
@@ -60,10 +60,10 @@ namespace CrcStudio.Project
         }
 
         [Browsable(false)]
-        public IEnumerable<CrcsProject> Projects { get { return _projects; } }
+        public IEnumerable<CrcsProject> Projects { get { return _projects.ToArray(); } }
 
         [Browsable(false)]
-        public IEnumerable<string> MissingProjects { get { return _missingProjects; } }
+        public IEnumerable<string> MissingProjects { get { return _missingProjects.ToArray(); } }
 
         public string SolutionPath { get { return ParentFolder; } }
 
@@ -445,7 +445,7 @@ namespace CrcStudio.Project
                 }
             }
 
-            return buildFiles;
+            return buildFiles.ToArray();
         }
 
         public IEnumerable<IProjectFile> GetOpenProjectFiles()
@@ -457,7 +457,7 @@ namespace CrcStudio.Project
                 openFiles.AddRange(proj.GetOpenFiles());
             }
 
-            return openFiles;
+            return openFiles.ToArray();
         }
 
         public IProjectFile GetProjectFile(string fileSystemPath)

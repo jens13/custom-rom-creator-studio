@@ -41,7 +41,7 @@ namespace CrcStudio.BuildProcess
             DecodeHandler.InstallFrameworkIfMissing(file);
 
             FileUtility.DeleteFile(file.UnsignedFile);
-            var ep = new ExecuteProgram((message) => MessageEngine.AddError(this, message));
+            var ep = new ExecuteProgram((message) => MessageEngine.AddInformation(this, message));
             var arguments = new StringBuilder();
             arguments.Append("-jar ").Append(_apkToolFile);
             arguments.Append(" b \"").Append(file.ResourceFolder).Append("\"");
@@ -51,15 +51,16 @@ namespace CrcStudio.BuildProcess
             {
                 throw new Exception(string.Format("Program {0} failed", Path.GetFileName(_apkToolFile)));
             }
-            ZipFile.ExtractAll(file.UnsignedFile, file.UnsignedFolder, true);
+            //ZipFile.ExtractAll(file.UnsignedFile, file.UnsignedFolder, true);
             using (var zf = new AndroidArchive(file.FileSystemPath, CrcsSettings.Current.OnlyStoreFileTypes))
             {
-                foreach (string resFile in Directory.GetFiles(file.UnsignedFolder, "*.*", SearchOption.AllDirectories))
-                {
-                    if (resFile.IndexOf(@"\META-INF\", StringComparison.Ordinal) >= 0) continue;
-                    if (resFile.EndsWith("AndroidManifest.xml", StringComparison.OrdinalIgnoreCase)) continue;
-                    zf.Add(resFile, FolderUtility.GetRelativePath(file.UnsignedFolder, resFile));
-                }
+                zf.MergeZipFile(file.UnsignedFile, true);
+                //foreach (string resFile in Directory.GetFiles(file.UnsignedFolder, "*.*", SearchOption.AllDirectories))
+                //{
+                //    if (resFile.IndexOf(@"\META-INF\", StringComparison.Ordinal) >= 0) continue;
+                //    if (resFile.EndsWith("AndroidManifest.xml", StringComparison.OrdinalIgnoreCase)) continue;
+                //    zf.Add(resFile, FolderUtility.GetRelativePath(file.UnsignedFolder, resFile));
+                //}
             }
         }
 

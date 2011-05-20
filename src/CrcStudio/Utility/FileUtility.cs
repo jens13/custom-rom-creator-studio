@@ -172,6 +172,7 @@ namespace CrcStudio.Utility
         {
             try
             {
+                if (!File.Exists(file)) return false;
                 int length = 4096;
                 var buffer = new byte[length];
                 using (

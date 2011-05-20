@@ -63,7 +63,7 @@ namespace CrcStudio.Project
         public IEnumerable<string> GetPngFilesToOptimize()
         {
             string[] pngFiles = Directory.GetFiles(ResourceFolder, "*.png", SearchOption.AllDirectories);
-            return pngFiles.Where(x => !x.EndsWith(".9.png", StringComparison.OrdinalIgnoreCase));
+            return pngFiles.Where(x => !x.EndsWith(".9.png", StringComparison.OrdinalIgnoreCase)).ToArray();
         }
     }
 }

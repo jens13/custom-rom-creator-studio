@@ -4,7 +4,6 @@
 // http://www.opensource.org/licenses/bsd-license.php)
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using CrcStudio.Messages;
@@ -17,7 +16,7 @@ namespace CrcStudio.BuildProcess
         private volatile bool _cancel;
         private volatile bool _completed;
         private List<IFileHandler> _fileHandlers = new List<IFileHandler>();
-        private List<object> _files;
+        private object[] _files;
         private volatile bool _started;
 
 
@@ -29,9 +28,9 @@ namespace CrcStudio.BuildProcess
         public bool Completed { get { return _completed; } }
         public bool Canceled { get { return _cancel && _completed; } }
 
-        public int FilesCount { get { return (_files == null) ? 0 : _files.Count; } }
+        public int FilesCount { get { return (_files == null) ? 0 : _files.Length; } }
 
-        public ReadOnlyCollection<object> Files { get { return (_files == null) ? new List<object>().AsReadOnly() : _files.AsReadOnly(); } }
+        public object[] Files { get { return _files ?? new object[0]; } }
 
         public void AddFileHandler(IFileHandler handler)
         {
@@ -51,20 +50,20 @@ namespace CrcStudio.BuildProcess
         public void Start(IEnumerable<object> files)
         {
             if (files == null) throw new ArgumentNullException("files");
-            _files = new List<object>(files);
             if (_started) throw new Exception("Operation already started");
-            if (files.Count() == 0)
+            _files = files.ToArray();
+            if (_files.Length == 0)
             {
                 Compleated();
                 return;
             }
-            ThreadPool.QueueUserWorkItem(FileProcessWorker, files);
+            ThreadPool.QueueUserWorkItem(FileProcessWorker, _files);
             _started = true;
         }
 
         private void FileProcessWorker(object state)
         {
-            var files = state as IEnumerable<object>;
+            var files = state as object[];
             if (files == null)
             {
                 Compleated();
@@ -89,9 +88,8 @@ namespace CrcStudio.BuildProcess
                     MessageEngine.AddError(ex);
                 }
             }
+            MessageEngine.AddInformation(this, string.Format("...Processing files {0}...", _cancel ? "canceled" : "ended"));
             Compleated();
-            MessageEngine.AddInformation(this,
-                                         string.Format("...Processing files {0}...", _cancel ? "canceled" : "ended"));
         }
 
         public bool IsCanceled()

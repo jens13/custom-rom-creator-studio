@@ -40,7 +40,7 @@ namespace CrcStudio.BuildProcess
 
             InstallFrameworkIfMissing(file);
 
-            var ep = new ExecuteProgram((message) => MessageEngine.AddError(this, message));
+            var ep = new ExecuteProgram((message) => MessageEngine.AddInformation(this, message));
             var arguments = new StringBuilder();
             arguments.Append("-jar ").Append(_apkToolFile);
             arguments.Append(" d -s -f -t ").Append(file.Project.Properties.ApkToolFrameWorkTag);

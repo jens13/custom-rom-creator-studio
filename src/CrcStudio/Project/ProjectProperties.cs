@@ -43,7 +43,7 @@ namespace CrcStudio.Project
 
         [Browsable(false)]
         [SerializeToFile(false)]
-        public IEnumerable<string> FrameWorkFiles { get { return _frameWorkFiles; } }
+        public IEnumerable<string> FrameWorkFiles { get { return _frameWorkFiles.ToArray(); } }
 
         [SerializeToFile(false)]
         public string BuildDisplayId

@@ -172,7 +172,7 @@ namespace CrcStudio.Project
         {
             XDocument xdoc = XDocument.Load(FileSystemPath);
             var projectFiles = new Dictionary<string, bool>();
-            IEnumerable<XElement> projectFilesElements = xdoc.Descendants("ProjectFiles").Descendants("Item");
+            var projectFilesElements = xdoc.Descendants("ProjectFiles").Descendants("Item");
             foreach (XElement xnode in projectFilesElements)
             {
                 XAttribute attr = xnode.Attribute("Path");
@@ -190,7 +190,7 @@ namespace CrcStudio.Project
                     <MissingItem>());
             _items.Sort((a, b) => string.Compare(a.RelativePath, b.RelativePath));
 
-            IEnumerable<XElement> projectPropertiesElements = xdoc.Descendants("Properties").Descendants("Item");
+            var projectPropertiesElements = xdoc.Descendants("Properties").Descendants("Item");
             foreach (XElement xnode in projectPropertiesElements)
             {
                 XAttribute attr = xnode.Attribute("Name");
@@ -288,13 +288,13 @@ namespace CrcStudio.Project
 
         private void AddDependenciesFromXml(XDocument xdoc)
         {
-            IEnumerable<XElement> dependencyElements = xdoc.Descendants("AdditionalDependencies").Descendants("Item");
+            var dependencyElements = xdoc.Descendants("AdditionalDependencies").Descendants("Item");
             foreach (XElement xnode in dependencyElements)
             {
                 XAttribute attr = xnode.Attribute("Name");
                 if (attr == null) continue;
                 string itemName = attr.Value;
-                IEnumerable<XElement> dependencyNodes = xnode.Descendants("Dependency");
+                var dependencyNodes = xnode.Descendants("Dependency");
                 foreach (XElement dependencyNode in dependencyNodes)
                 {
                     attr = dependencyNode.Attribute("Name");
@@ -354,7 +354,7 @@ namespace CrcStudio.Project
             string key = itemName.ToUpperInvariant();
             if (_additionalDependencies.ContainsKey(key))
             {
-                return _additionalDependencies[key];
+                return _additionalDependencies[key].ToArray();
             }
             return new string[0];
         }
@@ -579,26 +579,26 @@ namespace CrcStudio.Project
             var list = new List<CompositFile>();
             list.AddRange(_items.OfType<JarFile>());
             list.AddRange(_items.OfType<ApkFile>());
-            return list;
+            return list.ToArray();
         }
 
         public IEnumerable<CompositFile> GetDecompilableCompositFiles()
         {
-            return _items.OfType<CompositFile>().Where(x => x.CanDecompile);
+            return _items.OfType<CompositFile>().Where(x => x.CanDecompile).ToArray();
         }
 
         public IEnumerable<IProjectFile> GetBuildFiles()
         {
             var files = new List<IProjectFile>();
             files.AddRange(_items.OfType<IProjectFile>().Where(x => x.IncludeInBuild));
-            return files;
+            return files.ToArray();
         }
 
         public IEnumerable<IProjectFile> GetTreeViewSelectedFiles()
         {
             var files = new List<IProjectFile>();
             files.AddRange(_items.OfType<IProjectFile>().Where(x => x.IsTreeNodeSelected));
-            return files;
+            return files.ToArray();
         }
 
         public IEnumerable<IProjectFile> GetOpenFiles()
@@ -606,7 +606,7 @@ namespace CrcStudio.Project
             var openFiles = new List<IProjectFile>();
             if (IsOpen || IsDirty) openFiles.Add(this);
             openFiles.AddRange(_items.OfType<IProjectFile>().Where(x => x.IsOpen));
-            return openFiles;
+            return openFiles.ToArray();
         }
 
         public bool IsFolderIncluded(string folder)
@@ -648,11 +648,7 @@ namespace CrcStudio.Project
             }
             else
             {
-                IEnumerable<IProjectFile> projectFiles =
-                    _items.OfType<IProjectFile>().Where(
-                        x =>
-                        x.FileSystemPath.StartsWith(fileSystemPath + Path.DirectorySeparatorChar,
-                                                    StringComparison.OrdinalIgnoreCase));
+                var projectFiles = _items.OfType<IProjectFile>().Where(x => x.FileSystemPath.StartsWith(fileSystemPath + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)).ToArray();
                 if (projectFiles.Count() > 0)
                 {
                     foreach (IProjectFile file in projectFiles)
@@ -775,7 +771,7 @@ namespace CrcStudio.Project
         {
             return
                 _items.OfType<IProjectItem>().Where(
-                    x => !x.IsFolder && x.ParentFolder.Equals(parentFolder, StringComparison.OrdinalIgnoreCase));
+                    x => !x.IsFolder && x.ParentFolder.Equals(parentFolder, StringComparison.OrdinalIgnoreCase)).ToArray();
         }
 
         public void ProjectFilePropertyChanged()
@@ -798,14 +794,12 @@ namespace CrcStudio.Project
 
         public void PauseFileSystemWatcher()
         {
-            if (_fileSystemWatcher == null) return;
-            _fileSystemWatcher.EnableRaisingEvents = false;
+            //DetachFromSystem();
         }
 
         public void ResumeFileSystemWatcher()
         {
-            if (_fileSystemWatcher == null) return;
-            _fileSystemWatcher.EnableRaisingEvents = true;
+            //AttachToSystem();
         }
 
         public void AttachToSystem()
@@ -826,30 +820,30 @@ namespace CrcStudio.Project
         {
             if (e.FullPath.IndexOf(@"\.rsproj", StringComparison.OrdinalIgnoreCase) >= 0) return;
             IProjectFile file = GetProjectFile(e.FullPath);
-            if (file != null)
-            {
-                file.IsDeleted = true;
-            }
+            if (file == null) return;
+            file.IsDeleted = true;
         }
 
         private void FileSystemWatcherRenamed(object sender, RenamedEventArgs e)
         {
             if (e.FullPath.IndexOf(@"\.rsproj", StringComparison.OrdinalIgnoreCase) >= 0) return;
             IProjectFile file = GetProjectFile(e.OldFullPath);
+            if (file == null) return;
             file.Rename(e.Name);
         }
 
         private void FileSystemWatcherCreated(object sender, FileSystemEventArgs e)
         {
-            if (e.FullPath.IndexOf(@"\.rsproj", StringComparison.OrdinalIgnoreCase) >= 0) return;
-            IProjectFile file = GetProjectFile(e.FullPath);
+            var fileSystemPath = e.FullPath;
+            if (fileSystemPath.IndexOf(@"\.rsproj", StringComparison.OrdinalIgnoreCase) >= 0) return;
+            IProjectFile file = GetProjectFile(fileSystemPath);
             if (file != null)
             {
                 file.IsDeleted = false;
             }
-            else
+            else if (File.Exists(fileSystemPath))
             {
-                InsertFile(e.FullPath, false, false);
+                InsertFile(fileSystemPath, false, false);
             }
         }
 
