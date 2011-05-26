@@ -1,0 +1,71 @@
+﻿<!--
+         Copyright Jens Granlund 2011.
+     Distributed under the New BSD License.
+    (See accompanying file notice.txt or at 
+http://www.opensource.org/licenses/bsd-license.php)
+-->
+<UserControl x:Class="CrcStudio.Controls.ApkListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <UserControl.Resources>
+        <DataTemplate x:Key="listBoxTemplate">
+            <DockPanel>
+                <Rectangle Height="1" Fill="Black" DockPanel.Dock="Top"/>
+                <Rectangle Height="1" Fill="Black" DockPanel.Dock="Bottom"/>
+                <Rectangle Width="2" Fill="Black"/>
+                <Viewbox Height="100" Width="100" VerticalAlignment="Center">
+                    <Image Source="{Binding Image}" Height="100" Width="100" Stretch="None" />
+                </Viewbox>
+                <Rectangle Width="2" Fill="Black"/>
+                <Rectangle Width="2" Fill="Black" DockPanel.Dock="Right"/>
+                <StackPanel Orientation="Vertical">
+                    <DockPanel Background="LightBlue">
+                        <Label Content="{Binding Index}" DockPanel.Dock="Right"/>
+                        <Label Content="Index:" DockPanel.Dock="Right"/>
+                        <Label Content="Internal file:" />
+                        <Label Content="{Binding Name}" />
+                    </DockPanel>
+                    <DockPanel>
+                        <StackPanel Orientation="Vertical" DockPanel.Dock="Right">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Label Content="Internal CRC :" />
+                                <Label Content="{Binding InternalCrc}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Label Content="External CRC:" />
+                                <Label Content="{Binding ExternalCrc}" />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" DockPanel.Dock="Left">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Size:" />
+                                <Label Content="{Binding UncompressedSize}" />
+                                <Label />
+                                <Label Content="Compressedsize:" />
+                                <Label Content="{Binding CompressedSize}" />
+                                <Label />
+                                <Label Content="Externalsize:" />
+                                <Label Content="{Binding ExternalSize}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Imagesize:" />
+                                <Label Content="{Binding ImageSize}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DockPanel>
+                    <StackPanel Orientation="Horizontal" Background="LightBlue">
+                        <Label Content="External file:" />
+                        <Label Content="{Binding FileSystemPath}" />
+                    </StackPanel>
+                </StackPanel>
+            </DockPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <DockPanel>
+        <ListBox Name="internalListBox" ItemTemplate="{StaticResource listBoxTemplate}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+    </DockPanel>
+</UserControl>

@@ -34,9 +34,14 @@ namespace CrcStudio.Zip
         private int _useDataDescriptorSignature = -1;
         private int _useUtf8Encoding = -1;
 
-        private List<ZipFile> _mergeArchives = new List<ZipFile>();
+        private readonly List<ZipFile> _mergeArchives = new List<ZipFile>();
 
-        public ZipFile(string file, bool readOnly = false)
+        public ZipFile(string file)
+            : this(file, false)
+        {
+        }
+
+        internal ZipFile(string file, bool readOnly)
         {
             _archiveFile = file;
             _readOnly = readOnly;

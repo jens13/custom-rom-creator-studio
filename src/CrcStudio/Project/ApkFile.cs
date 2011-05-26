@@ -3,17 +3,24 @@
 //     (See accompanying file notice.txt or at 
 // http://www.opensource.org/licenses/bsd-license.php)
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using CrcStudio.Controls;
+using CrcStudio.TabControl;
 using CrcStudio.Utility;
+using CrcStudio.Zip;
 
 namespace CrcStudio.Project
 {
     public class ApkFile : CompositFile
     {
+        private bool _closing;
+        private bool _disposed;
+        private TabStripItem _tabItem;
+        private ApkViewer _apkViewer;
         private const string ResouresFolderName = ".resource";
 
         public ApkFile(string fileSystemPath, bool included, CrcsProject project)
@@ -65,5 +72,119 @@ namespace CrcStudio.Project
             string[] pngFiles = Directory.GetFiles(ResourceFolder, "*.png", SearchOption.AllDirectories);
             return pngFiles.Where(x => !x.EndsWith(".9.png", StringComparison.OrdinalIgnoreCase)).ToArray();
         }
+
+        public IEnumerable<ApkEntry> GetApkEntries()
+        {
+            var items = new List<ApkEntry>();
+            int index = 1;
+            using (var zf = new ReadOnlyZipFile(FileSystemPath))
+            {
+                foreach (var entry in zf.Entries)
+                {
+                    items.Add(new ApkEntry(entry, index++, ResourceFolder));
+                }
+                return items.ToArray();
+            }
+        }
+
+        [Browsable(false)]
+        public override TabStripItem TabItem { get { return _tabItem; } }
+
+        [Browsable(false)]
+        public override ITabStripItemControl TabItemControl { get { return _apkViewer; } }
+
+        [Browsable(false)]
+        public override bool CanOpen { get { return Exists; } }
+
+        [Browsable(false)]
+        public override bool CanSave { get { return false; } }
+
+        [Browsable(false)]
+        public override bool CanSaveAs { get { return false; } }
+
+        [Browsable(false)]
+        public override bool CanClose { get { return IsOpen; } }
+
+        [Browsable(false)]
+        public override bool IsDirty { get { return false; } }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        public override void Save()
+        {
+        }
+
+        public override void SaveAs(string fileSystemPath)
+        {
+        }
+
+        public override void Close()
+        {
+            try
+            {
+                _closing = true;
+                if (_tabItem != null)
+                {
+                    _tabItem.Close();
+                    _tabItem = null;
+                }
+                if (_apkViewer != null)
+                {
+                    _apkViewer.Dispose();
+                    _apkViewer = null;
+                }
+            }
+            finally
+            {
+                _closing = false;
+            }
+        }
+
+        public override IProjectFile Open()
+        {
+            if (_apkViewer == null)
+            {
+                _apkViewer = new ApkViewer(this);
+                if (_tabItem != null)
+                {
+                    _tabItem.Close();
+                }
+                _tabItem = TabStripItemFactory.CreateTabStripItem(_apkViewer, this);
+                _tabItem.Closed += TabItemClosed;
+            }
+            return this;
+        }
+
+        private void TabItemClosed(object sender, TabStripEventArgs e)
+        {
+            if (_closing) return;
+            Close();
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // get rid of managed resources
+            }
+            if (_disposed) return;
+            Close();
+            _disposed = true;
+        }
+
+
+        ~ApkFile()
+        {
+            Dispose(false);
+        }
+
     }
 }

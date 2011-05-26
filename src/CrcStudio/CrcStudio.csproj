@@ -74,6 +74,10 @@
     <Compile Include="BuildProcess\UnPackHandler.cs" />
     <Compile Include="BuildProcess\UpdateZipHandler.cs" />
     <Compile Include="BuildProcess\ZipAlignHandler.cs" />
+    <Compile Include="Controls\ApkListView.xaml.cs">
+      <DependentUpon>ApkListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ApkViewer.cs" />
     <Compile Include="Controls\AvalonEditContainer.cs" />
     <Compile Include="Controls\ITabStripItemControl.cs" />
     <Compile Include="Controls\OutputWindow.cs">
@@ -164,6 +168,7 @@
     <Compile Include="Messages\MessageEngine.cs" />
     <Compile Include="Messages\MessageEnums.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Project\ApkEntry.cs" />
     <Compile Include="Project\BinaryFile.cs" />
     <Compile Include="Project\CrcsProject.cs" />
     <Compile Include="Project\CrcsProjectEventArgs.cs" />
@@ -268,6 +273,12 @@
       <Project>{6DAB6DAF-D776-4A3B-A01D-69271D95582F}</Project>
       <Name>CrcStudio.Zip</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\ApkListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

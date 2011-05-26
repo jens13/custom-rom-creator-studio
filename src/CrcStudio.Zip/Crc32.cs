@@ -2,10 +2,14 @@
 //      Distributed under the New BSD License.
 //     (See accompanying file notice.txt or at 
 // http://www.opensource.org/licenses/bsd-license.php)
+using System.IO;
+
 namespace CrcStudio.Zip
 {
     public class Crc32Hash
     {
+        private const int BufferSize = 4096;
+
         public const uint DefaultPolynomial = 0xedb88320;
         public const uint DefaultSeed = 0xffffffff;
 
@@ -37,6 +41,23 @@ namespace CrcStudio.Zip
                 }
             }
             return crc;
+        }
+        public static uint CalculateHash(string fileSystemPath)
+        {
+            uint crc32 = Crc32Hash.DefaultSeed;
+            using (var stream = File.OpenRead(fileSystemPath))
+            {
+                int bytesRead;
+                var buffer = new byte[BufferSize];
+                do
+                {
+                    bytesRead = stream.Read(buffer, 0, BufferSize);
+                    if (bytesRead <= 0) break;
+                    crc32 = Crc32Hash.CalculateHash(crc32, buffer, bytesRead);
+                } while (bytesRead == BufferSize);
+                crc32 ^= Crc32Hash.DefaultSeed;
+            }
+            return crc32;
         }
     }
 }

@@ -78,6 +78,7 @@
     <Compile Include="Crc32.cs" />
     <Compile Include="GeneralPurposeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadOnlyZipFile.cs" />
     <Compile Include="ZipEntry.cs" />
     <Compile Include="ZipExtensions.cs" />
     <Compile Include="ZipFile.cs" />

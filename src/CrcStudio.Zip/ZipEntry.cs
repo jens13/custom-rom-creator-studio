@@ -497,5 +497,13 @@ namespace CrcStudio.Zip
             }
             _originalStream.Position = streamPos;
         }
+
+        public Stream GetStream()
+        {
+            var memoryStream = new MemoryStream();
+            Extract(memoryStream);
+            memoryStream.Position = 0;
+            return memoryStream;
+        }
     }
 }
