@@ -104,6 +104,8 @@ namespace CrcStudio.Forms
             this.panelMain = new System.Windows.Forms.Panel();
             this.tabStripMain = new CrcStudio.TabControl.TabStrip();
             this.panelClientSize = new System.Windows.Forms.Panel();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuMainViewRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             this.panelLeft.SuspendLayout();
@@ -311,7 +313,9 @@ namespace CrcStudio.Forms
             this.toolStripMenuItem5,
             this.menuMainViewRefreshProjectExplorer,
             this.toolStripMenuItem6,
-            this.menuMainViewShowLogFile});
+            this.menuMainViewShowLogFile,
+            this.toolStripMenuItem2,
+            this.menuMainViewRefresh});
             this.menuMainView.Name = "menuMainView";
             this.menuMainView.Size = new System.Drawing.Size(50, 23);
             this.menuMainView.Text = "View";
@@ -322,31 +326,33 @@ namespace CrcStudio.Forms
             this.menuMainViewShowExcluded.Checked = true;
             this.menuMainViewShowExcluded.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuMainViewShowExcluded.Name = "menuMainViewShowExcluded";
-            this.menuMainViewShowExcluded.Size = new System.Drawing.Size(222, 24);
+            this.menuMainViewShowExcluded.Size = new System.Drawing.Size(271, 24);
             this.menuMainViewShowExcluded.Text = "Show excluded files";
             this.menuMainViewShowExcluded.Click += new System.EventHandler(this.MenuMainViewShowExcludedClick);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(219, 6);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(268, 6);
             // 
             // menuMainViewRefreshProjectExplorer
             // 
             this.menuMainViewRefreshProjectExplorer.Name = "menuMainViewRefreshProjectExplorer";
-            this.menuMainViewRefreshProjectExplorer.Size = new System.Drawing.Size(222, 24);
+            this.menuMainViewRefreshProjectExplorer.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.menuMainViewRefreshProjectExplorer.Size = new System.Drawing.Size(271, 24);
             this.menuMainViewRefreshProjectExplorer.Text = "Refresh Project Explorer";
             this.menuMainViewRefreshProjectExplorer.Click += new System.EventHandler(this.MenuMainViewRefreshProjectExplorerClick);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(219, 6);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(268, 6);
             // 
             // menuMainViewShowLogFile
             // 
             this.menuMainViewShowLogFile.Name = "menuMainViewShowLogFile";
-            this.menuMainViewShowLogFile.Size = new System.Drawing.Size(222, 24);
+            this.menuMainViewShowLogFile.ShortcutKeyDisplayString = "                        ";
+            this.menuMainViewShowLogFile.Size = new System.Drawing.Size(271, 24);
             this.menuMainViewShowLogFile.Text = "Show Log File";
             this.menuMainViewShowLogFile.Click += new System.EventHandler(this.MenuMainViewShowLogFileClick);
             // 
@@ -713,6 +719,20 @@ namespace CrcStudio.Forms
             this.panelClientSize.Size = new System.Drawing.Size(999, 543);
             this.panelClientSize.TabIndex = 1;
             // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(268, 6);
+            // 
+            // menuMainViewRefresh
+            // 
+            this.menuMainViewRefresh.Name = "menuMainViewRefresh";
+            this.menuMainViewRefresh.ShortcutKeyDisplayString = "";
+            this.menuMainViewRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.menuMainViewRefresh.Size = new System.Drawing.Size(271, 24);
+            this.menuMainViewRefresh.Text = "Refresh";
+            this.menuMainViewRefresh.Click += new System.EventHandler(this.MenuMainViewRefreshClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(110F, 110F);
@@ -816,5 +836,7 @@ namespace CrcStudio.Forms
         private System.Windows.Forms.ToolStripMenuItem menuMainFileNewEmptySolution;
         private System.Windows.Forms.ToolStripMenuItem menuMainHelp;
         private System.Windows.Forms.ToolStripMenuItem menuMainHelpAbout;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem menuMainViewRefresh;
     }
 }

@@ -60,6 +60,10 @@ namespace CrcStudio.Controls
             ParentTabStripItem.Text = TabTitle + (IsDirty ? "*" : "");
         }
 
+        public void HandleContentUpdatedExternaly()
+        {
+        }
+
         #endregion
 
         private void TextEditorTextChanged(object sender, EventArgs e)

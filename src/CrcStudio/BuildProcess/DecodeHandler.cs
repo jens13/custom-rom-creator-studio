@@ -17,11 +17,13 @@ namespace CrcStudio.BuildProcess
         private readonly string _apkToolFile;
         private readonly bool _canDecodeAndEncode;
         private readonly string _javaFile;
+        private readonly bool _verbose;
 
         public DecodeHandler(SolutionProperties properties)
         {
             _javaFile = CrcsSettings.Current.JavaFile;
             _apkToolFile = properties.ApkToolFile;
+            _verbose = properties.ApkToolVerbose;
             _canDecodeAndEncode = properties.CanDecodeAndEncode;
         }
 
@@ -43,6 +45,7 @@ namespace CrcStudio.BuildProcess
             var ep = new ExecuteProgram((message) => MessageEngine.AddInformation(this, message));
             var arguments = new StringBuilder();
             arguments.Append("-jar ").Append(_apkToolFile);
+            if (_verbose) arguments.Append(" -v");
             arguments.Append(" d -s -f -t ").Append(file.Project.Properties.ApkToolFrameWorkTag);
             arguments.Append(" \"").Append(file.FileSystemPath).Append("\"");
             arguments.Append(" \"").Append(file.ResourceFolder).Append("\"");

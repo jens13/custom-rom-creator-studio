@@ -18,7 +18,11 @@ http://www.opensource.org/licenses/bsd-license.php)
                 <Rectangle Height="1" Fill="Black" DockPanel.Dock="Bottom"/>
                 <Rectangle Width="2" Fill="Black"/>
                 <Viewbox Height="100" Width="100" VerticalAlignment="Center">
-                    <Image Source="{Binding Image}" Height="100" Width="100" Stretch="None" />
+                    <Image Source="{Binding InternalImage}" Height="100" Width="100" Stretch="None" />
+                </Viewbox>
+                <Rectangle Width="2" Fill="Black"/>
+                <Viewbox Height="100" Width="100" VerticalAlignment="Center">
+                    <Image Source="{Binding ExternalImage}" Height="100" Width="100" Stretch="None" />
                 </Viewbox>
                 <Rectangle Width="2" Fill="Black"/>
                 <Rectangle Width="2" Fill="Black" DockPanel.Dock="Right"/>
@@ -30,37 +34,39 @@ http://www.opensource.org/licenses/bsd-license.php)
                         <Label Content="{Binding Name}" />
                     </DockPanel>
                     <DockPanel>
-                        <StackPanel Orientation="Vertical" DockPanel.Dock="Right">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Label Content="Internal CRC :" />
-                                <Label Content="{Binding InternalCrc}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Label Content="External CRC:" />
-                                <Label Content="{Binding ExternalCrc}" />
-                            </StackPanel>
-                        </StackPanel>
-                        <StackPanel Orientation="Vertical" DockPanel.Dock="Left">
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Size:" />
-                                <Label Content="{Binding UncompressedSize}" />
-                                <Label />
-                                <Label Content="Compressedsize:" />
-                                <Label Content="{Binding CompressedSize}" />
-                                <Label />
-                                <Label Content="Externalsize:" />
-                                <Label Content="{Binding ExternalSize}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Imagesize:" />
-                                <Label Content="{Binding ImageSize}" />
-                            </StackPanel>
-                        </StackPanel>
+                        <Label Content="{Binding InternalCrc}" DockPanel.Dock="Right"/>
+                        <Label Content="CRC:" DockPanel.Dock="Right"/>
+                        <Label DockPanel.Dock="Right"/>
+                        <Label Content="{Binding UncompressedSize}" DockPanel.Dock="Right"/>
+                        <Label Content="Size:" DockPanel.Dock="Right"/>
+                        <Label DockPanel.Dock="Right"/>
+                        <Label Content="{Binding CompressedSize}" DockPanel.Dock="Right"/>
+                        <Label Content="Compressedsize:" DockPanel.Dock="Right"/>
+                        <Label Content="Imagesize:" />
+                        <Label Content="{Binding InternalImageSize}" />
+                        <Label />
+                        <Label Content="Modified:" />
+                        <Label Content="{Binding InternalModifiedDate}" />
                     </DockPanel>
-                    <StackPanel Orientation="Horizontal" Background="LightBlue">
+                    <StackPanel Orientation="Horizontal" Background="LightGreen">
                         <Label Content="External file:" />
-                        <Label Content="{Binding FileSystemPath}" />
+                        <Label Content="{Binding ExternalName}" />
                     </StackPanel>
+                    <DockPanel>
+                        <Label Content="{Binding ExternalCrc}" DockPanel.Dock="Right"/>
+                        <Label Content="CRC:" DockPanel.Dock="Right"/>
+                        <Label DockPanel.Dock="Right"/>
+                        <Label Content="{Binding ExternalSize}" DockPanel.Dock="Right"/>
+                        <Label Content="Size:" DockPanel.Dock="Right"/>
+                        <Label Content="Imagesize:" />
+                        <Label Content="{Binding ExternalImageSize}" />
+                        <Label />
+                        <Label Content="Modified:" />
+                        <Label Content="{Binding ExternalModifiedDate}" />
+                        <Label />
+                        <Label Content="Created:" />
+                        <Label Content="{Binding ExternalCreatedDate}" />
+                    </DockPanel>
                 </StackPanel>
             </DockPanel>
         </DataTemplate>

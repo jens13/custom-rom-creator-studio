@@ -39,7 +39,7 @@ namespace CrcStudio.Zip
 
         protected override void InternalFlush(bool closeStream)
         {
-            _entries.OrderBy(x => x.Name);
+            _entries.Sort((a, b) => string.Compare(a.Name, b.Name));
             ChangePosition("classes.dex", 0);
             ChangePosition("AndroidManifest.xml", 0);
             ChangePosition("META-INF/CERT.RSA", 0);

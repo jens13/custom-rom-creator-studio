@@ -24,6 +24,7 @@ namespace CrcStudio.Project
         private string _updateZipName;
         private string _zipAlignVersion;
         private bool _javaExists;
+        private bool _apkToolVerbose;
 
         public SolutionProperties(CrcsSolution solution)
         {
@@ -204,6 +205,17 @@ namespace CrcStudio.Project
                 if (_overWriteFilesInZip == value) return;
                 _overWriteFilesInZip = value;
                 OnPropertyChanged("OverWriteFilesInZip");
+            }
+        }
+
+        public bool ApkToolVerbose
+        {
+            get { return _apkToolVerbose; }
+            set
+            {
+                if (_apkToolVerbose == value) return;
+                _apkToolVerbose = value;
+                OnPropertyChanged("ApkToolVerbose");
             }
         }
 

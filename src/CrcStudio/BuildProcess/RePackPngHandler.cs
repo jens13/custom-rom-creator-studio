@@ -3,7 +3,6 @@
 //     (See accompanying file notice.txt or at 
 // http://www.opensource.org/licenses/bsd-license.php)
 using System;
-using System.IO;
 using CrcStudio.Messages;
 using CrcStudio.Project;
 using CrcStudio.Utility;
@@ -27,8 +26,7 @@ namespace CrcStudio.BuildProcess
             MessageEngine.AddInformation(this, string.Format("Updating {0} with optimized png files", file.Name));
             using (var zf = new AndroidArchive(file.FileSystemPath))
             {
-                foreach (string pngFile in Directory.GetFiles(file.ResourceFolder, "*.png", SearchOption.AllDirectories)
-                    )
+                foreach (string pngFile in file.GetPngFilesToOptimize())
                 {
                     zf.Add(pngFile, FolderUtility.GetRelativePath(file.ResourceFolder, pngFile), CompressionType.Store);
                 }

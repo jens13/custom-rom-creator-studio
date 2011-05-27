@@ -73,17 +73,53 @@ namespace CrcStudio.Project
             return pngFiles.Where(x => !x.EndsWith(".9.png", StringComparison.OrdinalIgnoreCase)).ToArray();
         }
 
+        public override void HandleContentUpdatedExternaly()
+        {
+            if (_apkViewer == null) return;
+            _apkViewer.HandleContentUpdatedExternaly();
+        }
+        
         public IEnumerable<ApkEntry> GetApkEntries()
         {
             var items = new List<ApkEntry>();
             int index = 1;
             using (var zf = new ReadOnlyZipFile(FileSystemPath))
             {
-                foreach (var entry in zf.Entries)
-                {
-                    items.Add(new ApkEntry(entry, index++, ResourceFolder));
-                }
-                return items.ToArray();
+                items.AddRange(zf.Entries.Select(entry => new ApkEntry(entry, index++, ResourceFolder)));
+            }
+            if (Directory.Exists(ResourceFolder))
+            {
+                var files = Directory.GetFiles(ResourceFolder, "*.*", SearchOption.AllDirectories);
+                items.AddRange(
+                    files.Where(
+                        x =>
+                        items.FirstOrDefault(y => y.FileSystemPath.Equals(x, StringComparison.OrdinalIgnoreCase)) ==
+                        null).Select(path => new ApkEntry(path, ResourceFolder)));
+                items.Sort((a, b) => string.Compare(a.RelativePath, b.RelativePath));
+                ChangePosition(items, "classes.dex", 0);
+                ChangePosition(items, "AndroidManifest.xml", 0);
+                ChangePosition(items, "META-INF/CERT.RSA", 0);
+                ChangePosition(items, "META-INF/CERT.SF", 0);
+                ChangePosition(items, "META-INF/MANIFEST.MF", 0);
+                ChangePosition(items, "resources.arsc", -1);
+
+            }
+            return items.ToArray();
+        }
+        private void ChangePosition(List<ApkEntry> entries, string entryName, int newPosition)
+        {
+            int index = entries.FindIndex(x => x.Name.Equals(entryName, StringComparison.OrdinalIgnoreCase));
+            if (index == newPosition) return;
+            if (index < 0) return;
+            var entry = entries[index];
+            entries.RemoveAt(index);
+            if (newPosition < 0)
+            {
+                entries.Add(entry);
+            }
+            else
+            {
+                entries.Insert(newPosition, entry);
             }
         }
 

@@ -52,6 +52,8 @@
             this.buttonBuildOrderDown = new System.Windows.Forms.Button();
             this.buttonBuildOrderUp = new System.Windows.Forms.Button();
             this.checkBoxOverWriteFilesInZip = new System.Windows.Forms.CheckBox();
+            this.checkBoxApkToolVerbose = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -81,7 +83,7 @@
             // 
             this.comboBoxApkToolVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxApkToolVersion.FormattingEnabled = true;
-            this.comboBoxApkToolVersion.Location = new System.Drawing.Point(153, 159);
+            this.comboBoxApkToolVersion.Location = new System.Drawing.Point(165, 159);
             this.comboBoxApkToolVersion.Name = "comboBoxApkToolVersion";
             this.comboBoxApkToolVersion.Size = new System.Drawing.Size(264, 27);
             this.comboBoxApkToolVersion.TabIndex = 2;
@@ -91,7 +93,7 @@
             // 
             this.comboBoxSmaliVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSmaliVersion.FormattingEnabled = true;
-            this.comboBoxSmaliVersion.Location = new System.Drawing.Point(153, 192);
+            this.comboBoxSmaliVersion.Location = new System.Drawing.Point(165, 192);
             this.comboBoxSmaliVersion.Name = "comboBoxSmaliVersion";
             this.comboBoxSmaliVersion.Size = new System.Drawing.Size(264, 27);
             this.comboBoxSmaliVersion.TabIndex = 3;
@@ -110,7 +112,7 @@
             // 
             this.comboBoxBaksmaliVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxBaksmaliVersion.FormattingEnabled = true;
-            this.comboBoxBaksmaliVersion.Location = new System.Drawing.Point(153, 225);
+            this.comboBoxBaksmaliVersion.Location = new System.Drawing.Point(165, 225);
             this.comboBoxBaksmaliVersion.Name = "comboBoxBaksmaliVersion";
             this.comboBoxBaksmaliVersion.Size = new System.Drawing.Size(264, 27);
             this.comboBoxBaksmaliVersion.TabIndex = 4;
@@ -129,7 +131,7 @@
             // 
             this.comboBoxOptiPngVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxOptiPngVersion.FormattingEnabled = true;
-            this.comboBoxOptiPngVersion.Location = new System.Drawing.Point(153, 258);
+            this.comboBoxOptiPngVersion.Location = new System.Drawing.Point(165, 258);
             this.comboBoxOptiPngVersion.Name = "comboBoxOptiPngVersion";
             this.comboBoxOptiPngVersion.Size = new System.Drawing.Size(264, 27);
             this.comboBoxOptiPngVersion.TabIndex = 5;
@@ -148,7 +150,7 @@
             // 
             this.comboBoxZipAlignVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxZipAlignVersion.FormattingEnabled = true;
-            this.comboBoxZipAlignVersion.Location = new System.Drawing.Point(153, 291);
+            this.comboBoxZipAlignVersion.Location = new System.Drawing.Point(165, 291);
             this.comboBoxZipAlignVersion.Name = "comboBoxZipAlignVersion";
             this.comboBoxZipAlignVersion.Size = new System.Drawing.Size(264, 27);
             this.comboBoxZipAlignVersion.TabIndex = 6;
@@ -167,7 +169,7 @@
             // 
             this.comboBoxSignApkVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSignApkVersion.FormattingEnabled = true;
-            this.comboBoxSignApkVersion.Location = new System.Drawing.Point(153, 324);
+            this.comboBoxSignApkVersion.Location = new System.Drawing.Point(165, 324);
             this.comboBoxSignApkVersion.Name = "comboBoxSignApkVersion";
             this.comboBoxSignApkVersion.Size = new System.Drawing.Size(264, 27);
             this.comboBoxSignApkVersion.TabIndex = 7;
@@ -186,7 +188,7 @@
             // 
             this.comboBoxCertificate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCertificate.FormattingEnabled = true;
-            this.comboBoxCertificate.Location = new System.Drawing.Point(153, 357);
+            this.comboBoxCertificate.Location = new System.Drawing.Point(165, 357);
             this.comboBoxCertificate.Name = "comboBoxCertificate";
             this.comboBoxCertificate.Size = new System.Drawing.Size(264, 27);
             this.comboBoxCertificate.TabIndex = 8;
@@ -212,7 +214,7 @@
             // 
             // textBoxUpdateZip
             // 
-            this.textBoxUpdateZip.Location = new System.Drawing.Point(153, 45);
+            this.textBoxUpdateZip.Location = new System.Drawing.Point(165, 45);
             this.textBoxUpdateZip.Name = "textBoxUpdateZip";
             this.textBoxUpdateZip.Size = new System.Drawing.Size(264, 26);
             this.textBoxUpdateZip.TabIndex = 1;
@@ -230,7 +232,7 @@
             // checkBoxSignUpdateZip
             // 
             this.checkBoxSignUpdateZip.AutoSize = true;
-            this.checkBoxSignUpdateZip.Location = new System.Drawing.Point(153, 84);
+            this.checkBoxSignUpdateZip.Location = new System.Drawing.Point(165, 84);
             this.checkBoxSignUpdateZip.Name = "checkBoxSignUpdateZip";
             this.checkBoxSignUpdateZip.Size = new System.Drawing.Size(15, 14);
             this.checkBoxSignUpdateZip.TabIndex = 18;
@@ -287,6 +289,25 @@
             this.checkBoxOverWriteFilesInZip.UseVisualStyleBackColor = true;
             this.checkBoxOverWriteFilesInZip.CheckedChanged += new System.EventHandler(this.CheckBoxOverWriteFilesInZipCheckedChanged);
             // 
+            // checkBoxApkToolVerbose
+            // 
+            this.checkBoxApkToolVerbose.AutoSize = true;
+            this.checkBoxApkToolVerbose.Location = new System.Drawing.Point(165, 131);
+            this.checkBoxApkToolVerbose.Name = "checkBoxApkToolVerbose";
+            this.checkBoxApkToolVerbose.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxApkToolVerbose.TabIndex = 25;
+            this.checkBoxApkToolVerbose.UseVisualStyleBackColor = true;
+            this.checkBoxApkToolVerbose.CheckedChanged += new System.EventHandler(this.CheckBoxApkToolVerboseCheckedChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(17, 128);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(137, 19);
+            this.label12.TabIndex = 24;
+            this.label12.Text = "ApkTool verbose log:";
+            // 
             // SolutionPropertiesEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -294,6 +315,8 @@
             this.AutoScroll = true;
             this.AutoScrollMargin = new System.Drawing.Size(0, 20);
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Controls.Add(this.checkBoxApkToolVerbose);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.checkBoxOverWriteFilesInZip);
             this.Controls.Add(this.buttonBuildOrderDown);
             this.Controls.Add(this.buttonBuildOrderUp);
@@ -354,5 +377,7 @@
         private System.Windows.Forms.Button buttonBuildOrderUp;
         private System.Windows.Forms.Button buttonBuildOrderDown;
         private System.Windows.Forms.CheckBox checkBoxOverWriteFilesInZip;
+        private System.Windows.Forms.CheckBox checkBoxApkToolVerbose;
+        private System.Windows.Forms.Label label12;
     }
 }

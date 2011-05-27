@@ -714,6 +714,12 @@ namespace CrcStudio.Forms
                 MessageEngine.ShowError(ex);
             }
         }
+        private void MenuMainViewRefreshClick(object sender, EventArgs e)
+        {
+            var file = GetFileFromTabStripItem() as CompositFile;
+            if (file == null) return;
+            file.HandleContentUpdatedExternaly();
+        }
 
         private void TabStripMainTabStripItemSelected(object sender, TabStripEventArgs e)
         {

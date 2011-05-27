@@ -43,6 +43,10 @@ namespace CrcStudio.Controls
             ParentTabStripItem.Text = TabTitle + (IsDirty ? "*" : "");
         }
 
+        public void HandleContentUpdatedExternaly()
+        {
+        }
+
         #endregion
 
         public override void Refresh()
@@ -62,6 +66,8 @@ namespace CrcStudio.Controls
 
                 listBoxBuildOrder.Items.AddRange(_solution.Projects.ToArray());
                 checkBoxOverWriteFilesInZip.Checked = _solution.Properties.OverWriteFilesInZip;
+
+                checkBoxApkToolVerbose.Checked = _solution.Properties.ApkToolVerbose;
 
                 comboBoxApkToolVersion.Items.Add(LatestVersion);
                 comboBoxApkToolVersion.Items.AddRange(_tools.GetToolVersions(ProjectToolType.ApkTool).ToArray());
@@ -244,6 +250,13 @@ namespace CrcStudio.Controls
             {
                 buttonBuildOrderDown.Enabled = false;
             }
+        }
+
+        private void CheckBoxApkToolVerboseCheckedChanged(object sender, EventArgs e)
+        {
+            if (_refreshingControls) return;
+            _solution.Properties.ApkToolVerbose = checkBoxApkToolVerbose.Checked;
+            EvaluateDirty();
         }
     }
 }

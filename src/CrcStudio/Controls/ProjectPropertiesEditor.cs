@@ -40,6 +40,10 @@ namespace CrcStudio.Controls
             ParentTabStripItem.Text = TabTitle + (IsDirty ? "*" : "");
         }
 
+        public void HandleContentUpdatedExternaly()
+        {
+        }
+
         public bool IsDirty { get { return _project.IsDirty; } }
 
         #endregion

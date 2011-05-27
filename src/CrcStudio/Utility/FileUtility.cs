@@ -314,5 +314,21 @@ namespace CrcStudio.Utility
                 File.Create(fileSystemPath).Dispose();
             }
         }
+        public static string ShortFilePath(string file, int maxLength)
+        {
+            // Max 60 chars;
+            if (file.Length <= maxLength) return file;
+            string[] fileArray = file.Split('\\');
+            string fileText;
+            int startIndex = 2;
+            do
+            {
+                fileText = string.Format("{0}\\...\\{1}", fileArray[0],
+                                         string.Join("\\", fileArray, startIndex, fileArray.Length - startIndex));
+                startIndex++;
+            } while (fileText.Length > maxLength && startIndex <= fileArray.Length);
+            return fileText;
+        }
+
     }
 }

@@ -100,6 +100,10 @@ namespace CrcStudio.Project
             FileUtility.MoveFile(FileBackup, FileSystemPath);
             FolderUtility.DeleteDirectory(WorkingFolder);
             _containsClassesDex = -1;
+            HandleContentUpdatedExternaly();
+        }
+        public virtual void HandleContentUpdatedExternaly()
+        {
         }
 
         public void CreateBackup(bool overwriteExisting)

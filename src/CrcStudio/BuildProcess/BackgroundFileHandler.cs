@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using CrcStudio.Messages;
+using CrcStudio.Project;
 
 namespace CrcStudio.BuildProcess
 {
@@ -82,6 +83,8 @@ namespace CrcStudio.BuildProcess
                             fileHandler.ProcessFile(file, IsCanceled);
                         }
                     }
+                    var compositFile = file as CompositFile;
+                    if (compositFile != null) compositFile.HandleContentUpdatedExternaly();
                 }
                 catch (Exception ex)
                 {

@@ -13,5 +13,6 @@ namespace CrcStudio.Controls
         TabStripItem ParentTabStripItem { get; set; }
         bool IsDirty { get; }
         void EvaluateDirty();
+        void HandleContentUpdatedExternaly();
     }
 }

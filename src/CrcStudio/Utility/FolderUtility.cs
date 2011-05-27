@@ -36,12 +36,14 @@ namespace CrcStudio.Utility
             if (File.Exists(folderPath)) folderPath = Path.GetDirectoryName(folderPath);
             if (folderPath == null) throw new ArgumentNullException("path");
             int attempts = 0;
-            while (File.Exists(folderPath) && attempts < 10)
+            bool deleted = false;
+            while (!deleted && attempts < 10)
             {
                 try
                 {
                     attempts++;
                     if (Directory.Exists(folderPath)) Directory.Delete(folderPath, true);
+                    deleted = true;
                 }
                 catch (IOException)
                 {

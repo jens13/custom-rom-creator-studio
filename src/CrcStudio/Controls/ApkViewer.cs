@@ -23,9 +23,9 @@ namespace CrcStudio.Controls
             _apkListView.FontSize = 12;
             Child = _apkListView;
 
-            TabTitle = file.Name;
-            TabToolTip = file.FileSystemPath;
-            _apkListView.Items = file.GetApkEntries();
+            TabTitle = _file.Name;
+            TabToolTip = _file.FileSystemPath;
+            _apkListView.Items = _file.GetApkEntries();
         }
 
         #region ITabStripItemControl Members
@@ -38,6 +38,16 @@ namespace CrcStudio.Controls
 
         public void EvaluateDirty()
         {
+        }
+
+        public void HandleContentUpdatedExternaly()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(HandleContentUpdatedExternaly));
+                return;
+            }
+            _apkListView.Items = _file.GetApkEntries();
         }
 
         #endregion
