@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.IO;
 using CrcStudio.Controls;
 using CrcStudio.TabControl;
+using CrcStudio.Utility;
 
 namespace CrcStudio.Project
 {
@@ -136,7 +137,22 @@ namespace CrcStudio.Project
 
         public static IProjectFile CreatFile(string fileSystemPath, bool included)
         {
-            return new TextFile(fileSystemPath, included, null);
+            string extension = (Path.GetExtension(fileSystemPath) ?? "").ToUpperInvariant();
+            switch (extension)
+            {
+                case ".ODEX":
+                    return null;
+                case ".APK":
+                    return new ApkFile(fileSystemPath, included, null);
+                case ".JAR":
+                    return new JarFile(fileSystemPath, included, null);
+                default:
+                    if (CrcsProject.BinaryExtensions.Contains(extension) || FileUtility.IsBinary(fileSystemPath))
+                    {
+                        return new BinaryFile(fileSystemPath, included, null);
+                    }
+                    return new TextFile(fileSystemPath, included, null);
+            }
         }
     }
 }

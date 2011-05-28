@@ -107,8 +107,12 @@ namespace CrcStudio.Forms
             IProjectFile file = _solution.GetProjectFile(fileSystemPath);
             if (file == null)
             {
-                file = ProjectFileBase.CreatFile(fileSystemPath, false);
-                _nonProjectFiles.Add(file);
+                file = solutionExplorer.FindFile(fileSystemPath);
+                if (file == null)
+                {
+                    file = ProjectFileBase.CreatFile(fileSystemPath, false);
+                    _nonProjectFiles.Add(file);
+                }
             }
             OpenFile(file);
             return file;
@@ -123,8 +127,10 @@ namespace CrcStudio.Forms
                 return;
             }
 
+            var projectFile = file.Open();
+            if (projectFile == null) return;
             tabStripMain.Visible = true;
-            tabStripMain.AddTab(file.Open().TabItem);
+            tabStripMain.AddTab(projectFile.TabItem);
             if (file is CrcsProject || file is CrcsSolution) return;
             _recentFiles.Add(file.FileSystemPath);
         }
@@ -389,19 +395,40 @@ namespace CrcStudio.Forms
             {
                 menuMainFileRecentBar.Visible = _recentFiles.Visible || _recentSolutions.Visible;
                 bool canSaveSelectedTreeNodes = solutionExplorer.CanSaveSelectedTreeNodes();
-                var selectedFile = solutionExplorer.SelectedFiles.FirstOrDefault();
-                if (solutionExplorer.SelectedNodes.Count() == 1 && canSaveSelectedTreeNodes)
+                if (canSaveSelectedTreeNodes)
                 {
-                    menuMainFileSaveSelected.Text = "Save " + selectedFile.RelativePath;
-                    menuMainFileSaveSelectedAs.Text = "Save " + selectedFile.RelativePath + " As...";
+                    var selectedFile = solutionExplorer.SelectedFiles.FirstOrDefault();
+                    if (solutionExplorer.SelectedNodes.Count() == 1 && canSaveSelectedTreeNodes)
+                    {
+                        menuMainFileSaveSelected.Text = "Save " + selectedFile.RelativePath;
+                        menuMainFileSaveSelectedAs.Text = "Save " + selectedFile.RelativePath + " As...";
+                    }
+                    else
+                    {
+                        menuMainFileSaveSelected.Text = "Save Selected Items";
+                        menuMainFileSaveSelectedAs.Text = "Save Selected Items As...";
+                    }
+                    menuMainFileSaveSelectedAs.Enabled = canSaveSelectedTreeNodes;
+                    menuMainFileSaveSelected.Enabled = canSaveSelectedTreeNodes;
                 }
                 else
                 {
-                    menuMainFileSaveSelected.Text = "Save Selected Items";
-                    menuMainFileSaveSelectedAs.Text = "Save Selected Items As...";
+                    IProjectFile file = GetFileFromTabStripItem();
+                    if (file == null)
+                    {
+                        menuMainFileSaveSelected.Enabled = false;
+                        menuMainFileSaveSelectedAs.Enabled = false;
+                        menuMainFileSaveSelected.Text = "Save Selected Items";
+                        menuMainFileSaveSelectedAs.Text = "Save Selected Items As...";
+                    }
+                    else
+                    {
+                        menuMainFileSaveSelected.Text = "Save " + file.Name;
+                        menuMainFileSaveSelectedAs.Text = "Save " + file.Name + " As...";
+                        menuMainFileSaveSelected.Enabled = file.CanSave;
+                        menuMainFileSaveSelectedAs.Enabled = file.CanSaveAs;
+                    }
                 }
-                menuMainFileSaveSelectedAs.Enabled = canSaveSelectedTreeNodes;
-                menuMainFileSaveSelected.Enabled = canSaveSelectedTreeNodes;
                 menuMainFileAdd.Visible = _solution != null;
                 menuMainFileAddBar.Visible = _solution != null;
             }
@@ -539,7 +566,10 @@ namespace CrcStudio.Forms
         {
             try
             {
-                SaveFiles(solutionExplorer.SelectedFiles);
+                var selectedFiles = solutionExplorer.SelectedFiles.ToList();
+                var file = GetFileFromTabStripItem();
+                if (file != null) selectedFiles.Add(file);
+                SaveFiles(selectedFiles);
             }
             catch (Exception ex)
             {
@@ -966,7 +996,10 @@ namespace CrcStudio.Forms
 
         private IEnumerable<IProjectFile> GetOpenFiles()
         {
-            return tabStripMain.Items.Select(x => x.Tag).OfType<IProjectFile>().ToArray();
+            var projectFiles = tabStripMain.Items.Select(x => x.Tag).OfType<IProjectFile>().ToList();
+            if (_solution.IsDirty && !projectFiles.Contains(_solution)) projectFiles.Add(_solution);
+            projectFiles.AddRange(_solution.Projects.Where(x => !projectFiles.Contains(x)));
+            return projectFiles.ToArray();
         }
 
         public bool GetCloseFileConfirmation(IEnumerable<IProjectFile> files)

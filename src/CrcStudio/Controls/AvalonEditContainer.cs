@@ -51,6 +51,7 @@ namespace CrcStudio.Controls
             if (_originalFileCheckSum == null)
             {
                 _originalFileCheckSum = checkSum;
+                IsDirty = false;
             }
             else
             {

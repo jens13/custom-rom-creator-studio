@@ -24,6 +24,7 @@ namespace CrcStudio.Project
         private readonly string _resourceFolder;
         private FileInfo _fileInfo;
         private string _shortFilePath;
+        private string _resourceId;
 
         public ApkEntry(string fileSystemPath, string resourceFolder)
         {
@@ -117,17 +118,18 @@ namespace CrcStudio.Project
                                Path.DirectorySeparatorChar, '/').TrimStart('/');
             }
         }
+        public string ResourceId { get { return _resourceId == null ? "" : "ResourceId: " + _resourceId; } set { _resourceId = value; } }
         public string FileSystemPath { get { return _fileSystemPath; } }
         public string Name { get { return ZipEntryExists ? _zipEntry.Name : ""; } }
         public string ExternalName { get { return ExternalFileExists ? _shortFilePath : ""; } }
-        public string Index { get { return _index.ToString(); } }
+        public string Index { get { return ZipEntryExists ? _index.ToString() : ""; } }
         public string CompressedSize { get { return ZipEntryExists ? _zipEntry.CompressedSize.ToString() : ""; } }
         public string UncompressedSize { get { return ZipEntryExists ? _zipEntry.UncompressedSize.ToString() : ""; } }
         public string ExternalSize { get { return ExternalFileExists ? ExternalFile.Length.ToString() : ""; } }
         public string InternalCrc { get { return ZipEntryExists ? _zipEntry.Crc32.ToString("X8") : ""; } }
         public string ExternalCrc { get { return ExternalFileExists ? Crc32Hash.CalculateHash(_fileSystemPath).ToString("X8") : ""; } }
-        public string InternalImageSize { get { return _internalImageWidth > 0 ? _internalImageWidth + "x" + _internalImageHeight : ""; } }
-        public string ExternalImageSize { get { return _externalImageWidth > 0 ? _externalImageWidth + "x" + _internalImageHeight : ""; } }
+        public string InternalImageSize { get { return _internalImageWidth > 0 ? "Image: " + _internalImageWidth + "x" + _internalImageHeight : ""; } }
+        public string ExternalImageSize { get { return _externalImageWidth > 0 ? "Image: " + _externalImageWidth + "x" + _internalImageHeight : ""; } }
 
         public string InternalModifiedDate { get { return ZipEntryExists ? _zipEntry.LastModified.ToShortDateString() : ""; } }
         public string ExternalModifiedDate { get { return ExternalFileExists ? ExternalFile.LastWriteTime.ToShortDateString() : ""; } }
@@ -137,7 +139,7 @@ namespace CrcStudio.Project
         public BitmapImage ExternalImage { get { return _externalImage; } }
 
         private FileInfo ExternalFile { get { return _fileInfo; } }
-        private bool ExternalFileExists { get { return _fileInfo.Exists; } }
-        private bool ZipEntryExists { get { return (_zipEntry != null); } }
+        public bool ExternalFileExists { get { return _fileInfo.Exists; } }
+        public bool ZipEntryExists { get { return (_zipEntry != null); } }
     }
 }

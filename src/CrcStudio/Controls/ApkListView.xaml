@@ -28,44 +28,43 @@ http://www.opensource.org/licenses/bsd-license.php)
                 <Rectangle Width="2" Fill="Black" DockPanel.Dock="Right"/>
                 <StackPanel Orientation="Vertical">
                     <DockPanel Background="LightBlue">
-                        <Label Content="{Binding Index}" DockPanel.Dock="Right"/>
-                        <Label Content="Index:" DockPanel.Dock="Right"/>
+                        <TextBlock Text="{Binding InternalImageSize}"  Padding="5"  DockPanel.Dock="Right"/>
                         <Label Content="Internal file:" />
-                        <Label Content="{Binding Name}" />
+                        <TextBlock Text="{Binding Name}"  Padding="5" />
                     </DockPanel>
                     <DockPanel>
-                        <Label Content="{Binding InternalCrc}" DockPanel.Dock="Right"/>
+                        <TextBlock Text="{Binding InternalCrc}"  Padding="5" DockPanel.Dock="Right"/>
                         <Label Content="CRC:" DockPanel.Dock="Right"/>
                         <Label DockPanel.Dock="Right"/>
-                        <Label Content="{Binding UncompressedSize}" DockPanel.Dock="Right"/>
+                        <TextBlock Text="{Binding UncompressedSize}"  Padding="5" DockPanel.Dock="Right"/>
                         <Label Content="Size:" DockPanel.Dock="Right"/>
                         <Label DockPanel.Dock="Right"/>
-                        <Label Content="{Binding CompressedSize}" DockPanel.Dock="Right"/>
+                        <TextBlock Text="{Binding CompressedSize}"  Padding="5" DockPanel.Dock="Right"/>
                         <Label Content="Compressedsize:" DockPanel.Dock="Right"/>
-                        <Label Content="Imagesize:" />
-                        <Label Content="{Binding InternalImageSize}" />
-                        <Label />
                         <Label Content="Modified:" />
-                        <Label Content="{Binding InternalModifiedDate}" />
+                        <TextBlock Text="{Binding InternalModifiedDate}"  Padding="5" />
+                        <Label />
+                        <Label Content="Index:" />
+                        <TextBlock Text="{Binding Index}" Padding="5"/>
                     </DockPanel>
-                    <StackPanel Orientation="Horizontal" Background="LightGreen">
+                    <DockPanel Background="LightGreen">
+                        <TextBlock Text="{Binding ExternalImageSize}"  Padding="5"  DockPanel.Dock="Right"/>
+                        <Label DockPanel.Dock="Right"/>
+                        <TextBlock Text="{Binding ResourceId}"  Padding="5"  DockPanel.Dock="Right"/>
                         <Label Content="External file:" />
-                        <Label Content="{Binding ExternalName}" />
-                    </StackPanel>
+                        <TextBlock Text="{Binding ExternalName}"  Padding="5" />
+                    </DockPanel>
                     <DockPanel>
-                        <Label Content="{Binding ExternalCrc}" DockPanel.Dock="Right"/>
+                        <TextBlock Text="{Binding ExternalCrc}"  Padding="5" DockPanel.Dock="Right"/>
                         <Label Content="CRC:" DockPanel.Dock="Right"/>
                         <Label DockPanel.Dock="Right"/>
-                        <Label Content="{Binding ExternalSize}" DockPanel.Dock="Right"/>
+                        <TextBlock Text="{Binding ExternalSize}"  Padding="5" DockPanel.Dock="Right"/>
                         <Label Content="Size:" DockPanel.Dock="Right"/>
-                        <Label Content="Imagesize:" />
-                        <Label Content="{Binding ExternalImageSize}" />
-                        <Label />
                         <Label Content="Modified:" />
-                        <Label Content="{Binding ExternalModifiedDate}" />
+                        <TextBlock Text="{Binding ExternalModifiedDate}"  Padding="5" />
                         <Label />
                         <Label Content="Created:" />
-                        <Label Content="{Binding ExternalCreatedDate}" />
+                        <TextBlock Text="{Binding ExternalCreatedDate}"  Padding="5" />
                     </DockPanel>
                 </StackPanel>
             </DockPanel>

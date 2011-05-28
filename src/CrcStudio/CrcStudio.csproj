@@ -77,7 +77,12 @@
     <Compile Include="Controls\ApkListView.xaml.cs">
       <DependentUpon>ApkListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ApkViewer.cs" />
+    <Compile Include="Controls\ApkViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ApkViewer.Designer.cs">
+      <DependentUpon>ApkViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\AvalonEditContainer.cs" />
     <Compile Include="Controls\ITabStripItemControl.cs" />
     <Compile Include="Controls\OutputWindow.cs">
@@ -214,6 +219,9 @@
     </Compile>
     <Compile Include="Utility\MruMenuManager.cs" />
     <Compile Include="Utility\PropFileUtility.cs" />
+    <EmbeddedResource Include="Controls\ApkViewer.resx">
+      <DependentUpon>ApkViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\OutputWindow.resx">
       <DependentUpon>OutputWindow.cs</DependentUpon>
       <SubType>Designer</SubType>

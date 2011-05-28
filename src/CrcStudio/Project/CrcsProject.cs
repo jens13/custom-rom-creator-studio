@@ -18,11 +18,9 @@ namespace CrcStudio.Project
 {
     public sealed class CrcsProject : ProjectFileBase, IDisposable
     {
-        public static List<string> BinaryExtensions = new List<string>
-                                                          {".apk", ".jar", ".zip", ".rar", ".7z", ".rfs", ".iso"};
+        public static List<string> BinaryExtensions = new List<string> { ".APK", ".JAR", ".ZIP", ".RAR", ".7Z", ".RFS", ".ISO", ".OGG", ".MP3", ".PNG", ".JPG", ".JPEG", ".GIF", ".AVI", ".3GP", ".MP4", ".MPG", ".MPEG", ".ARSC" };
 
-        private readonly Dictionary<string, List<string>> _additionalDependencies =
-            new Dictionary<string, List<string>>();
+        private readonly Dictionary<string, List<string>> _additionalDependencies = new Dictionary<string, List<string>>();
 
         private readonly List<IProjectItem> _items = new List<IProjectItem>();
 

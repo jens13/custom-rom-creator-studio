@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 using CrcStudio.Controls;
 using CrcStudio.TabControl;
 using CrcStudio.Utility;
@@ -89,12 +90,13 @@ namespace CrcStudio.Project
             }
             if (Directory.Exists(ResourceFolder))
             {
-                var files = Directory.GetFiles(ResourceFolder, "*.*", SearchOption.AllDirectories);
+                var files = FolderUtility.GetFilesRecursively(ResourceFolder, "*.*", @"\build\apk");
                 items.AddRange(
                     files.Where(
                         x =>
                         items.FirstOrDefault(y => y.FileSystemPath.Equals(x, StringComparison.OrdinalIgnoreCase)) ==
                         null).Select(path => new ApkEntry(path, ResourceFolder)));
+                items.RemoveAll(x => x.RelativePath.EndsWith("apktool.yml", StringComparison.OrdinalIgnoreCase));
                 items.Sort((a, b) => string.Compare(a.RelativePath, b.RelativePath));
                 ChangePosition(items, "classes.dex", 0);
                 ChangePosition(items, "AndroidManifest.xml", 0);
@@ -103,6 +105,33 @@ namespace CrcStudio.Project
                 ChangePosition(items, "META-INF/MANIFEST.MF", 0);
                 ChangePosition(items, "resources.arsc", -1);
 
+            }
+            var publicXmlFile = Path.Combine(ResourceFolder, "res", "values", "public.xml");
+            if (File.Exists(publicXmlFile))
+            {
+                var xdoc = XDocument.Load(publicXmlFile);
+                foreach (var item in items)
+                {
+                    string type = "";
+                    if (item.RelativePath.IndexOf("drawable", StringComparison.OrdinalIgnoreCase) > -1)
+                    {
+                        type = "drawable";
+                    }
+                    else if (item.RelativePath.IndexOf("raw", StringComparison.OrdinalIgnoreCase) > -1)
+                    {
+                        type = "raw";
+                    }
+                    if (type.Length > 0)
+                    {
+                        var name = Path.GetFileNameWithoutExtension(item.FileSystemPath) ?? "";
+                        name = name.EndsWith(".9") ? name.Substring(0, name.Length - 2) : name;
+                        var xnode = xdoc.Descendants("public").FirstOrDefault(x => x.Attribute("type").Value == type && x.Attribute("name").Value == name);
+                        if (xnode != null)
+                        {
+                            item.ResourceId = xnode.Attribute("id").Value;
+                        }
+                    }
+                }
             }
             return items.ToArray();
         }

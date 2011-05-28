@@ -113,7 +113,15 @@ namespace CrcStudio.Controls
             if (SelectedItems.Count() == 0) return;
             if (SelectedItems.OfType<CrcsProject>().Count() > 0) return;
             if (SelectedItems.OfType<CrcsSolution>().Count() > 0) return;
-            MainForm.OpenSelectedFiles();
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+                MainForm.OpenSelectedFiles();
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         #endregion
@@ -492,7 +500,7 @@ namespace CrcStudio.Controls
 
                 if (childNode == null)
                 {
-                    string extension = Path.GetExtension(file);
+                    string extension = (Path.GetExtension(file) ?? "").ToUpperInvariant();
                     IProjectFile projectFile;
                     if (CrcsProject.BinaryExtensions.Contains(extension) || FileUtility.IsBinary(file))
                     {
@@ -539,6 +547,14 @@ namespace CrcStudio.Controls
                 if (treeNode == null) continue;
                 treeNode.Expand();
             }
+        }
+        public IProjectFile FindFile(string fileSystemPath)
+        {
+            ProjectTreeNode treeNode = _nodes.FirstOrDefault(x => x.FileSystemPath.Equals(fileSystemPath, StringComparison.OrdinalIgnoreCase));
+            if (treeNode == null) return null;
+            treeNode.EnsureVisible();
+            treeViewSolution.SelectedNode = treeNode;
+            return treeNode.ProjectItem as IProjectFile;
         }
 
         public CrcsProject GetProject(ProjectTreeNode treeNode)
@@ -985,5 +1001,6 @@ namespace CrcStudio.Controls
         }
 
         #endregion
+
     }
 }
