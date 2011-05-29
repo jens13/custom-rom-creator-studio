@@ -212,7 +212,7 @@ namespace CrcStudio.Forms
             this.menuMainFileOpenFile.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.menuMainFileOpenFile.Size = new System.Drawing.Size(226, 24);
             this.menuMainFileOpenFile.Text = "File...";
-            this.menuMainFileOpenFile.Click += new System.EventHandler(this.menuMainFileOpenFile_Click);
+            this.menuMainFileOpenFile.Click += new System.EventHandler(this.MenuMainFileOpenFileClick);
             // 
             // menuMainFileAddBar
             // 

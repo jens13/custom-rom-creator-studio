@@ -104,7 +104,7 @@ namespace CrcStudio.Forms
         public IProjectFile OpenFile(string fileSystemPath)
         {
             if (!File.Exists(fileSystemPath)) return null;
-            IProjectFile file = _solution.GetProjectFile(fileSystemPath);
+            IProjectFile file = _solution == null ? null : _solution.GetProjectFile(fileSystemPath);
             if (file == null)
             {
                 file = solutionExplorer.FindFile(fileSystemPath);
@@ -487,7 +487,7 @@ namespace CrcStudio.Forms
             //TODO Menu item is not visible for now
         }
 
-        private void menuMainFileOpenFile_Click(object sender, EventArgs e)
+        private void MenuMainFileOpenFileClick(object sender, EventArgs e)
         {
             try
             {
