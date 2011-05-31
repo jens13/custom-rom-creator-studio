@@ -44,7 +44,16 @@ namespace CrcStudio.Controls
         }
 
         [Browsable(false)]
-        public CrcsProject SelectedProject { get { return SelectedNode == null ? null : SelectedNode.ProjectItem.Project; } }
+        public CrcsProject SelectedProject 
+        { 
+            get 
+            {
+                if (SelectedNode == null) return null;
+                var proj = SelectedNode.ProjectItem as CrcsProject;
+                if (proj != null) return proj;
+                return SelectedNode.ProjectItem == null ? null : SelectedNode.ProjectItem.Project; 
+            } 
+        }
 
         [Browsable(false)]
         public ProjectTreeNode SelectedNode { get { return SelectedNodes.FirstOrDefault(); } }
@@ -367,9 +376,10 @@ namespace CrcStudio.Controls
                 {
                     childNode = projectFile.TreeNode;
 
-                    if (!projectFile.IsIncluded && (!ShowExcludedItems || projectFile.IsDeleted))
+                    if (!projectFile.IsIncluded && (!ShowExcludedItems || projectFile.IsDeleted || !projectFile.Exists))
                     {
                         if (childNode != null) RemoveNode(childNode);
+                        if (!projectFile.IsIncluded && !projectFile.Exists) rsproj.RemoveMissingItem(projectFile.FileSystemPath);
                         continue;
                     }
                     if (childNode == null)

@@ -44,7 +44,7 @@ namespace CrcStudio.Project
             string apkToolFrameWorkFolder = CrcsSettings.Current.ApkToolFrameWorkFolder;
             FolderUtility.DeleteDirectory(apkToolFrameWorkFolder);
             Directory.CreateDirectory(apkToolFrameWorkFolder);
-            Project = this;
+ //           Project = this;
         }
 
         public ProjectProperties Properties { get { return _properties; } }
@@ -184,7 +184,7 @@ namespace CrcStudio.Project
             }
             AddFolder(ProjectPath, projectFiles);
             _items.AddRange(
-                projectFiles.Keys.Where(x => !File.Exists(x)).Select(x => new MissingItem(x, false, this)).OfType
+                projectFiles.Keys.Where(x => !File.Exists(x) && !Directory.Exists(x)).Select(x => new MissingItem(x, false, this)).OfType
                     <MissingItem>());
             _items.Sort((a, b) => string.Compare(a.RelativePath, b.RelativePath));
 
@@ -588,7 +588,7 @@ namespace CrcStudio.Project
         public IEnumerable<IProjectFile> GetBuildFiles()
         {
             var files = new List<IProjectFile>();
-            files.AddRange(_items.OfType<IProjectFile>().Where(x => x.IncludeInBuild));
+            files.AddRange(_items.OfType<IProjectFile>().Where(x => x.IncludeInBuild).ToArray());
             return files.ToArray();
         }
 

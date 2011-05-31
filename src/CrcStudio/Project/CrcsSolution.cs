@@ -431,7 +431,8 @@ namespace CrcStudio.Project
                 {
                     foreach (IProjectFile file in proj.GetBuildFiles())
                     {
-                        IProjectFile existingFile = buildFiles.FirstOrDefault(x => x.RelativePath == file.RelativePath);
+                        IProjectFile file1 = file;
+                        IProjectFile existingFile = buildFiles.FirstOrDefault(x => x.RelativePath == file1.RelativePath);
                         if (existingFile != null)
                         {
                             if (!_properties.OverWriteFilesInZip)

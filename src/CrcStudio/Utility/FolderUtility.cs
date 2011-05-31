@@ -94,7 +94,7 @@ namespace CrcStudio.Utility
 
             Uri relativeUri = fromUri.MakeRelativeUri(toUri);
 
-            return relativeUri.ToString().Replace('/', Path.DirectorySeparatorChar);
+            return Uri.UnescapeDataString(relativeUri.ToString()).Replace('/', Path.DirectorySeparatorChar);
         }
 
         public static IEnumerable<string> GetFilesAndEmptyFoldersRecursively(string fullPath, string searchPattern,
