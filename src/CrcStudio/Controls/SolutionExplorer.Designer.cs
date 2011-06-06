@@ -72,8 +72,8 @@
             this.imageListFiles.Images.SetKeyName(4, "icon.png");
             this.imageListFiles.Images.SetKeyName(5, "jarformat.ico");
             this.imageListFiles.Images.SetKeyName(6, "settings_32.png");
-            this.imageListFiles.Images.SetKeyName(7, "rsproj.png");
-            this.imageListFiles.Images.SetKeyName(8, "rssln.png");
+            this.imageListFiles.Images.SetKeyName(7, "crcs_green.png");
+            this.imageListFiles.Images.SetKeyName(8, "crcs_blue.png");
             // 
             // contextMenuProject
             // 
@@ -271,7 +271,7 @@
             this.treeViewSolution.Location = new System.Drawing.Point(0, 20);
             this.treeViewSolution.Name = "treeViewSolution";
             this.treeViewSolution.SelectedImageIndex = 0;
-            this.treeViewSolution.SelectedNodes = ((System.Collections.Generic.IEnumerable<System.Windows.Forms.TreeNode>)(resources.GetObject("treeViewSolution.SelectedNodes")));
+            this.treeViewSolution.SelectedNodes = new System.Windows.Forms.TreeNode[0];
             this.treeViewSolution.ShowRootLines = false;
             this.treeViewSolution.Size = new System.Drawing.Size(301, 328);
             this.treeViewSolution.TabIndex = 1;

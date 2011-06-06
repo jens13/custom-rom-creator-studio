@@ -36,6 +36,7 @@ namespace CrcStudio.Forms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.menuMainFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainFileNew = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,6 +65,8 @@ namespace CrcStudio.Forms
             this.menuMainViewRefreshProjectExplorer = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.menuMainViewShowLogFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuMainViewRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainProject = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainProjectLoadFilesToExclude = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainProjectImportAdditionalDependencies = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,8 +107,6 @@ namespace CrcStudio.Forms
             this.panelMain = new System.Windows.Forms.Panel();
             this.tabStripMain = new CrcStudio.TabControl.TabStrip();
             this.panelClientSize = new System.Windows.Forms.Panel();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuMainViewRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             this.panelLeft.SuspendLayout();
@@ -355,6 +356,20 @@ namespace CrcStudio.Forms
             this.menuMainViewShowLogFile.Size = new System.Drawing.Size(271, 24);
             this.menuMainViewShowLogFile.Text = "Show Log File";
             this.menuMainViewShowLogFile.Click += new System.EventHandler(this.MenuMainViewShowLogFileClick);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(268, 6);
+            // 
+            // menuMainViewRefresh
+            // 
+            this.menuMainViewRefresh.Name = "menuMainViewRefresh";
+            this.menuMainViewRefresh.ShortcutKeyDisplayString = "";
+            this.menuMainViewRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.menuMainViewRefresh.Size = new System.Drawing.Size(271, 24);
+            this.menuMainViewRefresh.Text = "Refresh";
+            this.menuMainViewRefresh.Click += new System.EventHandler(this.MenuMainViewRefreshClick);
             // 
             // menuMainProject
             // 
@@ -719,20 +734,6 @@ namespace CrcStudio.Forms
             this.panelClientSize.Size = new System.Drawing.Size(999, 543);
             this.panelClientSize.TabIndex = 1;
             // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(268, 6);
-            // 
-            // menuMainViewRefresh
-            // 
-            this.menuMainViewRefresh.Name = "menuMainViewRefresh";
-            this.menuMainViewRefresh.ShortcutKeyDisplayString = "";
-            this.menuMainViewRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.menuMainViewRefresh.Size = new System.Drawing.Size(271, 24);
-            this.menuMainViewRefresh.Text = "Refresh";
-            this.menuMainViewRefresh.Click += new System.EventHandler(this.MenuMainViewRefreshClick);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(110F, 110F);
@@ -745,6 +746,7 @@ namespace CrcStudio.Forms
             this.Controls.Add(this.statusStripMain);
             this.Controls.Add(this.panelTopBorder);
             this.Controls.Add(this.menuStripMain);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripMain;
             this.Name = "MainForm";
             this.Text = "MainForm";
