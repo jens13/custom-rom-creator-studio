@@ -107,6 +107,9 @@ namespace CrcStudio.Forms
             this.panelMain = new System.Windows.Forms.Panel();
             this.tabStripMain = new CrcStudio.TabControl.TabStrip();
             this.panelClientSize = new System.Windows.Forms.Panel();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuMainHelpRegisterFileTypes = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMainHelpUnregisterFileTypes = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             this.panelLeft.SuspendLayout();
@@ -450,6 +453,9 @@ namespace CrcStudio.Forms
             // menuMainHelp
             // 
             this.menuMainHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuMainHelpRegisterFileTypes,
+            this.menuMainHelpUnregisterFileTypes,
+            this.toolStripMenuItem7,
             this.menuMainHelpAbout});
             this.menuMainHelp.Name = "menuMainHelp";
             this.menuMainHelp.Size = new System.Drawing.Size(49, 23);
@@ -458,7 +464,7 @@ namespace CrcStudio.Forms
             // menuMainHelpAbout
             // 
             this.menuMainHelpAbout.Name = "menuMainHelpAbout";
-            this.menuMainHelpAbout.Size = new System.Drawing.Size(116, 24);
+            this.menuMainHelpAbout.Size = new System.Drawing.Size(205, 24);
             this.menuMainHelpAbout.Text = "About";
             this.menuMainHelpAbout.Click += new System.EventHandler(this.MenuMainHelpAboutClick);
             // 
@@ -734,6 +740,25 @@ namespace CrcStudio.Forms
             this.panelClientSize.Size = new System.Drawing.Size(999, 543);
             this.panelClientSize.TabIndex = 1;
             // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(202, 6);
+            // 
+            // menuMainHelpRegisterFileTypes
+            // 
+            this.menuMainHelpRegisterFileTypes.Name = "menuMainHelpRegisterFileTypes";
+            this.menuMainHelpRegisterFileTypes.Size = new System.Drawing.Size(205, 24);
+            this.menuMainHelpRegisterFileTypes.Text = "Register File Types";
+            this.menuMainHelpRegisterFileTypes.Click += new System.EventHandler(this.menuMainHelpRegisterFileTypes_Click);
+            // 
+            // menuMainHelpUnregisterFileTypes
+            // 
+            this.menuMainHelpUnregisterFileTypes.Name = "menuMainHelpUnregisterFileTypes";
+            this.menuMainHelpUnregisterFileTypes.Size = new System.Drawing.Size(205, 24);
+            this.menuMainHelpUnregisterFileTypes.Text = "Unregister File Types";
+            this.menuMainHelpUnregisterFileTypes.Click += new System.EventHandler(this.menuMainHelpUnregisterFileTypes_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(110F, 110F);
@@ -840,5 +865,8 @@ namespace CrcStudio.Forms
         private System.Windows.Forms.ToolStripMenuItem menuMainHelpAbout;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem menuMainViewRefresh;
+        private System.Windows.Forms.ToolStripMenuItem menuMainHelpRegisterFileTypes;
+        private System.Windows.Forms.ToolStripMenuItem menuMainHelpUnregisterFileTypes;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
     }
 }

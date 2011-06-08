@@ -21,13 +21,15 @@ namespace CrcStudio.Forms
 {
     public partial class MainForm : Form
     {
+        private readonly string _fileSystemPath;
         private const int PanelMinWidth = 30;
         private const int PanelMinHeight = 30;
 
         #region MainForm
 
-        public MainForm()
+        public MainForm(string fileSystemPath)
         {
+            _fileSystemPath = fileSystemPath;
             InitializeComponent();
             MessageEngine.AttachConsumer(outputWindow);
             _recentFiles = new MruMenuManager("RecentFiles", 10, menuMainFile, menuMainFileRecentFiles, OpenRecentFile);
@@ -51,6 +53,24 @@ namespace CrcStudio.Forms
                 panelLeft.Width = _settings.PanelLeftWidth;
                 panelRight.Width = _settings.PanelRightWidth;
                 panelBottom.Height = _settings.PanelBottomHeight;
+                if (_fileSystemPath == null) return;
+                var extension = (Path.GetExtension(_fileSystemPath) ?? "").ToUpperInvariant();
+                if (extension == ".RSSLN")
+                {
+                    OpenSolution(_fileSystemPath);
+                }
+                else if (extension == ".RSPROJ")
+                {
+                    string file = _fileSystemPath.Substring(0, _fileSystemPath.Length - 6) + "rssln";
+                    if (File.Exists(file))
+                    {
+                        OpenSolution(file);
+                    }
+                }
+                else
+                {
+                    OpenFile(_fileSystemPath);
+                }
             }
             finally
             {
@@ -100,6 +120,19 @@ namespace CrcStudio.Forms
                 MessageEngine.ShowError(ex);
             }
         }
+        public bool ContainsFile(string fileSystemPath)
+        {
+            IProjectFile file = _solution == null ? null : _solution.GetProjectFile(fileSystemPath);
+            if (file == null)
+            {
+                file = solutionExplorer.FindFile(fileSystemPath);
+                if (file == null)
+                {
+                    file = _nonProjectFiles.FirstOrDefault(x => x.FileSystemPath.Equals(fileSystemPath, StringComparison.OrdinalIgnoreCase));
+                }
+            }
+            return file != null;
+        }
 
         public IProjectFile OpenFile(string fileSystemPath)
         {
@@ -110,8 +143,12 @@ namespace CrcStudio.Forms
                 file = solutionExplorer.FindFile(fileSystemPath);
                 if (file == null)
                 {
-                    file = ProjectFileBase.CreatFile(fileSystemPath, false);
-                    _nonProjectFiles.Add(file);
+                    file = _nonProjectFiles.FirstOrDefault(x => x.FileSystemPath.Equals(fileSystemPath,StringComparison.OrdinalIgnoreCase));
+                    if (file == null)
+                    {
+                        file = ProjectFileBase.CreatFile(fileSystemPath, false);
+                        _nonProjectFiles.Add(file);
+                    }
                 }
             }
             OpenFile(file);
@@ -120,6 +157,11 @@ namespace CrcStudio.Forms
 
         public void OpenFile(IProjectFile file)
         {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action<IProjectFile>(OpenFile), file);
+                return;
+            }
             if (!file.CanOpen) return;
             if (file.IsOpen)
             {
@@ -1112,6 +1154,16 @@ namespace CrcStudio.Forms
         {
             var frm = new AboutForm();
             frm.ShowDialog(this);
+        }
+
+        private void menuMainHelpRegisterFileTypes_Click(object sender, EventArgs e)
+        {
+            FileAssociationUtility.Register();
+        }
+
+        private void menuMainHelpUnregisterFileTypes_Click(object sender, EventArgs e)
+        {
+            FileAssociationUtility.Unregister();
         }
     }
 }

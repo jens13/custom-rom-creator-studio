@@ -50,6 +50,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -79,6 +80,7 @@
     <Compile Include="BuildProcess\UnPackHandler.cs" />
     <Compile Include="BuildProcess\UpdateZipHandler.cs" />
     <Compile Include="BuildProcess\ZipAlignHandler.cs" />
+    <Compile Include="CommandLineDispatcher.cs" />
     <Compile Include="Controls\ApkListView.xaml.cs">
       <DependentUpon>ApkListView.xaml</DependentUpon>
     </Compile>
@@ -214,6 +216,7 @@
     <Compile Include="Utility\ArgumentValidation.cs" />
     <Compile Include="Utility\ArgumentValidationExtender.cs" />
     <Compile Include="Utility\EncodingExtensions.cs" />
+    <Compile Include="Utility\FileAssociationUtility.cs" />
     <Compile Include="Utility\FileUtility.cs" />
     <Compile Include="Utility\FolderUtility.cs" />
     <Compile Include="Utility\IconHelper.cs">
@@ -222,6 +225,7 @@
     <Compile Include="Utility\IconListManager.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Utility\IpcCommunication.cs" />
     <Compile Include="Utility\MruMenuManager.cs" />
     <Compile Include="Utility\PropFileUtility.cs" />
     <EmbeddedResource Include="Controls\ApkViewer.resx">
