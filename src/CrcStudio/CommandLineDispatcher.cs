@@ -3,11 +3,12 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using CrcStudio.Forms;
+using CrcStudio.Utility;
 
 namespace CrcStudio
 {
 
-    public class CommandLineDispatcher : MarshalByRefObject
+    public class CommandLineDispatcher : MarshalByRefObject, IDispatchClass
     {
         public void OpenFile(string fileSystemPath)
         {
@@ -35,6 +36,10 @@ namespace CrcStudio
                 return frm;
             }
             return null;
+        }
+
+        public void Ping()
+        {
         }
     }
 }

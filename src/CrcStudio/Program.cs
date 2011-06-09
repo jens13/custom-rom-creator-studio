@@ -39,20 +39,25 @@ namespace CrcStudio
             //IDE looks for a single .sln file that references the project. If no such single
             //.sln file exists, then the IDE creates an unsaved solution with a default .sln
             //file name that has the same base name as the project file.
-            //try
-            //{
-            //    LogFileName = Settings.Default.LogFileName;
-            //    if (string.IsNullOrWhiteSpace(LogFileName))
-            //    {
-            //        LogFileName = Path.Combine(CrcsSettings.Current.AppDataPath, "Logfiles", Application.ProductName + ".log");
-            //    }
-            //    MessageEngine.AttachConsumer(new FileMessageConsumer(LogFileName, Settings.Default.LogFileMaxSize, Settings.Default.LogFileDateTimeFormat));
-            //    if (!File.Exists(CrcsSettings.Current.JavaFile)) MessageBox.Show("Java was not found by the application\r\nIf it is not insalled install it.\r\nIf it is installed, you can set the path manually in the file CrcStudio.exe.config");
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString());
-            //}
+            try
+            {
+                string name = Application.ProductName;
+                string path =  Path.Combine(CrcsSettings.Current.AppDataPath, "Logfiles");
+                var logFileName = Settings.Default.LogFileName;
+                if (!string.IsNullOrWhiteSpace(logFileName))
+                {
+                    name = Path.GetFileNameWithoutExtension(logFileName) ?? name;
+                    path = Path.GetDirectoryName(logFileName) ?? path;
+                }
+                var fileMessageConsumer = new FileMessageConsumer(name.Replace(" ", "_"), path, Settings.Default.LogFileMaxSize, Settings.Default.LogFileDateTimeFormat);
+                LogFileName = fileMessageConsumer.FileName;
+                MessageEngine.AttachConsumer(fileMessageConsumer);
+                if (!File.Exists(CrcsSettings.Current.JavaFile)) MessageBox.Show("Java was not found by the application\r\nIf it is not insalled install it.\r\nIf it is installed, you can set the path manually in the file CrcStudio.exe.config");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
             try
             {
                 string fileSystemPath = null;

@@ -110,8 +110,10 @@ namespace CrcStudio.Project
             var subFolders = new Queue<string>();
             foreach (string folder in Directory.GetDirectories(ProjectPath))
             {
+                if (FolderUtility.IsSystemFolder(folder)) continue;
                 frameWorkFolder = Path.Combine(folder, "system\\framework");
                 if (Directory.Exists(frameWorkFolder)) return frameWorkFolder;
+
                 subFolders.Enqueue(folder);
             }
             while (subFolders.Count > 0)

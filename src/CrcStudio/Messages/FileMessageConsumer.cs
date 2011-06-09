@@ -5,6 +5,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using CrcStudio.Utility;
@@ -14,15 +15,19 @@ namespace CrcStudio.Messages
     public class FileMessageConsumer : IMessageConsumer, IDisposable
     {
         private static readonly object _rolloverLock = new object();
+        private readonly string _name;
+        private readonly string _path;
         private readonly string _dateTimeFormat;
-        private readonly string _fileName;
+        private string _fileName;
         private readonly long _maximumFileSize;
         private bool _disposed;
         private TextWriterTraceListener _textWriterTraceListener;
+        public string FileName { get { return _fileName; } }
 
-        public FileMessageConsumer(string fileName, int maximumFileSizeInMegaByte, string dateTimeFormat)
+        public FileMessageConsumer(string name, string path, int maximumFileSizeInMegaByte, string dateTimeFormat)
         {
-            _fileName = fileName;
+            _name = name;
+            _path = path;
             _dateTimeFormat = dateTimeFormat;
             _maximumFileSize = maximumFileSizeInMegaByte*1024*1024;
             CreateLogFile();
@@ -62,21 +67,46 @@ namespace CrcStudio.Messages
 
         #endregion
 
-        public void CreateLogFile()
+        private Stream CreateFile()
         {
-            if (_textWriterTraceListener != null) _textWriterTraceListener.Close();
+            Stream stream = null;
+            int i = 1;
+            Directory.CreateDirectory(_path);
+            _fileName = Path.Combine(_path, _name + ".log");
+            while (stream == null)
+            {
+                try
+                {
+                    stream = File.Open(_fileName, FileMode.Append, FileAccess.Write, FileShare.Read);
+                }
+                catch (IOException ex)
+                {
+                    int errorCode = Marshal.GetHRForException(ex) & ((1 << 16) - 1);
+                    if (errorCode == 32 || errorCode == 33)
+                    {
+                        stream = null;
+                        _fileName = Path.Combine(_path, _name + "_" + i + ".log");
+                        i++;
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            return stream;
+        }
+        private void CreateLogFile()
+        {
+            var stream = CreateFile();
             var fileInfo = new FileInfo(_fileName);
-            if (fileInfo.Exists && fileInfo.LastWriteTime.Date != DateTime.Now.Date)
+            if (fileInfo.LastWriteTime.Date != DateTime.Now.Date)
             {
+                stream.Close();
                 RenameOldLogFiles(_fileName);
+                stream = File.Open(_fileName, FileMode.Append, FileAccess.Write, FileShare.Read);
             }
-            string folder = Path.GetDirectoryName(_fileName);
-            if (folder != null)
-            {
-                Directory.CreateDirectory(folder);
-            }
-            FileUtility.Touch(_fileName);
-            _textWriterTraceListener = new TextWriterTraceListener(_fileName);
+            _textWriterTraceListener = new TextWriterTraceListener(stream);
             Trace.Listeners.Add(_textWriterTraceListener);
             Trace.AutoFlush = true;
         }

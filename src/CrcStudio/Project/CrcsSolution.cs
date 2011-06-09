@@ -284,6 +284,21 @@ namespace CrcStudio.Project
             solution._initialized = true;
             return solution;
         }
+        public static bool SolutionContainsProject(string solutionFile, string projectFile)
+        {
+            var projectFileName = Path.GetFileName(projectFile);
+            if (projectFileName == null) return false;
+            var solutionPath = Path.GetDirectoryName(solutionFile);
+            XDocument xdoc = XDocument.Load(solutionFile);
+            IEnumerable<XElement> projectFilesElements = xdoc.Descendants("Projects").Descendants("Item");
+            foreach (XElement xnode in projectFilesElements)
+            {
+                if (!xnode.Value.EndsWith(projectFileName, StringComparison.OrdinalIgnoreCase)) continue;
+                string path = FolderUtility.GetRootedPath(solutionPath, xnode.Value);
+                if (path.Equals(projectFile, StringComparison.OrdinalIgnoreCase)) return true;
+            }
+            return false;
+        }
 
         private void LoadSolution()
         {

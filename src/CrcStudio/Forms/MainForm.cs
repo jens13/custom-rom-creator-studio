@@ -54,6 +54,7 @@ namespace CrcStudio.Forms
                 panelRight.Width = _settings.PanelRightWidth;
                 panelBottom.Height = _settings.PanelBottomHeight;
                 if (_fileSystemPath == null) return;
+                if (!File.Exists(_fileSystemPath)) return;
                 var extension = (Path.GetExtension(_fileSystemPath) ?? "").ToUpperInvariant();
                 if (extension == ".RSSLN")
                 {
@@ -61,10 +62,38 @@ namespace CrcStudio.Forms
                 }
                 else if (extension == ".RSPROJ")
                 {
-                    string file = _fileSystemPath.Substring(0, _fileSystemPath.Length - 6) + "rssln";
-                    if (File.Exists(file))
+                    bool solutionFound = false;
+                    var fi = new FileInfo(_fileSystemPath);
+                    var paths = new List<string>();
+                    paths.Add(fi.Directory.FullName);
+                    if (fi.Directory.Parent != null) paths.Add(fi.Directory.Parent.FullName);
+                    foreach(var path in paths)
                     {
-                        OpenSolution(file);
+                        foreach (var solution in Directory.GetFiles(path, "*.rssln"))
+                        {
+                            if (CrcsSolution.SolutionContainsProject(solution, _fileSystemPath))
+                            {
+                                OpenSolution(solution);
+                                solutionFound = true;
+                            }
+                        }
+                    }
+                    if (!solutionFound)
+                    {
+                        try
+                        {
+                        var file = _fileSystemPath.Substring(0, _fileSystemPath.Length - 6) + "rssln";
+                        _solution = CrcsSolution.CreateSolution(file);
+                        _solution.AddProject(CrcsProject.OpenProject(_fileSystemPath, _solution));
+                        solutionExplorer.SetSolution(_solution);
+                        solutionExplorer.Refresh();
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                            throw;
+                        }
                     }
                 }
                 else

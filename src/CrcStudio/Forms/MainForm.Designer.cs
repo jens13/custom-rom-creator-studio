@@ -78,6 +78,9 @@ namespace CrcStudio.Forms
             this.menuMainBuild = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainBuildBuild = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMainHelpRegisterFileTypes = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMainHelpUnregisterFileTypes = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.menuMainHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusText = new System.Windows.Forms.ToolStripStatusLabel();
@@ -107,9 +110,6 @@ namespace CrcStudio.Forms
             this.panelMain = new System.Windows.Forms.Panel();
             this.tabStripMain = new CrcStudio.TabControl.TabStrip();
             this.panelClientSize = new System.Windows.Forms.Panel();
-            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuMainHelpRegisterFileTypes = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuMainHelpUnregisterFileTypes = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             this.panelLeft.SuspendLayout();
@@ -327,8 +327,6 @@ namespace CrcStudio.Forms
             // 
             // menuMainViewShowExcluded
             // 
-            this.menuMainViewShowExcluded.Checked = true;
-            this.menuMainViewShowExcluded.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuMainViewShowExcluded.Name = "menuMainViewShowExcluded";
             this.menuMainViewShowExcluded.Size = new System.Drawing.Size(271, 24);
             this.menuMainViewShowExcluded.Text = "Show excluded files";
@@ -461,6 +459,25 @@ namespace CrcStudio.Forms
             this.menuMainHelp.Size = new System.Drawing.Size(49, 23);
             this.menuMainHelp.Text = "Help";
             // 
+            // menuMainHelpRegisterFileTypes
+            // 
+            this.menuMainHelpRegisterFileTypes.Name = "menuMainHelpRegisterFileTypes";
+            this.menuMainHelpRegisterFileTypes.Size = new System.Drawing.Size(205, 24);
+            this.menuMainHelpRegisterFileTypes.Text = "Register File Types";
+            this.menuMainHelpRegisterFileTypes.Click += new System.EventHandler(this.menuMainHelpRegisterFileTypes_Click);
+            // 
+            // menuMainHelpUnregisterFileTypes
+            // 
+            this.menuMainHelpUnregisterFileTypes.Name = "menuMainHelpUnregisterFileTypes";
+            this.menuMainHelpUnregisterFileTypes.Size = new System.Drawing.Size(205, 24);
+            this.menuMainHelpUnregisterFileTypes.Text = "Unregister File Types";
+            this.menuMainHelpUnregisterFileTypes.Click += new System.EventHandler(this.menuMainHelpUnregisterFileTypes_Click);
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(202, 6);
+            // 
             // menuMainHelpAbout
             // 
             this.menuMainHelpAbout.Name = "menuMainHelpAbout";
@@ -572,6 +589,7 @@ namespace CrcStudio.Forms
             // 
             // panelBottom
             // 
+            this.panelBottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(50)))), ((int)(((byte)(100)))));
             this.panelBottom.Controls.Add(this.outputWindow);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelBottom.Location = new System.Drawing.Point(331, 451);
@@ -726,7 +744,7 @@ namespace CrcStudio.Forms
             // 
             // panelClientSize
             // 
-            this.panelClientSize.BackColor = System.Drawing.Color.Yellow;
+            this.panelClientSize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(50)))), ((int)(((byte)(100)))));
             this.panelClientSize.Controls.Add(this.splitterMain);
             this.panelClientSize.Controls.Add(this.panelMain);
             this.panelClientSize.Controls.Add(this.panelBottom);
@@ -739,25 +757,6 @@ namespace CrcStudio.Forms
             this.panelClientSize.Name = "panelClientSize";
             this.panelClientSize.Size = new System.Drawing.Size(999, 543);
             this.panelClientSize.TabIndex = 1;
-            // 
-            // toolStripMenuItem7
-            // 
-            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(202, 6);
-            // 
-            // menuMainHelpRegisterFileTypes
-            // 
-            this.menuMainHelpRegisterFileTypes.Name = "menuMainHelpRegisterFileTypes";
-            this.menuMainHelpRegisterFileTypes.Size = new System.Drawing.Size(205, 24);
-            this.menuMainHelpRegisterFileTypes.Text = "Register File Types";
-            this.menuMainHelpRegisterFileTypes.Click += new System.EventHandler(this.menuMainHelpRegisterFileTypes_Click);
-            // 
-            // menuMainHelpUnregisterFileTypes
-            // 
-            this.menuMainHelpUnregisterFileTypes.Name = "menuMainHelpUnregisterFileTypes";
-            this.menuMainHelpUnregisterFileTypes.Size = new System.Drawing.Size(205, 24);
-            this.menuMainHelpUnregisterFileTypes.Text = "Unregister File Types";
-            this.menuMainHelpUnregisterFileTypes.Click += new System.EventHandler(this.menuMainHelpUnregisterFileTypes_Click);
             // 
             // MainForm
             // 

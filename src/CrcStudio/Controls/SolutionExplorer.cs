@@ -347,6 +347,7 @@ namespace CrcStudio.Controls
                 string fileSystemPath = node.FolderPath;
                 foreach (string subFolder in Directory.GetDirectories(fileSystemPath))
                 {
+                    if (FolderUtility.IsSystemFolder(subFolder)) continue;
                     string name = Path.GetFileName(subFolder);
                     if (name == ".rsproj") continue;
                     bool isFolderIncluded = rsproj.IsFolderIncluded(subFolder);

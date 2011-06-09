@@ -119,6 +119,7 @@ namespace CrcStudio.Utility
             while (folderStack.Count > 0)
             {
                 string folder = folderStack.Pop();
+                if (IsSystemFolder(folder)) continue;
                 string[] files = Directory.GetFiles(folder, searchPattern);
                 string[] subFolders = Directory.GetDirectories(folder);
                 if (includeEmptyFolders && files.Length == 0 && subFolders.Length == 0 &&
@@ -174,6 +175,11 @@ namespace CrcStudio.Utility
             //}
             //return Path.Combine(string.Join(Path.DirectorySeparatorChar.ToString(), relativeToArr, 0, relativeToCount),
             //                    string.Join(Path.DirectorySeparatorChar.ToString(), relativePathArr, relativePathStart, relativePathArr.Length - relativePathStart));
+        }
+
+        public static bool IsSystemFolder(string folder)
+        {
+            return ((File.GetAttributes(folder) & (FileAttributes.System | FileAttributes.Hidden)) != 0);
         }
     }
 }

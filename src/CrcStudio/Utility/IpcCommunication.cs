@@ -9,31 +9,48 @@ using System.Runtime.Remoting.Channels.Ipc;
 
 namespace CrcStudio.Utility
 {
+    public interface IDispatchClass
+    {
+        void Ping();
+    }
     public static class IpcCommunication
     {
         static IpcCommunication()
         {
             var current = Process.GetCurrentProcess();
-            var processName = current.ProcessName;
-#if DEBUG
-            processName = Assembly.GetExecutingAssembly().GetName().Name;
-#endif
-            var chan = new IpcChannel(processName + current.Id + "Server");
+            var chan = new IpcChannel(current.ProcessName + current.Id + "Server");
             ChannelServices.RegisterChannel(chan, true);
         }
 
-        public static IEnumerable<T> GetObjects<T>()
+        public static IEnumerable<T> GetObjects<T>() where T : IDispatchClass
         {
             var current = Process.GetCurrentProcess();
             var processName = current.ProcessName;
-#if DEBUG
-            processName = Assembly.GetExecutingAssembly().GetName().Name;
-#endif
-            var ids = Process.GetProcessesByName(processName).Where(x => x.Id != current.Id).Select(x => x.Id).ToList();
-            var objects = new List<T>();
-            foreach (var id in ids)
+            var serverNames = new List<string>();
+            if (processName.EndsWith(".vshost", StringComparison.OrdinalIgnoreCase))
             {
-                objects.Add((T)Activator.GetObject(typeof(T), "ipc://" + processName + id + "Server/" + typeof(T).Name));
+                processName = processName.Substring(0, processName.Length - 7);
+                serverNames.AddRange(Process.GetProcessesByName(processName).Select(x => processName + x.Id));
+            }
+            else
+            {
+                serverNames.AddRange(Process.GetProcessesByName(processName).Where(x => x.Id != current.Id).Select(x => processName + x.Id));
+                var debugHost = Process.GetProcessesByName(processName + ".vshost");
+                if (debugHost.Length > 0) serverNames.Add(debugHost[0].ProcessName + debugHost[0].Id);
+            }
+            var objects = new List<T>();
+            foreach (var serverName in serverNames)
+            {
+                var obj = Activator.GetObject(typeof(T), "ipc://" + serverName + "Server/" + typeof(T).Name) as IDispatchClass;
+                try
+                {
+                    obj.Ping();
+                }
+                catch
+                {
+                    continue;
+                }
+                objects.Add((T)obj);
             }
             return objects;
         }
