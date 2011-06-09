@@ -35,7 +35,7 @@ namespace CrcStudio.Controls
 
         private void ApkListViewItemDoubleClicked(object sender, ApkListDoubleClickedEventArgs e)
         {
-            var mainForm = Form.ActiveForm as MainForm;
+            var mainForm = Program.GetForm<MainForm>();
             if (mainForm == null) return;
             mainForm.OpenFile(e.Item.FileSystemPath);
         }

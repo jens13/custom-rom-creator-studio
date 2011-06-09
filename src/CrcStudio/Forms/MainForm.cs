@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using CrcStudio.BuildProcess;
 using CrcStudio.Messages;
@@ -16,6 +17,7 @@ using CrcStudio.Project;
 using CrcStudio.Properties;
 using CrcStudio.TabControl;
 using CrcStudio.Utility;
+using Timer = System.Windows.Forms.Timer;
 
 namespace CrcStudio.Forms
 {
@@ -55,6 +57,34 @@ namespace CrcStudio.Forms
                 panelBottom.Height = _settings.PanelBottomHeight;
                 if (_fileSystemPath == null) return;
                 if (!File.Exists(_fileSystemPath)) return;
+                _timer = new Timer();
+                _timer.Interval = 100;
+                _timer.Tick += TimerTick;
+                _timer.Enabled = true;
+                _timer.Start();
+            }
+            finally
+            {
+                _mainFormIsResizing = false;
+            }
+        }
+        private void TimerTick(object sender, EventArgs e)
+        {
+            _timer.Stop();
+            _timer.Dispose();
+            _timer = null;
+            OnLoaded();
+        }
+        private void OnLoaded()
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action(OnLoaded));
+                return;
+            }
+            try
+            {
+                Cursor = Cursors.WaitCursor;
                 var extension = (Path.GetExtension(_fileSystemPath) ?? "").ToUpperInvariant();
                 if (extension == ".RSSLN")
                 {
@@ -67,7 +97,7 @@ namespace CrcStudio.Forms
                     var paths = new List<string>();
                     paths.Add(fi.Directory.FullName);
                     if (fi.Directory.Parent != null) paths.Add(fi.Directory.Parent.FullName);
-                    foreach(var path in paths)
+                    foreach (var path in paths)
                     {
                         foreach (var solution in Directory.GetFiles(path, "*.rssln"))
                         {
@@ -80,20 +110,11 @@ namespace CrcStudio.Forms
                     }
                     if (!solutionFound)
                     {
-                        try
-                        {
                         var file = _fileSystemPath.Substring(0, _fileSystemPath.Length - 6) + "rssln";
                         _solution = CrcsSolution.CreateSolution(file);
                         _solution.AddProject(CrcsProject.OpenProject(_fileSystemPath, _solution));
                         solutionExplorer.SetSolution(_solution);
                         solutionExplorer.Refresh();
-
-                        }
-                        catch (Exception ex)
-                        {
-
-                            throw;
-                        }
                     }
                 }
                 else
@@ -101,9 +122,13 @@ namespace CrcStudio.Forms
                     OpenFile(_fileSystemPath);
                 }
             }
+            catch (Exception ex)
+            {
+                MessageEngine.ShowError(ex);
+            }
             finally
             {
-                _mainFormIsResizing = false;
+                Cursor = Cursors.Default;
             }
         }
 
@@ -125,7 +150,7 @@ namespace CrcStudio.Forms
             }
         }
 
-        public void OpenSolution(string fileSystemPath)
+        public void OpenSolutionWorker(string fileSystemPath)
         {
             CloseSolution();
             _solution = CrcsSolution.OpenSolution(fileSystemPath);
@@ -136,6 +161,16 @@ namespace CrcStudio.Forms
             _recentSolutions.Add(fileSystemPath);
             menuMainViewShowExcluded.Checked = _solution.ShowExcludedItems;
             SetTitle();
+            if (_loadSolutionDlg != null)
+            {
+                _loadSolutionDlg.Close();
+                _loadSolutionDlg = null;
+            }
+        }
+        public void OpenSolution(string fileSystemPath)
+        {
+            _loadSolutionDlg = new LoadSolutionForm(fileSystemPath);
+            _loadSolutionDlg.ShowDialog(this);
         }
 
         private void OpenRecentFile(MruMenuManager manager, string fileSystemPath)
@@ -191,19 +226,28 @@ namespace CrcStudio.Forms
                 BeginInvoke(new Action<IProjectFile>(OpenFile), file);
                 return;
             }
-            if (!file.CanOpen) return;
-            if (file.IsOpen)
+            try
             {
-                file.Select();
-                return;
-            }
+                if (!file.CanOpen) return;
+                if (file.IsOpen)
+                {
+                    file.Select();
+                    return;
+                }
 
-            var projectFile = file.Open();
-            if (projectFile == null) return;
-            tabStripMain.Visible = true;
-            tabStripMain.AddTab(projectFile.TabItem);
-            if (file is CrcsProject || file is CrcsSolution) return;
-            _recentFiles.Add(file.FileSystemPath);
+                Cursor.Current = Cursors.WaitCursor;
+
+                var projectFile = file.Open();
+                if (projectFile == null) return;
+                tabStripMain.Visible = true;
+                tabStripMain.AddTab(projectFile.TabItem);
+                if (file is CrcsProject || file is CrcsSolution) return;
+                _recentFiles.Add(file.FileSystemPath);
+            }
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
         }
 
         public void OpenSelectedFiles()
@@ -924,6 +968,8 @@ namespace CrcStudio.Forms
         private Timer _timerToolbarButton;
         private UpdateZipHandler _updateZipHandler;
         private bool _windowStateChangeing;
+        private LoadSolutionForm _loadSolutionDlg;
+        private Timer _timer;
 
         public void ProcessFiles(IEnumerable<CompositFile> files)
         {

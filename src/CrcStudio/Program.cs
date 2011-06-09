@@ -103,5 +103,17 @@ namespace CrcStudio
                 MessageBox.Show(ex.ToString());
             }
         }
+        public static T GetForm<T>() where T : Form
+        {
+            foreach (var form in Application.OpenForms)
+            {
+                var frm = form as T;
+                if (frm == null) continue;
+                return frm;
+            }
+            return null;
+        }
+
+
     }
 }
