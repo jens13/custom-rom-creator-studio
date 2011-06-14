@@ -152,19 +152,25 @@ namespace CrcStudio.Forms
 
         public void OpenSolutionWorker(string fileSystemPath)
         {
-            CloseSolution();
-            _solution = CrcsSolution.OpenSolution(fileSystemPath);
-            solutionExplorer.SetSolution(_solution);
-            solutionExplorer.Refresh();
-            solutionExplorer.ExpandTreeNodes(_solution.PathsForExpandedTreeNodes);
-            _solution.OpenRememberdFiles(OpenFile);
-            _recentSolutions.Add(fileSystemPath);
-            menuMainViewShowExcluded.Checked = _solution.ShowExcludedItems;
-            SetTitle();
-            if (_loadSolutionDlg != null)
+            try
             {
-                _loadSolutionDlg.Close();
-                _loadSolutionDlg = null;
+                CloseSolution();
+                _solution = CrcsSolution.OpenSolution(fileSystemPath);
+                solutionExplorer.SetSolution(_solution);
+                solutionExplorer.Refresh();
+                solutionExplorer.ExpandTreeNodes(_solution.PathsForExpandedTreeNodes);
+                _solution.OpenRememberdFiles(OpenFile);
+                _recentSolutions.Add(fileSystemPath);
+                menuMainViewShowExcluded.Checked = _solution.ShowExcludedItems;
+                SetTitle();
+            }
+            finally
+            {
+                if (_loadSolutionDlg != null)
+                {
+                    _loadSolutionDlg.Close();
+                    _loadSolutionDlg = null;
+                }
             }
         }
         public void OpenSolution(string fileSystemPath)
@@ -239,6 +245,7 @@ namespace CrcStudio.Forms
 
                 var projectFile = file.Open();
                 if (projectFile == null) return;
+                if (projectFile.TabItem == null) return;
                 tabStripMain.Visible = true;
                 tabStripMain.AddTab(projectFile.TabItem);
                 if (file is CrcsProject || file is CrcsSolution) return;

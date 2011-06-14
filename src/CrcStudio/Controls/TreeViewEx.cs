@@ -587,7 +587,7 @@ namespace CrcStudio.Controls
 
             if (_updating > 1)
                 return;
-
+#if !MONO
             // Prevent the control from raising any events.
             _oldEventMask = SendMessage(new HandleRef(this, Handle),
                                         EM_SETEVENTMASK, 0, 0);
@@ -595,6 +595,7 @@ namespace CrcStudio.Controls
             // Prevent the control from redrawing itself.
             SendMessage(new HandleRef(this, Handle),
                         WM_SETREDRAW, 0, 0);
+#endif
         }
 
         public void EndPaint()
@@ -604,16 +605,18 @@ namespace CrcStudio.Controls
 
             if (_updating > 0)
                 return;
-
+#if !MONO
             // Allow the control to redraw itself.
             SendMessage(new HandleRef(this, Handle),
                         WM_SETREDRAW, 1, 0);
-
+#endif
             Invalidate();
 
+#if !MONO
             // Allow the control to raise event messages.
             SendMessage(new HandleRef(this, Handle),
                         EM_SETEVENTMASK, 0, _oldEventMask);
+#endif
         }
 
         #endregion Paint handling methods
@@ -630,12 +633,14 @@ namespace CrcStudio.Controls
         private const int PFM_ALIGNMENT = 8;
         private const int SCF_SELECTION = 1;
 
+#if !MONO
         [DllImport("user32", CharSet = CharSet.Auto)]
         private static extern int SendMessage(HandleRef hWnd,
                                               int msg,
                                               int wParam,
                                               int lParam);
 
+#endif
         #endregion Win32 API constants and methods
 
         public event EventHandler<TreeViewEventArgs> SelectionChanged;

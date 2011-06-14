@@ -258,5 +258,9 @@ namespace CrcStudio.Controls
             _solution.Properties.ApkToolVerbose = checkBoxApkToolVerbose.Checked;
             EvaluateDirty();
         }
+
+        public void Save(string fileSystemPath)
+        {
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace CrcStudio.Controls
+﻿using System;
+
+namespace CrcStudio.Controls
 {
     partial class SolutionPropertiesEditor
     {

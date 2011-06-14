@@ -4,7 +4,9 @@
 // http://www.opensource.org/licenses/bsd-license.php)
 using System.Drawing;
 using System.IO;
+#if !MONO
 using System.Windows.Media.Imaging;
+#endif
 using CrcStudio.Utility;
 using CrcStudio.Zip;
 
@@ -14,10 +16,14 @@ namespace CrcStudio.Project
     {
         private readonly ZipEntry _zipEntry;
         private readonly int _index;
+#if !MONO
         private BitmapImage _internalImage;
+#endif
         private int _internalImageWidth;
         private int _internalImageHeight;
+#if !MONO
         private BitmapImage _externalImage;
+#endif
         private int _externalImageWidth;
         private int _externalImageHeight;
         private readonly string _fileSystemPath;
@@ -49,6 +55,7 @@ namespace CrcStudio.Project
 
         private void CreateInternalImage()
         {
+#if !MONO
             if ((Path.GetExtension(_zipEntry.Name) ?? "").ToUpperInvariant() != ".PNG") return;
             using (var stream = _zipEntry.GetStream())
             {
@@ -75,10 +82,12 @@ namespace CrcStudio.Project
                 _internalImage.StreamSource = stream;
                 _internalImage.EndInit();
             }
+#endif
         }
 
         private void CreateExternalImage()
         {
+#if !MONO
             if (!ExternalFileExists) return;
             if ((Path.GetExtension(_fileSystemPath) ?? "").ToUpperInvariant() != ".PNG") return;
             using (var stream = File.OpenRead(_fileSystemPath))
@@ -106,6 +115,7 @@ namespace CrcStudio.Project
                 _externalImage.StreamSource = stream;
                 _externalImage.EndInit();
             }
+#endif
         }
 
         public string RelativePath
@@ -135,8 +145,10 @@ namespace CrcStudio.Project
         public string ExternalModifiedDate { get { return ExternalFileExists ? ExternalFile.LastWriteTime.ToShortDateString() : ""; } }
         public string ExternalCreatedDate { get { return ExternalFileExists ? ExternalFile.CreationTime.ToShortDateString() : ""; } }
 
+#if !MONO
         public BitmapImage InternalImage { get { return _internalImage; } }
         public BitmapImage ExternalImage { get { return _externalImage; } }
+#endif
 
         private FileInfo ExternalFile { get { return _fileInfo; } }
         public bool ExternalFileExists { get { return _fileInfo.Exists; } }

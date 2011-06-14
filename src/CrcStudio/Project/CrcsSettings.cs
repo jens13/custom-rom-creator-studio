@@ -109,6 +109,10 @@ namespace CrcStudio.Project
 
         private string FindJava()
         {
+            if (FindJavaInSystemPath())
+            {
+                return "java.exe";
+            }
             var findJava = Properties.Settings.Default.JavaPath.Trim();
             if (File.Exists(findJava)) return findJava;
             string javaFolder = Environment.GetEnvironmentVariable("ProgramW6432");
@@ -143,6 +147,19 @@ namespace CrcStudio.Project
                 if (!string.IsNullOrWhiteSpace(javaBin)) return javaBin;
             }
             return null;
+        }
+
+        private bool FindJavaInSystemPath()
+        {
+            try
+            {
+                var ep = new ExecuteProgram();
+                return (ep.Execute("java.exe", "", AppDomain.CurrentDomain.BaseDirectory) == 0);
+            }
+            catch
+            {
+            }
+            return false;
         }
 
         private string FindWinMerge()

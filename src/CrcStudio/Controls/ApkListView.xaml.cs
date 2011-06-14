@@ -2,6 +2,7 @@
 //      Distributed under the New BSD License.
 //     (See accompanying file notice.txt or at 
 // http://www.opensource.org/licenses/bsd-license.php)
+#if !MONO
 using System;
 using System.Collections;
 using System.Windows.Controls;
@@ -50,3 +51,4 @@ namespace CrcStudio.Controls
         public ApkEntry Item { get; private set; }
     }
 }
+#endif

@@ -44,6 +44,10 @@ namespace CrcStudio.Controls
         {
         }
 
+        public void Save(string fileSystemPath)
+        {
+        }
+
         public bool IsDirty { get { return _project.IsDirty; } }
 
         #endregion

@@ -21,7 +21,11 @@ namespace CrcStudio.Project
         private bool _closing;
         private bool _disposed;
         private TabStripItem _tabItem;
+#if MONO
+        private ITabStripItemControl _apkViewer;
+#else
         private ApkViewer _apkViewer;
+#endif
         private const string ResouresFolderName = ".resource";
 
         public ApkFile(string fileSystemPath, bool included, CrcsProject project)
@@ -217,6 +221,7 @@ namespace CrcStudio.Project
         {
             if (_apkViewer == null)
             {
+#if !MONO
                 _apkViewer = new ApkViewer(this);
                 if (_tabItem != null)
                 {
@@ -224,6 +229,7 @@ namespace CrcStudio.Project
                 }
                 _tabItem = TabStripItemFactory.CreateTabStripItem(_apkViewer, this);
                 _tabItem.Closed += TabItemClosed;
+#endif
             }
             return this;
         }

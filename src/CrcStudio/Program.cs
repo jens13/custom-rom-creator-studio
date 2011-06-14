@@ -18,10 +18,17 @@ namespace CrcStudio
 {
     internal static class Program
     {
+        private static void ApplicationToForeground(IntPtr hWnd)
+        {
+#if !MONO
+            SetForegroundWindow(hWnd);
+#endif
+        }
+#if !MONO
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
-
+#endif
 
         public static string LogFileName { get; set; }
 
@@ -52,7 +59,7 @@ namespace CrcStudio
                 var fileMessageConsumer = new FileMessageConsumer(name.Replace(" ", "_"), path, Settings.Default.LogFileMaxSize, Settings.Default.LogFileDateTimeFormat);
                 LogFileName = fileMessageConsumer.FileName;
                 MessageEngine.AttachConsumer(fileMessageConsumer);
-                if (!File.Exists(CrcsSettings.Current.JavaFile)) MessageBox.Show("Java was not found by the application\r\nIf it is not insalled install it.\r\nIf it is installed, you can set the path manually in the file CrcStudio.exe.config");
+                if (CrcsSettings.Current.JavaFile == null) MessageBox.Show("Java was not found by the application\r\nIf it is not insalled install it.\r\nIf it is installed, you can set the path manually in the file CrcStudio.exe.config\r\nor add it to system path environment variable");
             }
             catch (Exception ex)
             {
@@ -79,12 +86,12 @@ namespace CrcStudio
                             {
                                 if (cld.ContainsFile(fileSystemPath))
                                 {
-                                    SetForegroundWindow(Process.GetProcessById(cld.GetProcessId()).MainWindowHandle);
+                                    ApplicationToForeground(Process.GetProcessById(cld.GetProcessId()).MainWindowHandle);
                                     cld.OpenFile(fileSystemPath);
                                     return;
                                 }
                             }
-                            SetForegroundWindow(Process.GetProcessById(clds[0].GetProcessId()).MainWindowHandle);
+                            ApplicationToForeground(Process.GetProcessById(clds[0].GetProcessId()).MainWindowHandle);
                             clds[0].OpenFile(fileSystemPath);
                             return;
                         }

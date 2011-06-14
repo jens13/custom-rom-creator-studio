@@ -14,7 +14,11 @@ namespace CrcStudio.Project
         private bool _closing;
         private bool _disposed;
         private TabStripItem _tabItem;
+#if MONO
+        private ITabStripItemControl _textEditor;
+#else
         private AvalonEditContainer _textEditor;
+#endif
 
         public TextFile(string fileSystemPath, bool included, CrcsProject project)
             : base(fileSystemPath, included, project)
@@ -91,6 +95,7 @@ namespace CrcStudio.Project
         {
             if (_textEditor == null)
             {
+#if !MONO
                 _textEditor = new AvalonEditContainer(FileSystemPath);
                 if (_tabItem != null)
                 {
@@ -98,6 +103,7 @@ namespace CrcStudio.Project
                 }
                 _tabItem = TabStripItemFactory.CreateTabStripItem(_textEditor, this);
                 _tabItem.Closed += TabItemClosed;
+#endif
             }
             return this;
         }

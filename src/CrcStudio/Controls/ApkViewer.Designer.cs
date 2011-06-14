@@ -1,6 +1,7 @@
-﻿namespace CrcStudio.Controls
+﻿#if !MONO
+namespace CrcStudio.Controls
 {
-    partial class ApkViewer
+	partial class ApkViewer
     {
         /// <summary> 
         /// Required designer variable.
@@ -117,3 +118,4 @@
 
     }
 }
+#endif

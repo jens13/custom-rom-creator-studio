@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !MONO
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -83,6 +84,10 @@ namespace CrcStudio.Controls
             CreateFilterCollection();
         }
 
+        public void Save(string fileSystemPath)
+        {
+        }
+
         #endregion
 
         private void textBoxFileFilter_TextChanged(object sender, EventArgs e)
@@ -93,3 +98,4 @@ namespace CrcStudio.Controls
 
     }
 }
+#endif 

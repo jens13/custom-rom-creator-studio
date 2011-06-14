@@ -31,7 +31,7 @@ namespace CrcStudio.Project
             FindToolVersions(toolsFolder, "signapk*.jar", ProjectToolType.SignApk);
 
             FindToolVersions(toolsFolder, "optipng*.exe", ProjectToolType.OptiPng);
-            FindToolVersions(toolsFolder, "zipalign*.exe", ProjectToolType.ZipAlign);
+            FindToolVersions(toolsFolder, "zipalign*", ProjectToolType.ZipAlign);
 
             FindCertificates(certificateFolder);
         }

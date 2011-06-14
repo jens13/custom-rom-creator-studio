@@ -19,7 +19,7 @@ namespace CrcStudio.Utility
         {
             var current = Process.GetCurrentProcess();
             var chan = new IpcChannel(current.ProcessName + current.Id + "Server");
-            ChannelServices.RegisterChannel(chan, true);
+            ChannelServices.RegisterChannel(chan, false);
         }
 
         public static IEnumerable<T> GetObjects<T>() where T : IDispatchClass

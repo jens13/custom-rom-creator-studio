@@ -63,6 +63,9 @@ namespace Etier.IconHelper
         /// <returns>Integer of the icon's position in the ImageList</returns>
         public int AddFileIcon(string filePath)
         {
+#if MONO
+            return 1;
+#else
             // Check if the file exists, otherwise, throw exception.
             if (!File.Exists(filePath)) throw new FileNotFoundException("File does not exist");
 
@@ -100,6 +103,7 @@ namespace Etier.IconHelper
                 AddExtension(extension.ToUpper(), pos); // add to hash table
                 return pos;
             }
+#endif
         }
 
         /// <summary>

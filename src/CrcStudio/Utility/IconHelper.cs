@@ -61,6 +61,9 @@ namespace Etier.IconHelper
         /// <returns>System.Drawing.Icon</returns>
         public static Icon GetFileIcon(string name, IconSize size, bool linkOverlay)
         {
+#if MONO
+            return null;
+#else
             var shfi = new Shell32.SHFILEINFO();
             uint flags = Shell32.SHGFI_ICON | Shell32.SHGFI_USEFILEATTRIBUTES;
 
@@ -86,6 +89,7 @@ namespace Etier.IconHelper
             var icon = (Icon) Icon.FromHandle(shfi.hIcon).Clone();
             User32.DestroyIcon(shfi.hIcon); // Cleanup
             return icon;
+#endif
         }
 
         /// <summary>
@@ -96,6 +100,9 @@ namespace Etier.IconHelper
         /// <returns>System.Drawing.Icon</returns>
         public static Icon GetFolderIcon(IconSize size, FolderType folderType)
         {
+#if MONO
+            return null;
+#else
             // Need to add size check, although errors generated at present!
             uint flags = Shell32.SHGFI_ICON | Shell32.SHGFI_USEFILEATTRIBUTES;
 
@@ -128,6 +135,7 @@ namespace Etier.IconHelper
 
             User32.DestroyIcon(shfi.hIcon); // Cleanup
             return icon;
+#endif
         }
     }
 
@@ -179,6 +187,7 @@ namespace Etier.IconHelper
         public const uint FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
         public const uint FILE_ATTRIBUTE_NORMAL = 0x00000080;
 
+#if !MONO
         [DllImport("Shell32.dll")]
         public static extern IntPtr SHGetFileInfo(
             string pszPath,
@@ -187,7 +196,7 @@ namespace Etier.IconHelper
             uint cbFileInfo,
             uint uFlags
             );
-
+#endif
         #region Nested type: BROWSEINFO
 
         [StructLayout(LayoutKind.Sequential)]
@@ -247,6 +256,7 @@ namespace Etier.IconHelper
     /// </summary>
     public class User32
     {
+#if !MONO
         /// <summary>
         /// Provides access to function required to delete handle. This method is used internally
         /// and is not required to be called separately.
@@ -255,5 +265,6 @@ namespace Etier.IconHelper
         /// <returns>N/A</returns>
         [DllImport("User32.dll")]
         public static extern int DestroyIcon(IntPtr hIcon);
+#endif
     }
 }
