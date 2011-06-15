@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using CrcStudio.Controls;
+using CrcStudio.Messages;
 using CrcStudio.TabControl;
 using CrcStudio.Utility;
 
@@ -818,16 +819,24 @@ namespace CrcStudio.Project
 
         private void FileSystemWatcherDeleted(object sender, FileSystemEventArgs e)
         {
-            if (e.FullPath.IndexOf(@"\.rsproj", StringComparison.OrdinalIgnoreCase) >= 0) return;
-            IProjectFile file = GetProjectFile(e.FullPath);
+            var fileSystemPath = e.FullPath;
+            if (fileSystemPath.IndexOf(@"\.rsproj", StringComparison.OrdinalIgnoreCase) >= 0) return;
+            IProjectFile file = GetProjectFile(fileSystemPath);
             if (file == null) return;
             file.IsDeleted = true;
         }
 
         private void FileSystemWatcherRenamed(object sender, RenamedEventArgs e)
         {
-            if (e.FullPath.IndexOf(@"\.rsproj", StringComparison.OrdinalIgnoreCase) >= 0) return;
-            IProjectFile file = GetProjectFile(e.OldFullPath);
+            var fileSystemPath = e.FullPath;
+            if (fileSystemPath.IndexOf(@"\.rsproj", StringComparison.OrdinalIgnoreCase) >= 0) return;
+            IProjectFile file = GetProjectFile(fileSystemPath);
+            if (file != null)
+            {
+                file.IsDeleted = false;
+                return;
+            }
+            file = GetProjectFile(e.OldFullPath);
             if (file == null) return;
             file.Rename(e.Name);
         }
