@@ -19,7 +19,10 @@ namespace CrcStudio.Project
 {
     public sealed class CrcsProject : ProjectFileBase, IDisposable
     {
-        public static List<string> BinaryExtensions = new List<string> { ".APK", ".JAR", ".ZIP", ".RAR", ".7Z", ".RFS", ".ISO", ".OGG", ".MP3", ".PNG", ".JPG", ".JPEG", ".GIF", ".AVI", ".3GP", ".MP4", ".MPG", ".MPEG", ".ARSC" };
+        public static List<string> BinaryExtensions = new List<string> 
+        { ".3G2", ".3GP", ".3GPP", ".3GPP2", ".7Z", ".AAC", ".AMR", ".APK", ".ARSC", ".AVI", ".AWB", ".GIF", ".IMY", ".ISO", 
+          ".JAR", ".JET", ".JPEG", ".JPL", ".JPG", ".M10", ".M4A", ".M4V", ".MID", ".MIDI", ".MP2", ".MP3", ".MP4", ".MPEG", 
+          ".MPG", ".OGG", ".PNG", ".RAR", ".RFS", ".RTTTL", ".SMF", ".WAV", ".WMA", ".WMV", ".XMF", ".ZIP" };
 
         private readonly Dictionary<string, List<string>> _additionalDependencies = new Dictionary<string, List<string>>();
 

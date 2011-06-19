@@ -320,6 +320,7 @@
   <PropertyGroup>
     <PostBuildEvent>md $(TargetDir)Tools
 copy $(SolutionDir)..\tools $(TargetDir)Tools
+copy $(SolutionDir)..\tools_win $(TargetDir)Tools
 copy $(SolutionDir)..\notice.txt $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
