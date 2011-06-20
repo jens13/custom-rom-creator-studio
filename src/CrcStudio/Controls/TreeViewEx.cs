@@ -595,6 +595,8 @@ namespace CrcStudio.Controls
             // Prevent the control from redrawing itself.
             SendMessage(new HandleRef(this, Handle),
                         WM_SETREDRAW, 0, 0);
+#else
+			base.BeginUpdate();
 #endif
         }
 
@@ -609,6 +611,8 @@ namespace CrcStudio.Controls
             // Allow the control to redraw itself.
             SendMessage(new HandleRef(this, Handle),
                         WM_SETREDRAW, 1, 0);
+#else
+			base.EndUpdate();
 #endif
             Invalidate();
 

@@ -153,7 +153,7 @@ namespace CrcStudio.Project
             foreach (CrcsProject proj in _projects)
             {
                 string relativePath = FolderUtility.GetRelativePath(SolutionPath, proj.FileSystemPath);
-                var xitem = new XElement("Item", relativePath, new XAttribute("IncludeInBuild", proj.IncludeInBuild));
+                var xitem = new XElement("Item", relativePath.Replace(Path.DirectorySeparatorChar, '\\'), new XAttribute("IncludeInBuild", proj.IncludeInBuild));
                 projects.Add(xitem);
             }
             foreach (string missingProj in _missingProjects)
@@ -309,7 +309,7 @@ namespace CrcStudio.Project
             IEnumerable<XElement> projectFilesElements = xdoc.Descendants("Projects").Descendants("Item");
             foreach (XElement xnode in projectFilesElements)
             {
-                string path = FolderUtility.GetRootedPath(SolutionPath, xnode.Value);
+                string path = FolderUtility.GetRootedPath(SolutionPath, xnode.Value.Replace('\\', Path.DirectorySeparatorChar));
 
                 if (File.Exists(path))
                 {

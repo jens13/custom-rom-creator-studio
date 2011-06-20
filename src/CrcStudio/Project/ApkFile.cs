@@ -94,7 +94,7 @@ namespace CrcStudio.Project
             }
             if (Directory.Exists(ResourceFolder))
             {
-                var files = FolderUtility.GetFilesRecursively(ResourceFolder, "*.*", @"\build\apk");
+                var files = FolderUtility.GetFilesRecursively(ResourceFolder, "*.*", string.Format("{0}build{0}apk", Path.DirectorySeparatorChar));
                 items.AddRange(
                     files.Where(
                         x =>

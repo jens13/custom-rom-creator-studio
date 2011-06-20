@@ -64,13 +64,13 @@ namespace CrcStudio.Utility
                 string folder = folderStack.Pop();
                 foreach (string subFolder in Directory.GetDirectories(folder))
                 {
-                    string folderName = subFolder.Replace(sourceLocation, "").TrimStart('\\');
+                    string folderName = subFolder.Replace(sourceLocation, "").TrimStart(Path.DirectorySeparatorChar);
                     Directory.CreateDirectory(Path.Combine(targetLocation, folderName));
                     folderStack.Push(subFolder);
                 }
                 foreach (string file in Directory.GetFiles(folder))
                 {
-                    string fileName = file.Replace(sourceLocation, "").TrimStart('\\');
+                    string fileName = file.Replace(sourceLocation, "").TrimStart(Path.DirectorySeparatorChar);
                     File.Copy(file, Path.Combine(targetLocation, fileName), true);
                 }
             }

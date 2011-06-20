@@ -17,6 +17,7 @@ namespace CrcStudio.Utility
     public class FileUtility
     {
         private static readonly List<string> fileTypesCanEdit = new List<string> {".smali", ".xml", ".prop", ".txt"};
+        private static string _rsprojPathExclusion = string.Format("{0}.rsproj", Path.DirectorySeparatorChar);
 
         public static IEnumerable<string> ReadAllLines(string file)
         {
@@ -214,7 +215,7 @@ namespace CrcStudio.Utility
 
         public static string FindFile(string folder, string fileName)
         {
-            IEnumerable<string> files = FolderUtility.GetFilesRecursively(folder, fileName, @"\.rsproj");
+            IEnumerable<string> files = FolderUtility.GetFilesRecursively(folder, fileName, _rsprojPathExclusion);
             string file = files.FirstOrDefault();
             if (string.IsNullOrWhiteSpace(file)) return fileName;
             return file;
@@ -316,15 +317,14 @@ namespace CrcStudio.Utility
         }
         public static string ShortFilePath(string file, int maxLength)
         {
-            // Max 60 chars;
             if (file.Length <= maxLength) return file;
-            string[] fileArray = file.Split('\\');
+            string[] fileArray = file.Split(Path.DirectorySeparatorChar);
             string fileText;
             int startIndex = 2;
             do
             {
-                fileText = string.Format("{0}\\...\\{1}", fileArray[0],
-                                         string.Join("\\", fileArray, startIndex, fileArray.Length - startIndex));
+                fileText = string.Format("{0}{2}...{2}{1}", fileArray[0],
+                                         string.Join(Path.DirectorySeparatorChar.ToString(), fileArray, startIndex, fileArray.Length - startIndex), Path.DirectorySeparatorChar);
                 startIndex++;
             } while (fileText.Length > maxLength && startIndex <= fileArray.Length);
             return fileText;

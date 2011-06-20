@@ -70,18 +70,7 @@ namespace CrcStudio.Utility
 
         private string CreateMenuText(string file)
         {
-            // Max 60 chars;
-            if (file.Length <= 70) return file;
-            string[] fileArray = file.Split('\\');
-            string fileText;
-            int startIndex = 2;
-            do
-            {
-                fileText = string.Format("{0}\\...\\{1}", fileArray[0],
-                                         string.Join("\\", fileArray, startIndex, fileArray.Length - startIndex));
-                startIndex++;
-            } while (fileText.Length > 70 && startIndex <= fileArray.Length);
-            return fileText;
+            return FileUtility.ShortFilePath(file, 70);
         }
 
         private void ItemClick(object sender, EventArgs e)

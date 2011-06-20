@@ -23,15 +23,17 @@ namespace CrcStudio.Project
 
         private CrcsSettings()
         {
-            AppDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Application.ProductName);
+            AppDataPath = Path.Combine(Environment.GetFolderPath (Environment.SpecialFolder.ApplicationData), Application.ProductName.Replace(" ", ""));
             if (!Directory.Exists(AppDataPath)) Directory.CreateDirectory(AppDataPath);
             AppDataSettingsPath = Path.Combine(AppDataPath, "Settings");
             if (!Directory.Exists(AppDataSettingsPath)) Directory.CreateDirectory(AppDataSettingsPath);
             JavaFile = FindJava();
             WinMergeFile = FindWinMerge();
-
+#if MONO
+            ApkToolFrameWorkFolder = Path.Combine(Environment.GetEnvironmentVariable("HOME") ?? "", "apktool", "framework");
+#else
             ApkToolFrameWorkFolder = Path.Combine(Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%") ?? "", "apktool", "framework");
-
+#endif
             CompressionRate = 9;
 
             CreateOnlyStoreFileTypes();
@@ -111,7 +113,7 @@ namespace CrcStudio.Project
         {
             if (FindJavaInSystemPath())
             {
-                return "java.exe";
+                return "java";
             }
             var findJava = Properties.Settings.Default.JavaPath.Trim();
             if (File.Exists(findJava)) return findJava;
@@ -154,7 +156,7 @@ namespace CrcStudio.Project
             try
             {
                 var ep = new ExecuteProgram();
-                return (ep.Execute("java.exe", "", AppDomain.CurrentDomain.BaseDirectory) == 0);
+                return (ep.Execute("java", "", AppDomain.CurrentDomain.BaseDirectory) == 0);
             }
             catch
             {

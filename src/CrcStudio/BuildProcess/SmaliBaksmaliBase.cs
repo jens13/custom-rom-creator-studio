@@ -181,8 +181,8 @@ namespace CrcStudio.BuildProcess
                 string[] files = Directory.GetFiles(location, missingClassName + ".smali", SearchOption.AllDirectories);
                 if (files.Length > 0)
                 {
-                    string folder = files[0].Substring(location.Length).TrimStart('\\').Substring(7).TrimStart('\\');
-                    folder = folder.Split('\\')[0];
+                    string folder = files[0].Substring(location.Length).TrimStart(Path.DirectorySeparatorChar).Substring(7).TrimStart(Path.DirectorySeparatorChar);
+                    folder = folder.Split(Path.DirectorySeparatorChar)[0];
                     return project.AddDependency(name, folder);
                 }
             }

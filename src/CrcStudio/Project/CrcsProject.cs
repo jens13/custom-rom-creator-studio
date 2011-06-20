@@ -19,6 +19,7 @@ namespace CrcStudio.Project
 {
     public sealed class CrcsProject : ProjectFileBase, IDisposable
     {
+        private static string _rsprojPathExclusion = string.Format("{0}.rsproj", Path.DirectorySeparatorChar);
         public static List<string> BinaryExtensions = new List<string> 
         { ".3G2", ".3GP", ".3GPP", ".3GPP2", ".7Z", ".AAC", ".AMR", ".APK", ".ARSC", ".AVI", ".AWB", ".GIF", ".IMY", ".ISO", 
           ".JAR", ".JET", ".JPEG", ".JPL", ".JPG", ".M10", ".M4A", ".M4V", ".MID", ".MIDI", ".MP2", ".MP3", ".MP4", ".MPEG", 
@@ -109,13 +110,13 @@ namespace CrcStudio.Project
 
         private string FindFrameWorkFolder()
         {
-            string frameWorkFolder = Path.Combine(ProjectPath, "system\\framework");
+            string frameWorkFolder = Path.Combine(ProjectPath, "system", "framework");
             if (Directory.Exists(frameWorkFolder)) return frameWorkFolder;
             var subFolders = new Queue<string>();
             foreach (string folder in Directory.GetDirectories(ProjectPath))
             {
                 if (FolderUtility.IsSystemFolder(folder)) continue;
-                frameWorkFolder = Path.Combine(folder, "system\\framework");
+                frameWorkFolder = Path.Combine(folder, "system", "framework");
                 if (Directory.Exists(frameWorkFolder)) return frameWorkFolder;
 
                 subFolders.Enqueue(folder);
@@ -124,7 +125,7 @@ namespace CrcStudio.Project
             {
                 foreach (string folder in Directory.GetDirectories(subFolders.Dequeue()))
                 {
-                    frameWorkFolder = Path.Combine(folder, "system\\framework");
+                    frameWorkFolder = Path.Combine(folder, "system", "framework");
                     if (Directory.Exists(frameWorkFolder)) return frameWorkFolder;
                 }
             }
@@ -181,7 +182,7 @@ namespace CrcStudio.Project
             {
                 XAttribute attr = xnode.Attribute("Path");
                 if (attr == null) continue;
-                string fileSystemPath = GetFullPathFromProjectRelativePath(attr.Value);
+                string fileSystemPath = GetFullPathFromProjectRelativePath(attr.Value.Replace('\\', Path.DirectorySeparatorChar));
                 if (projectFiles.ContainsKey(fileSystemPath)) continue;
                 bool ignoreDecompileErrors = false;
                 attr = xnode.Attribute("IgnoreDecompileErrors");
@@ -234,7 +235,7 @@ namespace CrcStudio.Project
                 var compositFile = file as CompositFile;
                 if (compositFile != null && compositFile.IgnoreDecompileErrors)
                 {
-                    projectFiles.Add(new XElement("Item", new XAttribute("Path", projectRelativePath),
+                    projectFiles.Add(new XElement("Item", new XAttribute("Path", projectRelativePath.Replace(Path.DirectorySeparatorChar, '\\')),
                                                   new XAttribute("IgnoreDecompileErrors", true)));
                 }
                 else
@@ -431,7 +432,7 @@ namespace CrcStudio.Project
             {
                 return GetFileNameProperCasing(path, additionalDependency.ToUpperInvariant());
             }
-            string[] files = FolderUtility.GetFilesRecursively(ProjectPath, additionalDependency, @"\.rsproj").ToArray();
+            string[] files = FolderUtility.GetFilesRecursively(ProjectPath, additionalDependency, _rsprojPathExclusion).ToArray();
             if (files.Length == 0) return null;
             return Path.GetFileName(files[0]);
         }
@@ -462,7 +463,7 @@ namespace CrcStudio.Project
         private void AddFolder(string fullPath, Dictionary<string, bool> projectFiles = null)
         {
             List<string> filesAndEmptyFolders =
-                FolderUtility.GetFilesAndEmptyFoldersRecursively(fullPath, "*.*", @"\.rsproj").ToList();
+                FolderUtility.GetFilesAndEmptyFoldersRecursively(fullPath, "*.*", _rsprojPathExclusion).ToList();
             filesAndEmptyFolders.Remove(FileSystemPath);
             filesAndEmptyFolders.Remove(Solution.FileSystemPath);
             filesAndEmptyFolders.Remove(Solution.FileSystemPath + ".user");
@@ -823,7 +824,7 @@ namespace CrcStudio.Project
         private void FileSystemWatcherDeleted(object sender, FileSystemEventArgs e)
         {
             var fileSystemPath = e.FullPath;
-            if (fileSystemPath.IndexOf(@"\.rsproj", StringComparison.OrdinalIgnoreCase) >= 0) return;
+            if (fileSystemPath.IndexOf(_rsprojPathExclusion, StringComparison.OrdinalIgnoreCase) >= 0) return;
             IProjectFile file = GetProjectFile(fileSystemPath);
             if (file == null) return;
             file.IsDeleted = true;
@@ -832,7 +833,7 @@ namespace CrcStudio.Project
         private void FileSystemWatcherRenamed(object sender, RenamedEventArgs e)
         {
             var fileSystemPath = e.FullPath;
-            if (fileSystemPath.IndexOf(@"\.rsproj", StringComparison.OrdinalIgnoreCase) >= 0) return;
+            if (fileSystemPath.IndexOf(_rsprojPathExclusion, StringComparison.OrdinalIgnoreCase) >= 0) return;
             IProjectFile file = GetProjectFile(fileSystemPath);
             if (file != null)
             {
@@ -847,7 +848,7 @@ namespace CrcStudio.Project
         private void FileSystemWatcherCreated(object sender, FileSystemEventArgs e)
         {
             var fileSystemPath = e.FullPath;
-            if (fileSystemPath.IndexOf(@"\.rsproj", StringComparison.OrdinalIgnoreCase) >= 0) return;
+            if (fileSystemPath.IndexOf(_rsprojPathExclusion, StringComparison.OrdinalIgnoreCase) >= 0) return;
             IProjectFile file = GetProjectFile(fileSystemPath);
             if (file != null)
             {

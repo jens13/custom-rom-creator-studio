@@ -13,6 +13,7 @@ namespace CrcStudio.Project
 {
     public abstract class ProjectFileBase : ProjectItemBase, IProjectFile
     {
+        private static string _rsprojPathExclusion = string.Format("{0}.rsproj", Path.DirectorySeparatorChar);
         private long _size = -1;
 
         protected ProjectFileBase(string fileSystemPath, bool included, CrcsProject project)
@@ -69,7 +70,7 @@ namespace CrcStudio.Project
         public virtual ITabStripItemControl TabItemControl { get { return null; } }
 
         [Browsable(false)]
-        public bool IncludeInBuild { get { return IsIncluded & (FileSystemPath.IndexOf(@"\.rsproj\", StringComparison.OrdinalIgnoreCase) == -1); } }
+        public bool IncludeInBuild { get { return IsIncluded & (FileSystemPath.IndexOf(_rsprojPathExclusion, StringComparison.OrdinalIgnoreCase) == -1); } }
 
         [Browsable(false)]
         public virtual bool IsOpen { get { return TabItem != null; } }
