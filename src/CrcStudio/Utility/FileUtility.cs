@@ -176,11 +176,16 @@ namespace CrcStudio.Utility
                 if (!File.Exists(file)) return false;
                 int length = 4096;
                 var buffer = new byte[length];
-                using (
-                    FileStream stream = File.Open(file, FileMode.Open, FileAccess.Read,
-                                                  FileShare.Delete | FileShare.ReadWrite))
+                try
                 {
-                    length = stream.Read(buffer, 0, length);
+                    using (FileStream stream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.Delete | FileShare.ReadWrite))
+                    {
+                        length = stream.Read(buffer, 0, length);
+                    }
+                }
+                catch (FileNotFoundException)
+                {
+                    return false;
                 }
                 int charCnt = 3;
                 int nullCnt = 0;

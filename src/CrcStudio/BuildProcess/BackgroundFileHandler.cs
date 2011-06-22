@@ -13,6 +13,7 @@ namespace CrcStudio.BuildProcess
 {
     public sealed class BackgroundFileHandler
     {
+        private const int ConsecutiveErrorsThreshold = 10;
         private readonly Action<BackgroundFileHandler> _completedCallback;
         private volatile bool _cancel;
         private volatile bool _completed;
@@ -70,6 +71,8 @@ namespace CrcStudio.BuildProcess
                 Compleated();
                 return;
             }
+            int consecutiveErrors = 0;
+            bool lastItterationHadErrors = false;
             MessageEngine.AddInformation(this, "...Start processing files...");
             foreach (object file in files)
             {
@@ -85,10 +88,18 @@ namespace CrcStudio.BuildProcess
                     }
                     var compositFile = file as CompositFile;
                     if (compositFile != null) compositFile.HandleContentUpdatedExternaly();
+                    lastItterationHadErrors = false;
                 }
                 catch (Exception ex)
                 {
                     MessageEngine.AddError(ex);
+                    consecutiveErrors = lastItterationHadErrors ? consecutiveErrors + 1 : 1;
+                    if (consecutiveErrors == ConsecutiveErrorsThreshold) 
+                    {
+                        _cancel = true;
+                        break;
+                    }
+                    lastItterationHadErrors = true;
                 }
             }
             MessageEngine.AddInformation(this, string.Format("...Processing files {0}...", _cancel ? "canceled" : "ended"));

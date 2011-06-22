@@ -395,7 +395,7 @@ namespace CrcStudio.Zip
             else
             {
                 string tempFile = Path.Combine(Path.GetDirectoryName(_archiveFile) ?? Path.GetTempPath(),
-                                               Guid.NewGuid() + ".zipfile");
+                                               Guid.NewGuid() + ".tmpzipfile");
                 WriteToFile(tempFile);
                 CloseMergeFiles();
                 _archiveStream.Close();

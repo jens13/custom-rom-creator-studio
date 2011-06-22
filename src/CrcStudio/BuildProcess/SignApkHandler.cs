@@ -49,11 +49,11 @@ namespace CrcStudio.BuildProcess
             arguments.Append(" \"").Append(_certificateFile).Append("\"");
             arguments.Append(" \"").Append(_certificateKeyFile).Append("\"");
             arguments.Append(" \"").Append(file.FileSystemPath).Append("\"");
-            arguments.Append(" \"").Append(file.FileSystemPath + ".tmp").Append("\"");
+            arguments.Append(" \"").Append(file.FileSystemPath + ".tmpsign").Append("\"");
 
             if (ep.Execute(_javaFile, arguments.ToString(), Path.GetDirectoryName(file.FileSystemPath)) == 0)
             {
-                FileUtility.MoveFile(file.FileSystemPath + ".tmp", file.FileSystemPath);
+                FileUtility.MoveFile(file.FileSystemPath + ".tmpsign", file.FileSystemPath);
             }
             else
             {

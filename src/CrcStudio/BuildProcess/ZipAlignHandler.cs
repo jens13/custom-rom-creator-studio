@@ -39,11 +39,11 @@ namespace CrcStudio.BuildProcess
 
             MessageEngine.AddInformation(this, string.Format("Zipaligning {0}", file.Name));
 
-            arguments = string.Format("-f 4 \"{0}\" \"{1}.tmp\"", file.FileSystemPath, file.FileSystemPath);
+            arguments = string.Format("-f 4 \"{0}\" \"{1}.tmpzipalign\"", file.FileSystemPath, file.FileSystemPath);
 
             if (ep.Execute(_zipAlignFile, arguments, Path.GetDirectoryName(_zipAlignFile)) == 0)
             {
-                FileUtility.MoveFile(file.FileSystemPath + ".tmp", file.FileSystemPath);
+                FileUtility.MoveFile(file.FileSystemPath + ".tmpzipalign", file.FileSystemPath);
             }
             else
             {

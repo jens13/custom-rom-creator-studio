@@ -72,6 +72,10 @@ namespace CrcStudio.Project
         }
 
         public bool CanDecompile { get { return HasOdexFile || ContainsClassesDex; } }
+        public void Recompiled()
+        {
+            _containsClassesDex = -1;
+        }
 
         [Browsable(false)]
         public ProjectTreeNode ClassesTreeNode

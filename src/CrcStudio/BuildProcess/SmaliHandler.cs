@@ -28,6 +28,7 @@ namespace CrcStudio.BuildProcess
             MessageEngine.AddInformation(this, string.Format("Recompiling classes for {0}", file.Name));
 
             Recompile(file.FileSystemPath, file.ClassesFolder);
+            file.Recompiled();
         }
 
         public bool CanProcess(object fileObject)

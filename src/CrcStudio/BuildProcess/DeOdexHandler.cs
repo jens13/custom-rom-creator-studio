@@ -42,6 +42,7 @@ namespace CrcStudio.BuildProcess
 
             if (!file.IsDeCompiled) return;
             Recompile(file.FileSystemPath, file.ClassesFolder);
+            file.Recompiled();
         }
 
         public bool CanProcess(object fileObject)

@@ -40,6 +40,7 @@ namespace CrcStudio.BuildProcess
             string locationOfDependencies = GetLocationOfDependencies(project);
 
             bool decompiled = false;
+            bool useIgnoreDecompileErrorsFlag = false;
             while (!decompiled)
             {
                 string additionalDependencies = project.GetAdditionalDependencies(name).Aggregate("",
@@ -55,14 +56,14 @@ namespace CrcStudio.BuildProcess
                 arguments.Append(" ").Append(_baksmaliFile);
                 arguments.Append(locationOfDependencies);
                 arguments.Append(" -o \"").Append(outputFolder).Append("\"");
-                if (ignoreDecompileErrors) arguments.Append(" -I");
+                if (useIgnoreDecompileErrorsFlag) arguments.Append(" -I");
                 arguments.Append(" -l -s");
                 arguments.Append(additionalDependencies);
                 if ((Path.GetExtension(classesFile) ?? "").ToUpperInvariant() == ".ODEX") arguments.Append(" -x");
                 arguments.Append(" \"").Append(classesFile).Append("\"");
                 if (ep.Execute(_javaFile, arguments.ToString(), Path.GetDirectoryName(classesFile)) == 0)
                 {
-                    if (ignoreDecompileErrors)
+                    if (useIgnoreDecompileErrorsFlag)
                     {
                         MessageEngine.AddInformation(this, ep.Output);
                     }
@@ -72,7 +73,14 @@ namespace CrcStudio.BuildProcess
                 {
                     if (!FindMissingDependency(name, project, ep.Output))
                     {
-                        throw ep.CreateException(Path.GetFileName(_baksmaliFile));
+                        if (ignoreDecompileErrors)
+                        {
+                            useIgnoreDecompileErrorsFlag = true;
+                        }
+                        else
+                        {
+                            throw ep.CreateException(Path.GetFileName(_baksmaliFile));
+                        }
                     }
                 }
             }
