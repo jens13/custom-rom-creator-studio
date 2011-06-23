@@ -47,9 +47,6 @@ namespace CrcStudio.Forms
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(345, 78);
             this.linkLabel1.TabIndex = 0;
-#if !MONO
-            this.linkLabel1.TabStop = true;
-#endif
             this.linkLabel1.Text = "Copyright Jens Granlund 2011.\r\nDistributed under the New BSD License.\r\n(See accom" +
                 "panying file notice.txt or at \r\nhttp://www.opensource.org/licenses/bsd-license.p" +
                 "hp)\r\n";
@@ -66,10 +63,7 @@ namespace CrcStudio.Forms
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(288, 243);
             this.linkLabel2.TabIndex = 1;
-#if !MONO
-            this.linkLabel2.TabStop = true;
-#endif
-            this.linkLabel2.Text = resources.GetString("linkLabel2.Text");
+           this.linkLabel2.Text = resources.GetString("linkLabel2.Text");
             this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.linkLabel2.UseCompatibleTextRendering = true;
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
@@ -81,9 +75,6 @@ namespace CrcStudio.Forms
             this.linkLabel3.Name = "linkLabel3";
             this.linkLabel3.Size = new System.Drawing.Size(320, 19);
             this.linkLabel3.TabIndex = 2;
-#if !MONO
-            this.linkLabel3.TabStop = true;
-#endif
             this.linkLabel3.Text = "http://custom-rom-creator-studio.googlecode.com";
             this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 

@@ -64,7 +64,7 @@ namespace Etier.IconHelper
         public int AddFileIcon(string filePath)
         {
 #if MONO
-            return 1;
+            return 2;
 #else
             // Check if the file exists, otherwise, throw exception.
             if (!File.Exists(filePath)) throw new FileNotFoundException("File does not exist");

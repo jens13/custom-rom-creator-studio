@@ -40,8 +40,8 @@ src\CrcStudio\Utility\IconListManager.cs
 ================================================================================
 
 
-The text editor used in this application is AvalonEdit from The SharpDevelop
-project, and are used in accordancewith the following license:
+The text editor used in this application is ICSharpCode.TextEditor from The 
+SharpDevelop project, and are used in accordancewith the following license:
 
 ================================================================================
 		  GNU LESSER GENERAL PUBLIC LICENSE

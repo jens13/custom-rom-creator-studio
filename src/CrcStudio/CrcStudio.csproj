@@ -39,6 +39,10 @@
     <StartupObject>CrcStudio.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.TextEditor, Version=3.2.1.6466, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ICSharpCode.TextEditor.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System">
@@ -66,9 +70,6 @@
     <Reference Include="System.Windows.Forms">
     </Reference>
     <Reference Include="System.Xml">
-    </Reference>
-    <Reference Include="ICSharpCode.AvalonEdit, Version=4.0.0.7070, Culture=neutral, PublicKeyToken=9cc39be672370310">
-      <HintPath>..\..\lib\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
@@ -100,8 +101,10 @@
     <Compile Include="Controls\ApkViewer.Designer.cs">
       <DependentUpon>ApkViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\AvalonEditContainer.cs" />
     <Compile Include="Controls\ITabStripItemControl.cs" />
+    <Compile Include="Controls\TextEditorContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\OutputWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -321,7 +324,8 @@
     <PostBuildEvent>md $(TargetDir)Tools
 copy $(SolutionDir)..\tools $(TargetDir)Tools
 copy $(SolutionDir)..\tools_win $(TargetDir)Tools
-copy $(SolutionDir)..\notice.txt $(TargetDir)</PostBuildEvent>
+copy $(SolutionDir)..\notice.txt $(TargetDir)
+</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

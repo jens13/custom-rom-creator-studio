@@ -14,6 +14,12 @@ namespace CrcStudio.Forms
         {
             InitializeComponent();
             linkLabel2.Text = linkLabel2.Text.Replace("Version ?.?.?.?", "Version " + Assembly.GetEntryAssembly().GetName().Version);
+#if !MONO
+            this.linkLabel1.TabStop = true;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel3.TabStop = true;
+#endif
+
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

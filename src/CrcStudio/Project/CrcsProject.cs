@@ -809,6 +809,9 @@ namespace CrcStudio.Project
 
         public void AttachToSystem()
         {
+#if MONO && DEBUG
+			return;
+#endif
             if (_fileSystemWatcher != null) return;
             _fileSystemWatcher = new FileSystemWatcher(ProjectPath);
             _fileSystemWatcher.BeginInit();

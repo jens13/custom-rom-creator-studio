@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrcStudio", "CrcStudio\CrcStudio.mono.csproj", "{4CA4B0CA-C401-4DA2-AC7B-B5AD98941147}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrcStudio.mono", "CrcStudio\CrcStudio.mono.csproj", "{4CA4B0CA-C401-4DA2-AC7B-B5AD98941147}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrcStudio.TabControl", "CrcStudio.TabControl\CrcStudio.TabControl.csproj", "{7D131BF8-7329-44F8-B072-12B19A178255}"
 EndProject
