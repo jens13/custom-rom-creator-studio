@@ -88,11 +88,6 @@
     <Compile Include="BuildProcess\UpdateZipHandler.cs" />
     <Compile Include="BuildProcess\ZipAlignHandler.cs" />
     <Compile Include="CommandLineDispatcher.cs" />
-    <Compile Include="Controls\ApkViewer.cs" />
-    <Compile Include="Controls\ApkViewer.Designer.cs">
-      <DependentUpon>ApkViewer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\AvalonEditContainer.cs" />
     <Compile Include="Controls\ITabStripItemControl.cs" />
     <Compile Include="Controls\OutputWindow.cs">
       <SubType>UserControl</SubType>
@@ -239,9 +234,6 @@
     <Compile Include="Utility\IpcCommunication.cs" />
     <Compile Include="Utility\MruMenuManager.cs" />
     <Compile Include="Utility\PropFileUtility.cs" />
-    <EmbeddedResource Include="Controls\ApkViewer.resx">
-      <DependentUpon>ApkViewer.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\OutputWindow.resx">
       <DependentUpon>OutputWindow.cs</DependentUpon>
       <SubType>Designer</SubType>

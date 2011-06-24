@@ -21,6 +21,7 @@ namespace CrcStudio.Controls
 {
     public partial class SolutionExplorer : UserControl
     {
+        private static string _rsprojPathExclusion = string.Format("{0}.rsproj", Path.DirectorySeparatorChar);
         private readonly IconListManager _iconManager;
         private readonly List<ProjectTreeNode> _nodes = new List<ProjectTreeNode>();
         private CrcsSolution _solution;
@@ -532,18 +533,22 @@ namespace CrcStudio.Controls
         {
             return
                 _nodes.Select(x => x.ProjectItem).OfType<IProjectFile>().Where(x => x.IsOpen).Select(
-                    x => x.FileSystemPath).ToArray();
+                    x => x.FileSystemPath).Where(
+                        p => p.IndexOf(_rsprojPathExclusion, StringComparison.OrdinalIgnoreCase) == -1).ToArray();
         }
 
         public IEnumerable<string> GetExpandedTreeNodes()
         {
-            return _nodes.Where(x => x.IsExpanded).Select(x => x.FileSystemPath).ToArray();
+            return
+                _nodes.Where(x => x.IsExpanded && (x.IsFolder || x.IsProject || x.IsSolution)).Select(
+                    x => x.FileSystemPath).Where(
+                        p => p.IndexOf(_rsprojPathExclusion, StringComparison.OrdinalIgnoreCase) == -1).ToArray();
         }
 
         public IEnumerable<string> GetExpandedTreeNodes(CrcsProject project)
         {
             return
-                _nodes.Where(x => x.IsExpanded && ReferenceEquals(x.ProjectItem.Project, project)).Select(
+                _nodes.Where(x => x.IsExpanded && (x.IsFolder || x.IsProject) && ReferenceEquals(x.ProjectItem.Project, project)).Select(
                     x => x.FileSystemPath).ToArray();
         }
 

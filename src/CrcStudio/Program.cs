@@ -18,6 +18,9 @@ namespace CrcStudio
 {
     internal static class Program
     {
+        public static bool PlatformIsUnix { get; private set; }
+        public static bool RunningMono { get; private set; }
+
         private static void ApplicationToForeground(IntPtr hWnd)
         {
 #if !MONO
@@ -38,6 +41,10 @@ namespace CrcStudio
         [STAThread]
         private static void Main(string[] args)
         {
+            var p = (int)Environment.OSVersion.Platform;
+            PlatformIsUnix = ((p == 4) || (p == 6) || (p == 128)) ? true : false;
+            RunningMono = (Type.GetType("Mono.Runtime") != null) ? true : false;
+
             //The first argument for devenv is usually a solution file or project file.
             //You can also use any other file as the first argument if you want to have the
             //file open automatically in an editor. When you enter a project file, the IDE
