@@ -117,19 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="linkLabel2.Text" xml:space="preserve">
-    <value>Custom Rom Creator Studio
-Version ?.?.?.?
+  <data name="textBox1.Text" xml:space="preserve">
+    <value>Depends on following items to run properly:
+- JRE 1.6 (Java Runtime Environment)
+- ApkTool.jar
+- Smali.jar and Baksmali.jar
+- SignApk.jar
+- aapt command
+- zipalign command
+- optipng command
 
-Depends on following items to run properly:
-JRE 1.6 (Java Runtime Environment)
-ApkTool.jar
-Smali.jar and Baksmali.jar
-SignApk.jar
-aapt command
-zipalign command
-optipng command
+for more information se project website:
+http://custom-rom-creator-studio.googlecode.com
 
-for more information se project website:</value>
+Copyright Jens Granlund 2011.
+Distributed under the New BSD License.
+(See accompanying file notice.txt or at 
+http://www.opensource.org/licenses/bsd-license.php)</value>
   </data>
 </root>

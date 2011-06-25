@@ -33,67 +33,93 @@ namespace CrcStudio.Forms
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.labelVersion = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // linkLabel1
+            // panel1
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.LinkArea = new System.Windows.Forms.LinkArea(112, 60);
-            this.linkLabel1.Location = new System.Drawing.Point(13, 304);
-            this.linkLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(345, 78);
-            this.linkLabel1.TabIndex = 0;
-            this.linkLabel1.Text = "Copyright Jens Granlund 2011.\r\nDistributed under the New BSD License.\r\n(See accom" +
-                "panying file notice.txt or at \r\nhttp://www.opensource.org/licenses/bsd-license.p" +
-                "hp)\r\n";
-            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkLabel1.UseCompatibleTextRendering = true;
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.panel1.BackgroundImage = global::CrcStudio.Properties.Resources.crcs_53x53;
+            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(53, 53);
+            this.panel1.TabIndex = 0;
             // 
-            // linkLabel2
+            // label1
             // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.LinkArea = new System.Windows.Forms.LinkArea(0, 27);
-            this.linkLabel2.Location = new System.Drawing.Point(41, 9);
-            this.linkLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(288, 243);
-            this.linkLabel2.TabIndex = 1;
-           this.linkLabel2.Text = resources.GetString("linkLabel2.Text");
-            this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkLabel2.UseCompatibleTextRendering = true;
-            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 15.70909F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(71, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(326, 35);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Custom Rom Creator Studio";
             // 
-            // linkLabel3
+            // panel2
             // 
-            this.linkLabel3.AutoSize = true;
-            this.linkLabel3.Location = new System.Drawing.Point(25, 253);
-            this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(320, 19);
-            this.linkLabel3.TabIndex = 2;
-            this.linkLabel3.Text = "http://custom-rom-creator-studio.googlecode.com";
-            this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.panel2.Location = new System.Drawing.Point(77, 60);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(312, 5);
+            this.panel2.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(13, 84);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(376, 25);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Custom Rom Creator Studio";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // labelVersion
+            // 
+            this.labelVersion.Location = new System.Drawing.Point(13, 109);
+            this.labelVersion.Name = "labelVersion";
+            this.labelVersion.Size = new System.Drawing.Size(376, 25);
+            this.labelVersion.TabIndex = 5;
+            this.labelVersion.Text = "Version ?.?.?.?";
+            this.labelVersion.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Location = new System.Drawing.Point(13, 137);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(376, 312);
+            this.textBox1.TabIndex = 6;
+            this.textBox1.TabStop = false;
+            this.textBox1.Text = resources.GetString("textBox1.Text");
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(372, 391);
-            this.Controls.Add(this.linkLabel3);
-            this.Controls.Add(this.linkLabel2);
-            this.Controls.Add(this.linkLabel1);
+            this.ClientSize = new System.Drawing.Size(402, 461);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.labelVersion);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About Custom Rom Creator Studio";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AboutFormKeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -101,8 +127,13 @@ namespace CrcStudio.Forms
 
         #endregion
 
-        private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.LinkLabel linkLabel2;
-        private System.Windows.Forms.LinkLabel linkLabel3;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelVersion;
+        private System.Windows.Forms.TextBox textBox1;
+
+
     }
 }

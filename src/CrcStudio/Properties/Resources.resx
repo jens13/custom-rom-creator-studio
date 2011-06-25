@@ -118,10 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="112_UpArrowShort_Blue_16x16_72" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="DownArrowShort_Blue_16x16_72" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icon\112_DownArrowShort_Blue_16x16_72.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UpArrowShort_Blue_16x16_72" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Icon\112_UpArrowShort_Blue_16x16_72.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="112_DownArrowShort_Blue_16x16_72" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Icon\112_DownArrowShort_Blue_16x16_72.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="crcs_53x53" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\crcs_53x53.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

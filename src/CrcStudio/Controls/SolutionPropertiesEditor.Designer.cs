@@ -262,7 +262,7 @@ namespace CrcStudio.Controls
             // 
             // buttonBuildOrderDown
             // 
-            this.buttonBuildOrderDown.Image = global::CrcStudio.Properties.Resources._112_DownArrowShort_Blue_16x16_72;
+            this.buttonBuildOrderDown.Image = global::CrcStudio.Properties.Resources.DownArrowShort_Blue_16x16_72;
             this.buttonBuildOrderDown.Location = new System.Drawing.Point(735, 117);
             this.buttonBuildOrderDown.Name = "buttonBuildOrderDown";
             this.buttonBuildOrderDown.Size = new System.Drawing.Size(42, 41);
@@ -272,7 +272,7 @@ namespace CrcStudio.Controls
             // 
             // buttonBuildOrderUp
             // 
-            this.buttonBuildOrderUp.Image = global::CrcStudio.Properties.Resources._112_UpArrowShort_Blue_16x16_72;
+            this.buttonBuildOrderUp.Image = global::CrcStudio.Properties.Resources.UpArrowShort_Blue_16x16_72;
             this.buttonBuildOrderUp.Location = new System.Drawing.Point(735, 70);
             this.buttonBuildOrderUp.Name = "buttonBuildOrderUp";
             this.buttonBuildOrderUp.Size = new System.Drawing.Size(42, 41);

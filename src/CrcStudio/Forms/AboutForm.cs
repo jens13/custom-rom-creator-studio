@@ -13,23 +13,17 @@ namespace CrcStudio.Forms
         public AboutForm()
         {
             InitializeComponent();
-            linkLabel2.Text = linkLabel2.Text.Replace("Version ?.?.?.?", "Version " + Assembly.GetEntryAssembly().GetName().Version);
-#if !MONO
-            this.linkLabel1.TabStop = true;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel3.TabStop = true;
-#endif
-
+            labelVersion.Text = "Version " + Assembly.GetEntryAssembly().GetName().Version;
+            labelVersion.Focus();
         }
 
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void AboutFormKeyDown(object sender, KeyEventArgs e)
         {
-            Process.Start("http://custom-rom-creator-studio.googlecode.com");
-        }
-
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start("http://www.opensource.org/licenses/bsd-license.php");
+            if (e.KeyCode == Keys.Escape)
+            {
+                e.Handled = true;
+                Close();
+            }
         }
     }
 }
