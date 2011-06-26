@@ -78,9 +78,7 @@ namespace CrcStudio.Forms
             this.menuMainBuild = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainBuildBuild = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuMainHelpRegisterFileTypes = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuMainHelpUnregisterFileTypes = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuMainHelpBar1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuMainHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusText = new System.Windows.Forms.ToolStripStatusLabel();
@@ -110,6 +108,9 @@ namespace CrcStudio.Forms
             this.panelMain = new System.Windows.Forms.Panel();
             this.tabStripMain = new CrcStudio.TabControl.TabStrip();
             this.panelClientSize = new System.Windows.Forms.Panel();
+            this.menuMainHelpFileAssociation = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMainHelpRegisterFileTypes = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMainHelpUnregisterFileTypes = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             this.panelLeft.SuspendLayout();
@@ -451,37 +452,22 @@ namespace CrcStudio.Forms
             // menuMainHelp
             // 
             this.menuMainHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuMainHelpRegisterFileTypes,
-            this.menuMainHelpUnregisterFileTypes,
-            this.toolStripMenuItem7,
+            this.menuMainHelpFileAssociation,
+            this.menuMainHelpBar1,
             this.menuMainHelpAbout});
             this.menuMainHelp.Name = "menuMainHelp";
             this.menuMainHelp.Size = new System.Drawing.Size(49, 23);
             this.menuMainHelp.Text = "Help";
             // 
-            // menuMainHelpRegisterFileTypes
+            // menuMainHelpBar1
             // 
-            this.menuMainHelpRegisterFileTypes.Name = "menuMainHelpRegisterFileTypes";
-            this.menuMainHelpRegisterFileTypes.Size = new System.Drawing.Size(205, 24);
-            this.menuMainHelpRegisterFileTypes.Text = "Register File Types";
-            this.menuMainHelpRegisterFileTypes.Click += new System.EventHandler(this.menuMainHelpRegisterFileTypes_Click);
-            // 
-            // menuMainHelpUnregisterFileTypes
-            // 
-            this.menuMainHelpUnregisterFileTypes.Name = "menuMainHelpUnregisterFileTypes";
-            this.menuMainHelpUnregisterFileTypes.Size = new System.Drawing.Size(205, 24);
-            this.menuMainHelpUnregisterFileTypes.Text = "Unregister File Types";
-            this.menuMainHelpUnregisterFileTypes.Click += new System.EventHandler(this.menuMainHelpUnregisterFileTypes_Click);
-            // 
-            // toolStripMenuItem7
-            // 
-            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(202, 6);
+            this.menuMainHelpBar1.Name = "menuMainHelpBar1";
+            this.menuMainHelpBar1.Size = new System.Drawing.Size(168, 6);
             // 
             // menuMainHelpAbout
             // 
             this.menuMainHelpAbout.Name = "menuMainHelpAbout";
-            this.menuMainHelpAbout.Size = new System.Drawing.Size(205, 24);
+            this.menuMainHelpAbout.Size = new System.Drawing.Size(171, 24);
             this.menuMainHelpAbout.Text = "About";
             this.menuMainHelpAbout.Click += new System.EventHandler(this.MenuMainHelpAboutClick);
             // 
@@ -758,6 +744,27 @@ namespace CrcStudio.Forms
             this.panelClientSize.Size = new System.Drawing.Size(999, 543);
             this.panelClientSize.TabIndex = 1;
             // 
+            // menuMainHelpFileAssociation
+            // 
+            this.menuMainHelpFileAssociation.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuMainHelpRegisterFileTypes,
+            this.menuMainHelpUnregisterFileTypes});
+            this.menuMainHelpFileAssociation.Name = "menuMainHelpFileAssociation";
+            this.menuMainHelpFileAssociation.Size = new System.Drawing.Size(171, 24);
+            this.menuMainHelpFileAssociation.Text = "File Association";
+            // 
+            // menuMainHelpRegisterFileTypes
+            // 
+            this.menuMainHelpRegisterFileTypes.Name = "menuMainHelpRegisterFileTypes";
+            this.menuMainHelpRegisterFileTypes.Size = new System.Drawing.Size(205, 24);
+            this.menuMainHelpRegisterFileTypes.Text = "Register File Types";
+            // 
+            // menuMainHelpUnregisterFileTypes
+            // 
+            this.menuMainHelpUnregisterFileTypes.Name = "menuMainHelpUnregisterFileTypes";
+            this.menuMainHelpUnregisterFileTypes.Size = new System.Drawing.Size(205, 24);
+            this.menuMainHelpUnregisterFileTypes.Text = "Unregister File Types";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(110F, 110F);
@@ -864,8 +871,9 @@ namespace CrcStudio.Forms
         private System.Windows.Forms.ToolStripMenuItem menuMainHelpAbout;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem menuMainViewRefresh;
+        private System.Windows.Forms.ToolStripSeparator menuMainHelpBar1;
+        private System.Windows.Forms.ToolStripMenuItem menuMainHelpFileAssociation;
         private System.Windows.Forms.ToolStripMenuItem menuMainHelpRegisterFileTypes;
         private System.Windows.Forms.ToolStripMenuItem menuMainHelpUnregisterFileTypes;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
     }
 }

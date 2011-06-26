@@ -265,6 +265,15 @@ namespace CrcStudio.Controls
             return count == selectedFilesCount;
         }
 
+        public bool CanOptimizePngSelectedTreeNodes()
+        {
+            if (!_solution.Properties.CanOptimizePng) return false;
+            int count = SelectedNodes.Count();
+            if (count == 0) return false;
+            int selectedFilesCount = SelectedItems.OfType<ApkFile>().Count();
+            return count == selectedFilesCount;
+        }
+
         public bool CanEncodeSelectedTreeNodes()
         {
             if (!_solution.Properties.CanDecodeAndEncode) return false;
@@ -672,6 +681,7 @@ namespace CrcStudio.Controls
             bool canEncodeSelectedTreeNodes = CanEncodeSelectedTreeNodes();
             bool canRecompileSelectedTreeNodes = CanRecompileSelectedTreeNodes();
             bool canDecompileSelectedTreeNodes = CanDecompileSelectedTreeNodes();
+            bool canOptiPngSelectedTreeNodes = CanOptimizePngSelectedTreeNodes();
 
             menuProjectOpen.Visible = canOpenSelectedTreeNodes;
 
@@ -681,12 +691,12 @@ namespace CrcStudio.Controls
             menuProjectExcludeFromProject.Visible = canExcludeSelectedTreeNodes;
 
             barVisible = canIncludeSelectedTreeNodes || canExcludeSelectedTreeNodes || barVisible;
-            bool bar2Visible = canProcessSelectedTreeNodes || canDecodeSelectedTreeNodes || canEncodeSelectedTreeNodes || canRecompileSelectedTreeNodes || canDecompileSelectedTreeNodes;
+            bool bar2Visible = canProcessSelectedTreeNodes || canDecodeSelectedTreeNodes || canEncodeSelectedTreeNodes || canRecompileSelectedTreeNodes || canDecompileSelectedTreeNodes || canOptiPngSelectedTreeNodes;
             menuProjectBar2.Visible = bar2Visible && barVisible;
             menuProjectProcess.Visible = canProcessSelectedTreeNodes;
             menuProjectDecompile.Visible = canDecompileSelectedTreeNodes;
             menuProjectRecompile.Visible = canRecompileSelectedTreeNodes;
-            menuProjectOptimizePng.Visible = canDecodeSelectedTreeNodes;
+            menuProjectOptimizePng.Visible = canOptiPngSelectedTreeNodes;
             menuProjectDecode.Visible = canDecodeSelectedTreeNodes;
             menuProjectEncode.Visible = canEncodeSelectedTreeNodes;
 

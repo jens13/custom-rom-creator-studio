@@ -43,6 +43,12 @@ namespace CrcStudio.Forms
             panelBottom.MinimumSize = new Size(PanelMinWidth, PanelMinHeight);
             _settings = CrcsSettings.LoadSettingsFile<MainFormSettings>() ?? new MainFormSettings(Bounds);
             SetTitle();
+
+            if (Program.PlatformIsUnix)
+            {
+                menuMainHelpFileAssociation.Visible = false;
+                menuMainHelpBar1.Visible = false;
+            }
         }
 
         protected override void OnLoad(EventArgs e)
@@ -494,7 +500,7 @@ namespace CrcStudio.Forms
         {
             try
             {
-                if (
+                if (_solution.Properties.CanOptimizePng &&
                     MessageEngine.AskQuestion(this, "Do you want png files to be optimized", "Deodex...",
                                               MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
