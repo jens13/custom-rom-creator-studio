@@ -167,6 +167,7 @@ namespace CrcStudio.Forms
                 solutionExplorer.ExpandTreeNodes(_solution.PathsForExpandedTreeNodes);
                 _solution.OpenRememberdFiles(OpenFile);
                 _recentSolutions.Add(fileSystemPath);
+                FileUtility.AddToRecentDocuments(fileSystemPath);
                 menuMainViewShowExcluded.Checked = _solution.ShowExcludedItems;
                 SetTitle();
             }
@@ -731,6 +732,7 @@ namespace CrcStudio.Forms
                 solutionExplorer.SetSolution(_solution);
                 solutionExplorer.Refresh();
                 _recentSolutions.Add(_solution.FileSystemPath);
+                FileUtility.AddToRecentDocuments(_solution.FileSystemPath);
             }
             catch (Exception ex)
             {

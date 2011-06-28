@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -320,6 +321,12 @@ namespace CrcStudio.Utility
                 File.Create(fileSystemPath).Dispose();
             }
         }
+        public static void AddToRecentDocuments(string fileSystemPath)
+        {
+            SHAddToRecentDocs(2, fileSystemPath);
+        }
+        [DllImport("shell32.dll", CharSet = CharSet.Ansi)]
+        public static extern void SHAddToRecentDocs(int type, string path);
         public static string ShortFilePath(string file, int maxLength)
         {
             if (file.Length <= maxLength) return file;
