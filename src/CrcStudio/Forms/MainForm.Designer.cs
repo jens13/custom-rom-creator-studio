@@ -78,6 +78,9 @@ namespace CrcStudio.Forms
             this.menuMainBuild = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainBuildBuild = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMainHelpFileAssociation = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMainHelpRegisterFileTypes = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMainHelpUnregisterFileTypes = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMainHelpBar1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuMainHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
@@ -108,9 +111,6 @@ namespace CrcStudio.Forms
             this.panelMain = new System.Windows.Forms.Panel();
             this.tabStripMain = new CrcStudio.TabControl.TabStrip();
             this.panelClientSize = new System.Windows.Forms.Panel();
-            this.menuMainHelpFileAssociation = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuMainHelpRegisterFileTypes = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuMainHelpUnregisterFileTypes = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             this.panelLeft.SuspendLayout();
@@ -132,7 +132,7 @@ namespace CrcStudio.Forms
             this.menuMainHelp});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Size = new System.Drawing.Size(1009, 27);
+            this.menuStripMain.Size = new System.Drawing.Size(991, 27);
             this.menuStripMain.TabIndex = 0;
             this.menuStripMain.Text = "menuStrip1";
             // 
@@ -459,6 +459,27 @@ namespace CrcStudio.Forms
             this.menuMainHelp.Size = new System.Drawing.Size(49, 23);
             this.menuMainHelp.Text = "Help";
             // 
+            // menuMainHelpFileAssociation
+            // 
+            this.menuMainHelpFileAssociation.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuMainHelpRegisterFileTypes,
+            this.menuMainHelpUnregisterFileTypes});
+            this.menuMainHelpFileAssociation.Name = "menuMainHelpFileAssociation";
+            this.menuMainHelpFileAssociation.Size = new System.Drawing.Size(171, 24);
+            this.menuMainHelpFileAssociation.Text = "File Association";
+            // 
+            // menuMainHelpRegisterFileTypes
+            // 
+            this.menuMainHelpRegisterFileTypes.Name = "menuMainHelpRegisterFileTypes";
+            this.menuMainHelpRegisterFileTypes.Size = new System.Drawing.Size(205, 24);
+            this.menuMainHelpRegisterFileTypes.Text = "Register File Types";
+            // 
+            // menuMainHelpUnregisterFileTypes
+            // 
+            this.menuMainHelpUnregisterFileTypes.Name = "menuMainHelpUnregisterFileTypes";
+            this.menuMainHelpUnregisterFileTypes.Size = new System.Drawing.Size(205, 24);
+            this.menuMainHelpUnregisterFileTypes.Text = "Unregister File Types";
+            // 
             // menuMainHelpBar1
             // 
             this.menuMainHelpBar1.Name = "menuMainHelpBar1";
@@ -477,10 +498,10 @@ namespace CrcStudio.Forms
             this.toolStripStatusText,
             this.toolStripProgressBar,
             this.toolStripStatusButton});
-            this.statusStripMain.Location = new System.Drawing.Point(0, 580);
+            this.statusStripMain.Location = new System.Drawing.Point(0, 569);
             this.statusStripMain.Name = "statusStripMain";
             this.statusStripMain.Padding = new System.Windows.Forms.Padding(1, 0, 13, 0);
-            this.statusStripMain.Size = new System.Drawing.Size(1009, 28);
+            this.statusStripMain.Size = new System.Drawing.Size(991, 28);
             this.statusStripMain.TabIndex = 1;
             // 
             // toolStripStatusText
@@ -494,7 +515,7 @@ namespace CrcStudio.Forms
             // toolStripProgressBar
             // 
             this.toolStripProgressBar.Name = "toolStripProgressBar";
-            this.toolStripProgressBar.Size = new System.Drawing.Size(183, 22);
+            this.toolStripProgressBar.Size = new System.Drawing.Size(180, 22);
             this.toolStripProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.toolStripProgressBar.Visible = false;
             // 
@@ -506,7 +527,7 @@ namespace CrcStudio.Forms
             this.toolStripStatusButton.BorderStyle = System.Windows.Forms.Border3DStyle.Raised;
             this.toolStripStatusButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripStatusButton.Name = "toolStripStatusButton";
-            this.toolStripStatusButton.Size = new System.Drawing.Size(295, 23);
+            this.toolStripStatusButton.Size = new System.Drawing.Size(277, 23);
             this.toolStripStatusButton.Spring = true;
             this.toolStripStatusButton.Text = "Cancel";
             this.toolStripStatusButton.Visible = false;
@@ -518,7 +539,7 @@ namespace CrcStudio.Forms
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 0);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(326, 543);
+            this.panelLeft.Size = new System.Drawing.Size(320, 532);
             this.panelLeft.TabIndex = 2;
             this.panelLeft.SizeChanged += new System.EventHandler(this.PanelLeftSizeChanged);
             // 
@@ -529,16 +550,16 @@ namespace CrcStudio.Forms
             this.solutionExplorer.Location = new System.Drawing.Point(0, 0);
             this.solutionExplorer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.solutionExplorer.Name = "solutionExplorer";
-            this.solutionExplorer.Size = new System.Drawing.Size(326, 543);
+            this.solutionExplorer.Size = new System.Drawing.Size(320, 532);
             this.solutionExplorer.TabIndex = 0;
             // 
             // panelRight
             // 
             this.panelRight.Controls.Add(this.propertiesExplorer);
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelRight.Location = new System.Drawing.Point(714, 0);
+            this.panelRight.Location = new System.Drawing.Point(701, 0);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(285, 543);
+            this.panelRight.Size = new System.Drawing.Size(280, 532);
             this.panelRight.TabIndex = 3;
             this.panelRight.SizeChanged += new System.EventHandler(this.PanelRightSizeChanged);
             // 
@@ -551,15 +572,15 @@ namespace CrcStudio.Forms
             this.propertiesExplorer.Name = "propertiesExplorer";
             this.propertiesExplorer.SelectedObject = null;
             this.propertiesExplorer.SelectedObjects = new object[0];
-            this.propertiesExplorer.Size = new System.Drawing.Size(285, 543);
+            this.propertiesExplorer.Size = new System.Drawing.Size(280, 532);
             this.propertiesExplorer.TabIndex = 0;
             // 
             // splitterLeft
             // 
             this.splitterLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(50)))), ((int)(((byte)(100)))));
-            this.splitterLeft.Location = new System.Drawing.Point(326, 0);
+            this.splitterLeft.Location = new System.Drawing.Point(320, 0);
             this.splitterLeft.Name = "splitterLeft";
-            this.splitterLeft.Size = new System.Drawing.Size(5, 543);
+            this.splitterLeft.Size = new System.Drawing.Size(5, 532);
             this.splitterLeft.TabIndex = 4;
             this.splitterLeft.TabStop = false;
             // 
@@ -567,9 +588,9 @@ namespace CrcStudio.Forms
             // 
             this.splitterRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(50)))), ((int)(((byte)(100)))));
             this.splitterRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.splitterRight.Location = new System.Drawing.Point(709, 0);
+            this.splitterRight.Location = new System.Drawing.Point(696, 0);
             this.splitterRight.Name = "splitterRight";
-            this.splitterRight.Size = new System.Drawing.Size(5, 543);
+            this.splitterRight.Size = new System.Drawing.Size(5, 532);
             this.splitterRight.TabIndex = 5;
             this.splitterRight.TabStop = false;
             // 
@@ -578,9 +599,9 @@ namespace CrcStudio.Forms
             this.panelBottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(50)))), ((int)(((byte)(100)))));
             this.panelBottom.Controls.Add(this.outputWindow);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottom.Location = new System.Drawing.Point(331, 451);
+            this.panelBottom.Location = new System.Drawing.Point(325, 442);
             this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(378, 92);
+            this.panelBottom.Size = new System.Drawing.Size(371, 90);
             this.panelBottom.TabIndex = 6;
             this.panelBottom.SizeChanged += new System.EventHandler(this.PanelBottomSizeChanged);
             // 
@@ -590,16 +611,16 @@ namespace CrcStudio.Forms
             this.outputWindow.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.outputWindow.Location = new System.Drawing.Point(0, 0);
             this.outputWindow.Name = "outputWindow";
-            this.outputWindow.Size = new System.Drawing.Size(378, 92);
+            this.outputWindow.Size = new System.Drawing.Size(371, 90);
             this.outputWindow.TabIndex = 0;
             // 
             // splitterMain
             // 
             this.splitterMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(50)))), ((int)(((byte)(100)))));
             this.splitterMain.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.splitterMain.Location = new System.Drawing.Point(331, 446);
+            this.splitterMain.Location = new System.Drawing.Point(325, 437);
             this.splitterMain.Name = "splitterMain";
-            this.splitterMain.Size = new System.Drawing.Size(378, 5);
+            this.splitterMain.Size = new System.Drawing.Size(371, 5);
             this.splitterMain.TabIndex = 7;
             this.splitterMain.TabStop = false;
             // 
@@ -670,16 +691,16 @@ namespace CrcStudio.Forms
             this.panelTopBorder.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTopBorder.Location = new System.Drawing.Point(0, 27);
             this.panelTopBorder.Name = "panelTopBorder";
-            this.panelTopBorder.Size = new System.Drawing.Size(1009, 5);
+            this.panelTopBorder.Size = new System.Drawing.Size(991, 5);
             this.panelTopBorder.TabIndex = 0;
             // 
             // panelBottomBorder
             // 
             this.panelBottomBorder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(50)))), ((int)(((byte)(100)))));
             this.panelBottomBorder.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottomBorder.Location = new System.Drawing.Point(0, 575);
+            this.panelBottomBorder.Location = new System.Drawing.Point(0, 564);
             this.panelBottomBorder.Name = "panelBottomBorder";
-            this.panelBottomBorder.Size = new System.Drawing.Size(1009, 5);
+            this.panelBottomBorder.Size = new System.Drawing.Size(991, 5);
             this.panelBottomBorder.TabIndex = 0;
             // 
             // panelLeftBorder
@@ -688,16 +709,16 @@ namespace CrcStudio.Forms
             this.panelLeftBorder.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeftBorder.Location = new System.Drawing.Point(0, 32);
             this.panelLeftBorder.Name = "panelLeftBorder";
-            this.panelLeftBorder.Size = new System.Drawing.Size(5, 543);
+            this.panelLeftBorder.Size = new System.Drawing.Size(5, 532);
             this.panelLeftBorder.TabIndex = 0;
             // 
             // panelRightBorder
             // 
             this.panelRightBorder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(50)))), ((int)(((byte)(100)))));
             this.panelRightBorder.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelRightBorder.Location = new System.Drawing.Point(1004, 32);
+            this.panelRightBorder.Location = new System.Drawing.Point(986, 32);
             this.panelRightBorder.Name = "panelRightBorder";
-            this.panelRightBorder.Size = new System.Drawing.Size(5, 543);
+            this.panelRightBorder.Size = new System.Drawing.Size(5, 532);
             this.panelRightBorder.TabIndex = 1;
             // 
             // panelMain
@@ -705,9 +726,9 @@ namespace CrcStudio.Forms
             this.panelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(50)))), ((int)(((byte)(100)))));
             this.panelMain.Controls.Add(this.tabStripMain);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(331, 0);
+            this.panelMain.Location = new System.Drawing.Point(325, 0);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(378, 451);
+            this.panelMain.Size = new System.Drawing.Size(371, 442);
             this.panelMain.TabIndex = 0;
             // 
             // tabStripMain
@@ -720,7 +741,7 @@ namespace CrcStudio.Forms
             this.tabStripMain.InActiveSelectedForeColor = System.Drawing.SystemColors.ControlText;
             this.tabStripMain.Location = new System.Drawing.Point(0, 0);
             this.tabStripMain.Name = "tabStripMain";
-            this.tabStripMain.Size = new System.Drawing.Size(378, 451);
+            this.tabStripMain.Size = new System.Drawing.Size(371, 442);
             this.tabStripMain.TabIndex = 8;
             this.tabStripMain.Text = "tabStrip1";
             this.tabStripMain.Visible = false;
@@ -741,35 +762,14 @@ namespace CrcStudio.Forms
             this.panelClientSize.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelClientSize.Location = new System.Drawing.Point(5, 32);
             this.panelClientSize.Name = "panelClientSize";
-            this.panelClientSize.Size = new System.Drawing.Size(999, 543);
+            this.panelClientSize.Size = new System.Drawing.Size(981, 532);
             this.panelClientSize.TabIndex = 1;
-            // 
-            // menuMainHelpFileAssociation
-            // 
-            this.menuMainHelpFileAssociation.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuMainHelpRegisterFileTypes,
-            this.menuMainHelpUnregisterFileTypes});
-            this.menuMainHelpFileAssociation.Name = "menuMainHelpFileAssociation";
-            this.menuMainHelpFileAssociation.Size = new System.Drawing.Size(171, 24);
-            this.menuMainHelpFileAssociation.Text = "File Association";
-            // 
-            // menuMainHelpRegisterFileTypes
-            // 
-            this.menuMainHelpRegisterFileTypes.Name = "menuMainHelpRegisterFileTypes";
-            this.menuMainHelpRegisterFileTypes.Size = new System.Drawing.Size(205, 24);
-            this.menuMainHelpRegisterFileTypes.Text = "Register File Types";
-            // 
-            // menuMainHelpUnregisterFileTypes
-            // 
-            this.menuMainHelpUnregisterFileTypes.Name = "menuMainHelpUnregisterFileTypes";
-            this.menuMainHelpUnregisterFileTypes.Size = new System.Drawing.Size(205, 24);
-            this.menuMainHelpUnregisterFileTypes.Text = "Unregister File Types";
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(110F, 110F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(108F, 108F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1009, 608);
+            this.ClientSize = new System.Drawing.Size(991, 597);
             this.Controls.Add(this.panelClientSize);
             this.Controls.Add(this.panelRightBorder);
             this.Controls.Add(this.panelLeftBorder);
