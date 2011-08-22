@@ -170,8 +170,8 @@ namespace CrcStudio.Forms
             // menuMainFileNewProject
             // 
             this.menuMainFileNewProject.Name = "menuMainFileNewProject";
-            this.menuMainFileNewProject.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.N)));
+            this.menuMainFileNewProject.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.N)));
             this.menuMainFileNewProject.Size = new System.Drawing.Size(217, 24);
             this.menuMainFileNewProject.Text = "Project...";
             this.menuMainFileNewProject.Click += new System.EventHandler(this.MenuMainFileNewProjectClick);
@@ -205,8 +205,8 @@ namespace CrcStudio.Forms
             // menuMainFileOpenSolution
             // 
             this.menuMainFileOpenSolution.Name = "menuMainFileOpenSolution";
-            this.menuMainFileOpenSolution.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.O)));
+            this.menuMainFileOpenSolution.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.O)));
             this.menuMainFileOpenSolution.Size = new System.Drawing.Size(226, 24);
             this.menuMainFileOpenSolution.Text = "Solution...";
             this.menuMainFileOpenSolution.Click += new System.EventHandler(this.MenuMainFileOpenSolutionClick);
@@ -276,8 +276,8 @@ namespace CrcStudio.Forms
             // 
             this.menuMainFileSaveAll.Name = "menuMainFileSaveAll";
             this.menuMainFileSaveAll.ShortcutKeyDisplayString = "";
-            this.menuMainFileSaveAll.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.S)));
+            this.menuMainFileSaveAll.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
             this.menuMainFileSaveAll.Size = new System.Drawing.Size(342, 24);
             this.menuMainFileSaveAll.Text = "Save All";
             this.menuMainFileSaveAll.Click += new System.EventHandler(this.MenuMainFileSaveAllClick);
@@ -473,12 +473,14 @@ namespace CrcStudio.Forms
             this.menuMainHelpRegisterFileTypes.Name = "menuMainHelpRegisterFileTypes";
             this.menuMainHelpRegisterFileTypes.Size = new System.Drawing.Size(205, 24);
             this.menuMainHelpRegisterFileTypes.Text = "Register File Types";
+            this.menuMainHelpRegisterFileTypes.Click += new System.EventHandler(this.menuMainHelpRegisterFileTypes_Click);
             // 
             // menuMainHelpUnregisterFileTypes
             // 
             this.menuMainHelpUnregisterFileTypes.Name = "menuMainHelpUnregisterFileTypes";
             this.menuMainHelpUnregisterFileTypes.Size = new System.Drawing.Size(205, 24);
             this.menuMainHelpUnregisterFileTypes.Text = "Unregister File Types";
+            this.menuMainHelpUnregisterFileTypes.Click += new System.EventHandler(this.menuMainHelpUnregisterFileTypes_Click);
             // 
             // menuMainHelpBar1
             // 
@@ -521,9 +523,9 @@ namespace CrcStudio.Forms
             // 
             // toolStripStatusButton
             // 
-            this.toolStripStatusButton.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
-                        | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
-                        | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.toolStripStatusButton.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
             this.toolStripStatusButton.BorderStyle = System.Windows.Forms.Border3DStyle.Raised;
             this.toolStripStatusButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripStatusButton.Name = "toolStripStatusButton";
