@@ -72,19 +72,12 @@ namespace CrcStudio.BuildProcess
 
         private void Dispose(bool disposing)
         {
+            if (_disposed) return;
             if (disposing)
             {
-                // get rid of managed resources
+                CloseZipFile();
             }
-            if (_disposed) return;
-            CloseZipFile();
             _disposed = true;
-        }
-
-
-        ~UpdateZipHandler()
-        {
-            Dispose(false);
         }
     }
 }

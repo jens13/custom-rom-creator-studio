@@ -128,25 +128,18 @@ namespace CrcStudio.Messages
             FileUtility.MoveFile(file, newFile);
         }
 
-        private void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
+            if (_disposed) return;
             if (disposing)
             {
-                // get rid of managed resources
-            }
-            if (_disposed) return;
-            if (_textWriterTraceListener != null)
-            {
-                _textWriterTraceListener.Dispose();
-                _textWriterTraceListener = null;
+                if (_textWriterTraceListener != null)
+                {
+                    _textWriterTraceListener.Dispose();
+                    _textWriterTraceListener = null;
+                }
             }
             _disposed = true;
-        }
-
-
-        ~FileMessageConsumer()
-        {
-            Dispose(false);
         }
     }
 }

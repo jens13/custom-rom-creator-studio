@@ -94,8 +94,14 @@ namespace CrcStudio.Project
 
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            if (_disposed) return;
+            if (_fileSystemWatcher != null)
+            {
+                _fileSystemWatcher.Dispose();
+                _fileSystemWatcher = null;
+            }
+            Close();
+            _disposed = true;
         }
 
         #endregion
@@ -861,28 +867,6 @@ namespace CrcStudio.Project
             {
                 InsertFile(fileSystemPath, false, false);
             }
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                // get rid of managed resources
-            }
-            if (_disposed) return;
-            if (_fileSystemWatcher != null)
-            {
-                _fileSystemWatcher.Dispose();
-                _fileSystemWatcher = null;
-            }
-            Close();
-            _disposed = true;
-        }
-
-
-        ~CrcsProject()
-        {
-            Dispose(false);
         }
 
         public bool RemoveMissingItem(string fileSystemPath)

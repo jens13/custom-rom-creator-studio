@@ -479,29 +479,23 @@ namespace CrcStudio.Zip
 
         protected virtual void Dispose(bool disposing)
         {
+            if (_disposed) return;
             if (disposing)
             {
-                // get rid of managed resources
+                if (_archiveStream != null)
+                {
+                    if (_isDirty)
+                    {
+                        InternalFlush(true);
+                    }
+                    else
+                    {
+                        _archiveStream.Close();
+                        _archiveStream = null;
+                    }
+                }
             }
-            if (_disposed) return;
-            if (_archiveStream == null) return;
-            if (_isDirty)
-            {
-                InternalFlush(true);
-            }
-            else
-            {
-                _archiveStream.Close();
-                _archiveStream = null;
-            }
-
             _disposed = true;
-        }
-
-
-        ~ZipFile()
-        {
-            Dispose(false);
         }
     }
 }

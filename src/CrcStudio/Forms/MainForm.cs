@@ -391,6 +391,8 @@ namespace CrcStudio.Forms
                 {
                     _updateZipHandler.CloseZipFile();
                 }
+                _updateZipHandler.Dispose();
+                _updateZipHandler = null;
             }
             if (_backgroundWorkers.Count == 0)
             {
@@ -742,6 +744,7 @@ namespace CrcStudio.Forms
 
         private void MenuMainBuildBuildClick(object sender, EventArgs e)
         {
+            bool error=false;
             try
             {
                 toolStripStatusText.Text = "Building update.zip";
@@ -756,7 +759,22 @@ namespace CrcStudio.Forms
             }
             catch (Exception ex)
             {
+                error = true;
                 MessageEngine.ShowError(ex);
+            }
+            finally
+            {
+                if (error)
+                {
+                    HideProgressBarAndCancel();
+                    _solution.ResumeFileSystemWatchers();
+                    if (_updateZipHandler != null)
+                    {
+                        _updateZipHandler.DeleteZipFile();
+                        _updateZipHandler.Dispose();
+                        _updateZipHandler = null;
+                    }
+                }
             }
         }
 

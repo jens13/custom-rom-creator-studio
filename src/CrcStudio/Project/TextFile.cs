@@ -108,21 +108,14 @@ namespace CrcStudio.Project
             Close();
         }
 
-        private void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
+            if (_disposed) return;
             if (disposing)
             {
-                // get rid of managed resources
+                Close();
             }
-            if (_disposed) return;
-            Close();
             _disposed = true;
-        }
-
-
-        ~TextFile()
-        {
-            Dispose(false);
         }
     }
 }

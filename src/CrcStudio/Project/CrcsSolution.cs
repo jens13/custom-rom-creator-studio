@@ -453,7 +453,7 @@ namespace CrcStudio.Project
                             if (!_properties.OverWriteFilesInZip)
                                 throw new Exception(
                                     string.Format("{0} is already added from a project earlier in the build order",
-                                                  file.RelativePath));
+                                                  file1.RelativePath));
                             buildFiles.Remove(existingFile);
                         }
                         buildFiles.Add(file);
@@ -571,21 +571,14 @@ namespace CrcStudio.Project
             }
         }
 
-        private void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
+            if (_disposed) return;
             if (disposing)
             {
-                // get rid of managed resources
+                Close();
             }
-            if (_disposed) return;
-            Close();
             _disposed = true;
-        }
-
-
-        ~CrcsSolution()
-        {
-            Dispose(false);
         }
     }
 }
