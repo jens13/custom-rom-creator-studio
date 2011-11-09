@@ -57,11 +57,11 @@ namespace CrcStudio.Forms
             // 
             // textBoxSourceLocation
             // 
-            this.textBoxSourceLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxSourceLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxSourceLocation.Location = new System.Drawing.Point(168, 131);
             this.textBoxSourceLocation.Name = "textBoxSourceLocation";
-            this.textBoxSourceLocation.Size = new System.Drawing.Size(545, 26);
+            this.textBoxSourceLocation.Size = new System.Drawing.Size(545, 25);
             this.textBoxSourceLocation.TabIndex = 0;
             // 
             // label1
@@ -75,11 +75,11 @@ namespace CrcStudio.Forms
             // 
             // textBoxProjectName
             // 
-            this.textBoxProjectName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxProjectName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxProjectName.Location = new System.Drawing.Point(168, 12);
             this.textBoxProjectName.Name = "textBoxProjectName";
-            this.textBoxProjectName.Size = new System.Drawing.Size(545, 26);
+            this.textBoxProjectName.Size = new System.Drawing.Size(545, 25);
             this.textBoxProjectName.TabIndex = 2;
             // 
             // label2
@@ -104,11 +104,11 @@ namespace CrcStudio.Forms
             // 
             // textBoxProjectLocation
             // 
-            this.textBoxProjectLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxProjectLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxProjectLocation.Location = new System.Drawing.Point(168, 50);
             this.textBoxProjectLocation.Name = "textBoxProjectLocation";
-            this.textBoxProjectLocation.Size = new System.Drawing.Size(545, 26);
+            this.textBoxProjectLocation.Size = new System.Drawing.Size(545, 25);
             this.textBoxProjectLocation.TabIndex = 3;
             // 
             // label3
@@ -168,8 +168,11 @@ namespace CrcStudio.Forms
             this.Controls.Add(this.textBoxSourceLocation);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ProjectWizard";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ProjectWizard";
             this.ResumeLayout(false);

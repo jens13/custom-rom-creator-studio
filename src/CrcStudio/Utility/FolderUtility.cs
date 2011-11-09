@@ -52,8 +52,9 @@ namespace CrcStudio.Utility
             }
         }
 
-        public static void CopyRecursive(string sourceLocation, string targetLocation)
+        public static void CopyRecursive(string sourceLocation, string targetLocation, Func<string, FileExistsAction> fileExist)
         {
+            var filesToCopy = new Dictionary<string, string>();
             var folderStack = new Stack<string>();
 
             Directory.CreateDirectory(targetLocation);
@@ -64,14 +65,44 @@ namespace CrcStudio.Utility
                 string folder = folderStack.Pop();
                 foreach (string subFolder in Directory.GetDirectories(folder))
                 {
-                    string folderName = subFolder.Replace(sourceLocation, "").TrimStart(Path.DirectorySeparatorChar);
-                    Directory.CreateDirectory(Path.Combine(targetLocation, folderName));
+ //                   string folderName = subFolder.Replace(sourceLocation, "").TrimStart(Path.DirectorySeparatorChar);
+ //                   Directory.CreateDirectory(Path.Combine(targetLocation, folderName));
                     folderStack.Push(subFolder);
                 }
                 foreach (string file in Directory.GetFiles(folder))
                 {
                     string fileName = file.Replace(sourceLocation, "").TrimStart(Path.DirectorySeparatorChar);
-                    File.Copy(file, Path.Combine(targetLocation, fileName), true);
+                    filesToCopy.Add(file, Path.Combine(targetLocation, fileName));
+                }
+            }
+            bool replace;
+            bool replaceAll = false;
+            foreach (var sourceFile in filesToCopy.Keys)
+            {
+                replace = false;
+                var destFileName = filesToCopy[sourceFile];
+                var directoryName = Path.GetDirectoryName(destFileName);
+                if (!string.IsNullOrWhiteSpace(directoryName))
+                {
+                    Directory.CreateDirectory(directoryName);
+                }
+                if (!replaceAll && File.Exists(destFileName) && fileExist != null)
+                {
+                    switch (fileExist(destFileName))
+                    {
+                        case FileExistsAction.Cancel:
+                            return;
+                        case FileExistsAction.Replace:
+                            replace = true;
+                            break;
+                        case FileExistsAction.ReplaceAll:
+                            replaceAll = true;
+                            break;
+                    }
+                }
+                if (replace || replaceAll)
+                {
+                    File.Copy(sourceFile, destFileName, true);
                 }
             }
         }

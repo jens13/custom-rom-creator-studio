@@ -1058,8 +1058,9 @@ namespace CrcStudio.Forms
                     Cursor = Cursors.WaitCursor;
                     toolStripStatusText.Text = "Creating project...";
                     if (form.CopySourceFilesToTargetLocation)
-                        FolderUtility.CopyRecursive(form.SourceLocation, form.ProjectLocation);
-
+                    {
+                        FolderUtility.CopyRecursive(form.SourceLocation, form.ProjectLocation, FileExistsQuestion);
+                    }
                     _solution = CrcsSolution.CreateSolution(form.SolutionFileName);
                     CrcsProject rsproj = CrcsProject.CreateProject(form.ProjectFileName, _solution);
                     rsproj.Save();
@@ -1076,6 +1077,13 @@ namespace CrcStudio.Forms
             return false;
         }
 
+        private FileExistsAction FileExistsQuestion(string filename)
+        {
+            var dialog = new FileExistsQuestionForm(filename);
+            dialog.ShowDialog(this);
+            return dialog.FileExistsAction;
+        }
+
         private bool AddNewProject()
         {
             var form = new ProjectWizard();
@@ -1086,8 +1094,9 @@ namespace CrcStudio.Forms
                     Cursor = Cursors.WaitCursor;
                     toolStripStatusText.Text = "Creating project...";
                     if (form.CopySourceFilesToTargetLocation)
-                        FolderUtility.CopyRecursive(form.SourceLocation, form.ProjectLocation);
-
+                    {
+                        FolderUtility.CopyRecursive(form.SourceLocation, form.ProjectLocation, FileExistsQuestion);
+                    }
                     CrcsProject rsproj = CrcsProject.CreateProject(form.ProjectFileName, _solution);
                     rsproj.Save();
                     _solution.AddProject(rsproj);

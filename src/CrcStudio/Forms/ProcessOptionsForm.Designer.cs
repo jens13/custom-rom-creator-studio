@@ -137,8 +137,12 @@ namespace CrcStudio.Forms
             this.Controls.Add(this.checkBoxRecompile);
             this.Controls.Add(this.checkBoxDecompile);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ProcessOptionsForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Process Options";
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -152,6 +152,12 @@
     <Compile Include="Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FileExistsQuestionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FileExistsQuestionForm.Designer.cs">
+      <DependentUpon>FileExistsQuestionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\LoadSolutionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -236,6 +242,7 @@
     <Compile Include="Utility\ArgumentValidationExtender.cs" />
     <Compile Include="Utility\EncodingExtensions.cs" />
     <Compile Include="Utility\FileAssociationUtility.cs" />
+    <Compile Include="Utility\FileExistsAction.cs" />
     <Compile Include="Utility\FileUtility.cs" />
     <Compile Include="Utility\FolderUtility.cs" />
     <Compile Include="Utility\IconHelper.cs">
@@ -269,6 +276,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FileExistsQuestionForm.resx">
+      <DependentUpon>FileExistsQuestionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoadSolutionForm.resx">
       <DependentUpon>LoadSolutionForm.cs</DependentUpon>
