@@ -100,6 +100,10 @@ namespace CrcStudio.Utility
                             break;
                     }
                 }
+                else
+                {
+                    replace = true;
+                }
                 if (replace || replaceAll)
                 {
                     File.Copy(sourceFile, destFileName, true);
