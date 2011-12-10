@@ -52,7 +52,7 @@ namespace CrcStudio.Utility
             }
         }
 
-        public static void CopyRecursive(string sourceLocation, string targetLocation, Func<string, FileExistsAction> fileExist)
+        public static void CopyRecursive(string sourceLocation, string targetLocation, Func<string, FileExistsAction> fileExistCallBack)
         {
             var filesToCopy = new Dictionary<string, string>();
             var folderStack = new Stack<string>();
@@ -81,14 +81,10 @@ namespace CrcStudio.Utility
             {
                 replace = false;
                 var destFileName = filesToCopy[sourceFile];
-                var directoryName = Path.GetDirectoryName(destFileName);
-                if (!string.IsNullOrWhiteSpace(directoryName))
+                var exists = File.Exists(destFileName);
+                if (!replaceAll && exists && fileExistCallBack != null)
                 {
-                    Directory.CreateDirectory(directoryName);
-                }
-                if (!replaceAll && File.Exists(destFileName) && fileExist != null)
-                {
-                    switch (fileExist(destFileName))
+                    switch (fileExistCallBack(destFileName))
                     {
                         case FileExistsAction.Cancel:
                             return;
@@ -100,12 +96,13 @@ namespace CrcStudio.Utility
                             break;
                     }
                 }
-                else
+                if (replace || replaceAll || !exists)
                 {
-                    replace = true;
-                }
-                if (replace || replaceAll)
-                {
+                    var directoryName = Path.GetDirectoryName(destFileName);
+                    if (!string.IsNullOrWhiteSpace(directoryName))
+                    {
+                        Directory.CreateDirectory(directoryName);
+                    }
                     File.Copy(sourceFile, destFileName, true);
                 }
             }

@@ -435,25 +435,28 @@ namespace CrcStudio.Project
             root.Save(FileSystemPath + ".user");
         }
 
-        [Browsable(false)]
-//        public CrcsProject MainProject { get { return _mainProject; } set { if (ReferenceEquals(_mainProject, value)) return; _mainProject = value; _isDirty = true; } }
         public IEnumerable<IProjectFile> GetBuildFiles()
         {
             var buildFiles = new List<IProjectFile>();
-            foreach (CrcsProject proj in _projects)
+            var crcsProjects = _projects;
+//            foreach (CrcsProject proj in crcsProjects)
+            for (int i = 0; i < crcsProjects.Count; i++)
             {
+                CrcsProject proj = crcsProjects[i];
                 if (proj.IncludeInBuild)
                 {
-                    foreach (IProjectFile file in proj.GetBuildFiles())
+                    var projectFiles = proj.GetBuildFiles().ToArray();
+//                    foreach (IProjectFile file in projectFiles)
+                    for (int j = 0; j < projectFiles.Length; j++)
                     {
-                        IProjectFile file1 = file;
-                        IProjectFile existingFile = buildFiles.FirstOrDefault(x => x.RelativePath == file1.RelativePath);
+                        var file = projectFiles[j];
+                        IProjectFile existingFile = buildFiles.FirstOrDefault(x => x.RelativePath == file.RelativePath);
                         if (existingFile != null)
                         {
                             if (!_properties.OverWriteFilesInZip)
                                 throw new Exception(
                                     string.Format("{0} is already added from a project earlier in the build order",
-                                                  file1.RelativePath));
+                                                  file.RelativePath));
                             buildFiles.Remove(existingFile);
                         }
                         buildFiles.Add(file);

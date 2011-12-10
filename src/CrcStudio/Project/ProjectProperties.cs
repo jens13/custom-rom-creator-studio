@@ -22,6 +22,7 @@ namespace CrcStudio.Project
 
         private string _originalBuildDisplayId;
         private bool _reSignApkFiles;
+        private string _apiLevel;
 
         public ProjectProperties(CrcsProject project)
         {
@@ -74,6 +75,17 @@ namespace CrcStudio.Project
                 if (_reSignApkFiles == value) return;
                 _reSignApkFiles = value;
                 OnPropertyChanged("ReSignApkFiles");
+            }
+        }
+
+        public string ApiLevel
+        {
+            get { return _apiLevel; }
+            set
+            {
+                if (_apiLevel == value) return;
+                _apiLevel = value;
+                OnPropertyChanged("ApiLevel");
             }
         }
 

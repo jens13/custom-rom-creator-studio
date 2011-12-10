@@ -41,7 +41,7 @@ namespace CrcStudio.BuildProcess
             }
 
             if (!file.IsDeCompiled) return;
-            Recompile(file.FileSystemPath, file.ClassesFolder);
+            Recompile(file.FileSystemPath, file.ClassesFolder, file.Project);
             file.Recompiled();
         }
 

@@ -27,7 +27,7 @@ namespace CrcStudio.BuildProcess
             if (!file.IsDeCompiled) return;
             MessageEngine.AddInformation(this, string.Format("Recompiling classes for {0}", file.Name));
 
-            Recompile(file.FileSystemPath, file.ClassesFolder);
+            Recompile(file.FileSystemPath, file.ClassesFolder, file.Project);
             file.Recompiled();
         }
 

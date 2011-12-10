@@ -15,11 +15,13 @@ namespace CrcStudio.Controls
         private readonly CrcsProject _project;
         private string _buildDisplayId;
         private bool _refreshingControls;
+        private string _apiLevel;
 
         public ProjectPropertiesEditor(CrcsProject project)
         {
             _project = project;
             _buildDisplayId = project.Properties.BuildDisplayId;
+            _apiLevel = project.Properties.ApiLevel;
             InitializeComponent();
             labelTitle.Text = "Project '" + _project.Name + "' properties";
             TabTitle = _project.Name;
@@ -58,6 +60,7 @@ namespace CrcStudio.Controls
             {
                 _refreshingControls = true;
                 textBoxBuildDisplayId.Text = _buildDisplayId;
+                textBoxApiLevel.Text = _apiLevel;
                 checkBoxReSignApkFiles.Checked = project.Properties.ReSignApkFiles;
                 checkBoxIncludeInBuild.Checked = project.IncludeInBuild;
                 foreach (string file in _project.Properties.FrameWorkFiles)
@@ -133,6 +136,20 @@ namespace CrcStudio.Controls
         {
             if (_refreshingControls) return;
             _project.IsIncluded = checkBoxIncludeInBuild.Checked;
+            EvaluateDirty();
+        }
+
+        private void TextBoxApiLevelLeave(object sender, EventArgs e)
+        {
+            ChangeApiLevel();
+        }
+
+        private void ChangeApiLevel()
+        {
+            if (_refreshingControls) return;
+            if (_apiLevel == textBoxApiLevel.Text) return;
+            _apiLevel = textBoxApiLevel.Text;
+            _project.Properties.ApiLevel = textBoxApiLevel.Text;
             EvaluateDirty();
         }
     }

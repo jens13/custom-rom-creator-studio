@@ -22,6 +22,8 @@ namespace CrcStudio.BuildProcess
         protected readonly string _javaFile;
         private readonly Dictionary<CrcsProject, string> _pathToDependencies = new Dictionary<CrcsProject, string>();
         protected readonly string _smaliFile;
+        protected readonly bool _useSmaliApiLevel;
+        protected readonly bool _useBaksmaliApiLevel;
 
         protected SmaliBaksmaliBase(SolutionProperties properties)
         {
@@ -29,15 +31,42 @@ namespace CrcStudio.BuildProcess
             _baksmaliFile = properties.BaksmaliFile;
             _canDecompile = properties.CanDecompile;
             _smaliFile = properties.SmaliFile;
+            _useSmaliApiLevel = GetSmaliVersion() == "1.3.0";
+            _useBaksmaliApiLevel = GetBaksmaliVersion() == "1.3.0";
             _canRecompile = properties.CanRecompile;
         }
 
-        protected void Decompile(string name, string classesFile, string outputFolder, bool ignoreDecompileErrors,
-                                 CrcsProject project)
+        private string GetBaksmaliVersion()
+        {
+            return GetVersion(_baksmaliFile);
+        }
+
+        private string GetVersion(string jarFile)
+        {
+            var ep = new ExecuteProgram();
+
+            var arguments = new StringBuilder();
+            arguments.Append("-jar");
+            arguments.Append(" ").Append(jarFile).Append(" -v");
+
+            if (ep.Execute(_javaFile, arguments.ToString(), Path.GetDirectoryName(_smaliFile)) == 0)
+            {
+                return ep.Output.Split(' ')[1];
+            }
+            return "";
+        }
+
+        private string GetSmaliVersion()
+        {
+            return GetVersion(_smaliFile);
+        }
+
+        protected void Decompile(string name, string classesFile, string outputFolder, bool ignoreDecompileErrors, CrcsProject project)
         {
             var ep = new ExecuteProgram();
 
             string locationOfDependencies = GetLocationOfDependencies(project);
+            var apiLevel = project.Properties.ApiLevel;
 
             bool decompiled = false;
             bool useIgnoreDecompileErrorsFlag = false;
@@ -61,6 +90,10 @@ namespace CrcStudio.BuildProcess
                 arguments.Append(additionalDependencies);
                 if ((Path.GetExtension(classesFile) ?? "").ToUpperInvariant() == ".ODEX") arguments.Append(" -x");
                 arguments.Append(" \"").Append(classesFile).Append("\"");
+                if (_useBaksmaliApiLevel)
+                {
+                    arguments.Append(" -a ").Append(apiLevel);
+                }
                 if (ep.Execute(_javaFile, arguments.ToString(), Path.GetDirectoryName(classesFile)) == 0)
                 {
                     if (useIgnoreDecompileErrorsFlag)
@@ -211,9 +244,10 @@ namespace CrcStudio.BuildProcess
             return _pathToDependencies[project];
         }
 
-        protected void Recompile(string compositFilePath, string inputFolder)
+        protected void Recompile(string compositFilePath, string inputFolder, CrcsProject project)
         {
             var ep = new ExecuteProgram();
+            var apiLevel = project.Properties.ApiLevel;
 
             var arguments = new StringBuilder();
             arguments.Append("-jar");
@@ -221,7 +255,10 @@ namespace CrcStudio.BuildProcess
             arguments.Append(" \"").Append(inputFolder).Append("\"");
             string classesDexFile = Path.Combine(FolderUtility.CreateTempFolder(), "classes.dex");
             arguments.Append(" -o \"").Append(classesDexFile).Append("\"");
-
+            if (_useSmaliApiLevel)
+            {
+                arguments.Append(" -a ").Append(apiLevel);
+            }
             if (ep.Execute(_javaFile, arguments.ToString(), Path.GetDirectoryName(classesDexFile)) != 0)
             {
                 throw ep.CreateException(Path.GetFileName(_smaliFile));

@@ -153,8 +153,8 @@ namespace CrcStudio.Project
             string buildPropFile = FileUtility.FindFile(rsproj.ProjectPath, "build.prop");
             if (File.Exists(buildPropFile))
             {
-                rsproj.Properties.ApkToolFrameWorkTag = PropFileUtility.GetProp(buildPropFile,
-                                                                                "ro.build.version.incremental");
+                rsproj.Properties.ApkToolFrameWorkTag = PropFileUtility.GetProp(buildPropFile, "ro.build.version.incremental");
+                rsproj.Properties.ApiLevel = PropFileUtility.GetProp(buildPropFile, "ro.build.version.sdk");
             }
             else
             {
@@ -600,16 +600,19 @@ namespace CrcStudio.Project
 
         public IEnumerable<IProjectFile> GetBuildFiles()
         {
-            var files = new List<IProjectFile>();
-            files.AddRange(_items.OfType<IProjectFile>().Where(x => x.IncludeInBuild).ToArray());
-            return files.ToArray();
+            var projectFiles = _items.OfType<IProjectFile>().ToArray();
+            return projectFiles.Where(x => x.IncludeInBuild).ToArray();
+            //var files = new List<IProjectFile>();
+            //files.AddRange(_items.OfType<IProjectFile>().Where(x => x.IncludeInBuild));
+            //return files.ToArray();
         }
 
         public IEnumerable<IProjectFile> GetTreeViewSelectedFiles()
         {
-            var files = new List<IProjectFile>();
-            files.AddRange(_items.OfType<IProjectFile>().Where(x => x.IsTreeNodeSelected));
-            return files.ToArray();
+            return _items.OfType<IProjectFile>().Where(x => x.IsTreeNodeSelected).ToArray();
+            //var files = new List<IProjectFile>();
+            //files.AddRange(_items.OfType<IProjectFile>().Where(x => x.IsTreeNodeSelected));
+            //return files.ToArray();
         }
 
         public IEnumerable<IProjectFile> GetOpenFiles()

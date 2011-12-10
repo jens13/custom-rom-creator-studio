@@ -40,6 +40,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.checkBoxIncludeInBuild = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBoxApiLevel = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // labelTitle
@@ -69,14 +71,14 @@
             // 
             this.textBoxBuildDisplayId.Location = new System.Drawing.Point(23, 74);
             this.textBoxBuildDisplayId.Name = "textBoxBuildDisplayId";
-            this.textBoxBuildDisplayId.Size = new System.Drawing.Size(319, 26);
+            this.textBoxBuildDisplayId.Size = new System.Drawing.Size(319, 25);
             this.textBoxBuildDisplayId.TabIndex = 2;
             this.textBoxBuildDisplayId.Leave += new System.EventHandler(this.TextBoxBuildDisplayIdLeave);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 174);
+            this.label3.Location = new System.Drawing.Point(19, 203);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(227, 19);
             this.label3.TabIndex = 3;
@@ -84,16 +86,16 @@
             // 
             // textBoxFrameWorkFile
             // 
-            this.textBoxFrameWorkFile.Location = new System.Drawing.Point(23, 380);
+            this.textBoxFrameWorkFile.Location = new System.Drawing.Point(23, 409);
             this.textBoxFrameWorkFile.Name = "textBoxFrameWorkFile";
-            this.textBoxFrameWorkFile.Size = new System.Drawing.Size(319, 26);
+            this.textBoxFrameWorkFile.Size = new System.Drawing.Size(319, 25);
             this.textBoxFrameWorkFile.TabIndex = 4;
             // 
             // listBoxFrameWorkFiles
             // 
             this.listBoxFrameWorkFiles.FormattingEnabled = true;
             this.listBoxFrameWorkFiles.ItemHeight = 19;
-            this.listBoxFrameWorkFiles.Location = new System.Drawing.Point(23, 197);
+            this.listBoxFrameWorkFiles.Location = new System.Drawing.Point(23, 226);
             this.listBoxFrameWorkFiles.Name = "listBoxFrameWorkFiles";
             this.listBoxFrameWorkFiles.ScrollAlwaysVisible = true;
             this.listBoxFrameWorkFiles.Size = new System.Drawing.Size(319, 175);
@@ -103,7 +105,7 @@
             // buttonRemove
             // 
             this.buttonRemove.Enabled = false;
-            this.buttonRemove.Location = new System.Drawing.Point(23, 413);
+            this.buttonRemove.Location = new System.Drawing.Point(23, 442);
             this.buttonRemove.Name = "buttonRemove";
             this.buttonRemove.Size = new System.Drawing.Size(94, 32);
             this.buttonRemove.TabIndex = 6;
@@ -114,7 +116,7 @@
             // buttonAdd
             // 
             this.buttonAdd.Enabled = false;
-            this.buttonAdd.Location = new System.Drawing.Point(248, 413);
+            this.buttonAdd.Location = new System.Drawing.Point(248, 442);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(94, 32);
             this.buttonAdd.TabIndex = 7;
@@ -125,7 +127,7 @@
             // checkBoxReSignApkFiles
             // 
             this.checkBoxReSignApkFiles.AutoSize = true;
-            this.checkBoxReSignApkFiles.Location = new System.Drawing.Point(159, 121);
+            this.checkBoxReSignApkFiles.Location = new System.Drawing.Point(159, 150);
             this.checkBoxReSignApkFiles.Name = "checkBoxReSignApkFiles";
             this.checkBoxReSignApkFiles.Size = new System.Drawing.Size(15, 14);
             this.checkBoxReSignApkFiles.TabIndex = 20;
@@ -135,7 +137,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(19, 116);
+            this.label11.Location = new System.Drawing.Point(19, 145);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(105, 19);
             this.label11.TabIndex = 19;
@@ -144,7 +146,7 @@
             // checkBoxIncludeInBuild
             // 
             this.checkBoxIncludeInBuild.AutoSize = true;
-            this.checkBoxIncludeInBuild.Location = new System.Drawing.Point(159, 146);
+            this.checkBoxIncludeInBuild.Location = new System.Drawing.Point(159, 175);
             this.checkBoxIncludeInBuild.Name = "checkBoxIncludeInBuild";
             this.checkBoxIncludeInBuild.Size = new System.Drawing.Size(15, 14);
             this.checkBoxIncludeInBuild.TabIndex = 22;
@@ -154,11 +156,28 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 141);
+            this.label1.Location = new System.Drawing.Point(19, 170);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(105, 19);
             this.label1.TabIndex = 21;
             this.label1.Text = "Include in build:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(19, 117);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(68, 19);
+            this.label4.TabIndex = 23;
+            this.label4.Text = "API Level:";
+            // 
+            // textBoxApiLevel
+            // 
+            this.textBoxApiLevel.Location = new System.Drawing.Point(159, 114);
+            this.textBoxApiLevel.Name = "textBoxApiLevel";
+            this.textBoxApiLevel.Size = new System.Drawing.Size(183, 25);
+            this.textBoxApiLevel.TabIndex = 24;
+            this.textBoxApiLevel.Leave += new System.EventHandler(this.TextBoxApiLevelLeave);
             // 
             // ProjectPropertiesEditor
             // 
@@ -167,6 +186,8 @@
             this.AutoScroll = true;
             this.AutoScrollMargin = new System.Drawing.Size(0, 20);
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Controls.Add(this.textBoxApiLevel);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.checkBoxIncludeInBuild);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.checkBoxReSignApkFiles);
@@ -203,5 +224,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.CheckBox checkBoxIncludeInBuild;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBoxApiLevel;
     }
 }
