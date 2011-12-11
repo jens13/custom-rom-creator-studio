@@ -46,7 +46,6 @@ namespace CrcStudio.Zip
         private uint _uncompressedSize;
         private ushort _versionMadeBy = 10;
         private ushort _versionNeededToExtract = 10;
-        private long _fileSize;
 
         internal ZipEntry(string fileName, string entryName, CompressionType compressionType)
             : this(entryName, compressionType)
@@ -55,7 +54,6 @@ namespace CrcStudio.Zip
             var fi = new FileInfo(fileName);
             if (!fi.Exists) throw new FileNotFoundException("File not found", fileName);
             _lastModified = fi.LastWriteTime;
-            _fileSize = fi.Length;
             IsDirty = true;
         }
 
@@ -64,7 +62,6 @@ namespace CrcStudio.Zip
         {
             if (!fileStream.CanRead) throw new IOException("Can not read from file stream");
             _fileStream = fileStream;
-            _fileSize = fileStream.Length;
             IsDirty = true;
         }
 
@@ -84,7 +81,6 @@ namespace CrcStudio.Zip
         {
             _originalStream = stream;
             ReadCentralHeader();
-            _fileSize = _uncompressedSize;
         }
 
         public byte[] LocalExtraField { get { return _localExtraField; } }
@@ -111,7 +107,7 @@ namespace CrcStudio.Zip
 
         public DateTime LastModified { get { return _lastModified; } set { _lastModified = value; } }
 
-        public ushort CompressionMethod { get { return (_fileSize > 0) ? _compressionMethod : (ushort)CompressionType.Store; } }
+        public ushort CompressionMethod { get { return _compressionMethod; } }
 
         public ushort GeneralPurposeBitFlag { get { return _generalPurposeBitFlag; } }
 
@@ -380,9 +376,23 @@ namespace CrcStudio.Zip
             stream.Write(fileName, 0, fileName.Length);
             stream.Write(ExtraField, 0, ExtraField.Length);
 
+            var dataOffset = stream.Position;
             WriteData(stream);
-
             stream.Flush();
+
+            if (UncompressedSize == 0)
+            {
+                _compressionMethod = (ushort)CompressionType.Store;
+            }
+            else if (CompressedSize > UncompressedSize)
+            {
+                stream.Position = dataOffset;
+                _fileStream.Position = 0;
+                _compressionMethod = (ushort) CompressionType.Store;
+                WriteData(stream);
+                stream.Flush();
+            }
+
             if (UseDataDescriptor)
             {
                 if (UseDataDescriptorSignature)
@@ -395,7 +405,9 @@ namespace CrcStudio.Zip
                 stream.Flush();
             }
             long streamPos = stream.Position;
-            stream.Position = LocalHeaderOffset + 14;
+            stream.Position = LocalHeaderOffset + 8;
+            stream.WriteUShort(CompressionMethod);
+            stream.WriteDateTime(LastModified);
             stream.WriteUInt(Crc32);
             stream.WriteUInt(CompressedSize);
             stream.WriteUInt(UncompressedSize);
