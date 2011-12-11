@@ -387,7 +387,7 @@ namespace CrcStudio.Zip
             else if (CompressedSize > UncompressedSize)
             {
                 stream.Position = dataOffset;
-                _fileStream.Position = 0;
+                if (_fileStream != null) _fileStream.Position = 0;
                 _compressionMethod = (ushort) CompressionType.Store;
                 WriteData(stream);
                 stream.Flush();
