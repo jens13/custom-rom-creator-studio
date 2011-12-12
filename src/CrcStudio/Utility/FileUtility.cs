@@ -323,10 +323,14 @@ namespace CrcStudio.Utility
         }
         public static void AddToRecentDocuments(string fileSystemPath)
         {
+#if !MONO
             SHAddToRecentDocs(2, fileSystemPath);
+#endif
         }
+#if !MONO
         [DllImport("shell32.dll", CharSet = CharSet.Ansi)]
         public static extern void SHAddToRecentDocs(int type, string path);
+#endif
         public static string ShortFilePath(string file, int maxLength)
         {
             if (file.Length <= maxLength) return file;
