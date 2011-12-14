@@ -97,6 +97,7 @@ namespace CrcStudio.Project
             if (_disposed) return;
             if (_fileSystemWatcher != null)
             {
+                _fileSystemWatcher.EnableRaisingEvents = false;
                 _fileSystemWatcher.Dispose();
                 _fileSystemWatcher = null;
             }
