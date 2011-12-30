@@ -12,14 +12,14 @@ namespace CrcStudio.Utility
 {
     public class FolderUtility
     {
-        public static SaveFileDialog CreateBrowseForFolder(string path)
+        public static OpenFileDialog CreateBrowseForFolder(string path)
         {
-            var sfd = new SaveFileDialog();
+            var sfd = new OpenFileDialog();
             sfd.CheckFileExists = false;
             sfd.CheckPathExists = false;
             sfd.InitialDirectory = Path.Combine(path);
             sfd.FileName = "filename will be ignored";
-            sfd.Title = "Select a folder and click 'Save', filename will be ignored...";
+            sfd.Title = "Select a folder and click 'Open', filename will be ignored...";
             return sfd;
         }
 

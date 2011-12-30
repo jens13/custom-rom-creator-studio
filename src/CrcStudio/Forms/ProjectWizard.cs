@@ -5,6 +5,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using CrcStudio.Utility;
 
@@ -12,8 +13,11 @@ namespace CrcStudio.Forms
 {
     public partial class ProjectWizard : Form
     {
-        public ProjectWizard()
+        private readonly bool _createSolution;
+
+        public ProjectWizard(bool createSolution)
         {
+            _createSolution = createSolution;
             InitializeComponent();
         }
 
@@ -26,7 +30,7 @@ namespace CrcStudio.Forms
 
         private void ButtonBrowseSourceClick(object sender, EventArgs e)
         {
-            SaveFileDialog sfd = FolderUtility.CreateBrowseForFolder(textBoxSourceLocation.Text);
+            var sfd = FolderUtility.CreateBrowseForFolder(textBoxSourceLocation.Text);
             if (sfd.ShowDialog(this) == DialogResult.OK)
             {
                 textBoxSourceLocation.Text = Path.GetDirectoryName(sfd.FileName);
@@ -35,7 +39,7 @@ namespace CrcStudio.Forms
 
         private void ButtonBrowseProjectLocationClick(object sender, EventArgs e)
         {
-            SaveFileDialog sfd = FolderUtility.CreateBrowseForFolder(textBoxProjectLocation.Text);
+            var sfd = FolderUtility.CreateBrowseForFolder(textBoxProjectLocation.Text);
             if (sfd.ShowDialog(this) == DialogResult.OK)
             {
                 textBoxProjectLocation.Text = Path.GetDirectoryName(sfd.FileName);
@@ -77,6 +81,34 @@ namespace CrcStudio.Forms
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void textBoxProjectName_TextChanged(object sender, EventArgs e) { RefershInfo(); }
+        private void RefershInfo()
+        {
+            if (ProjectName.Trim() == "" || !Path.IsPathRooted(ProjectFileName))
+            {
+                buttonCreate.Enabled = false;
+                textBoxInfo.Text = "";
+                return;
+            }
+            buttonCreate.Enabled = true;
+            var sb = new StringBuilder();
+            sb.Append("Project file '").Append(ProjectFileName).AppendLine("' will be created");
+            if (Directory.Exists(ProjectLocation))
+            {
+                sb.AppendLine("Existing files in project location will be included in project.");
+            }
+            if (_createSolution)
+            {
+                sb.Append("Solution file '").Append(SolutionFileName).AppendLine("' will be created");
+            }
+            sb.AppendLine();
+            if (Directory.Exists(SourceLocation))
+            {
+                sb.Append("Files will be copied recursively from '").Append(SourceLocation).Append("'");
+            }
+            textBoxInfo.Text = sb.ToString();
         }
     }
 }

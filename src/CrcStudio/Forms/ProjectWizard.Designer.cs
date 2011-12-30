@@ -43,14 +43,16 @@ namespace CrcStudio.Forms
             this.buttonCreate = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.textBoxInfo = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // buttonBrowseSource
             // 
-            this.buttonBrowseSource.Location = new System.Drawing.Point(729, 125);
+            this.buttonBrowseSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonBrowseSource.Location = new System.Drawing.Point(751, 125);
             this.buttonBrowseSource.Name = "buttonBrowseSource";
             this.buttonBrowseSource.Size = new System.Drawing.Size(108, 39);
-            this.buttonBrowseSource.TabIndex = 1;
+            this.buttonBrowseSource.TabIndex = 4;
             this.buttonBrowseSource.Text = "Browse...";
             this.buttonBrowseSource.UseVisualStyleBackColor = true;
             this.buttonBrowseSource.Click += new System.EventHandler(this.ButtonBrowseSourceClick);
@@ -61,8 +63,9 @@ namespace CrcStudio.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxSourceLocation.Location = new System.Drawing.Point(168, 131);
             this.textBoxSourceLocation.Name = "textBoxSourceLocation";
-            this.textBoxSourceLocation.Size = new System.Drawing.Size(545, 25);
-            this.textBoxSourceLocation.TabIndex = 0;
+            this.textBoxSourceLocation.Size = new System.Drawing.Size(567, 25);
+            this.textBoxSourceLocation.TabIndex = 3;
+            this.textBoxSourceLocation.TextChanged += new System.EventHandler(this.textBoxProjectName_TextChanged);
             // 
             // label1
             // 
@@ -79,8 +82,9 @@ namespace CrcStudio.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxProjectName.Location = new System.Drawing.Point(168, 12);
             this.textBoxProjectName.Name = "textBoxProjectName";
-            this.textBoxProjectName.Size = new System.Drawing.Size(545, 25);
-            this.textBoxProjectName.TabIndex = 2;
+            this.textBoxProjectName.Size = new System.Drawing.Size(567, 25);
+            this.textBoxProjectName.TabIndex = 0;
+            this.textBoxProjectName.TextChanged += new System.EventHandler(this.textBoxProjectName_TextChanged);
             // 
             // label2
             // 
@@ -94,10 +98,10 @@ namespace CrcStudio.Forms
             // buttonBrowseProjectLocation
             // 
             this.buttonBrowseProjectLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonBrowseProjectLocation.Location = new System.Drawing.Point(729, 44);
+            this.buttonBrowseProjectLocation.Location = new System.Drawing.Point(751, 44);
             this.buttonBrowseProjectLocation.Name = "buttonBrowseProjectLocation";
             this.buttonBrowseProjectLocation.Size = new System.Drawing.Size(108, 39);
-            this.buttonBrowseProjectLocation.TabIndex = 4;
+            this.buttonBrowseProjectLocation.TabIndex = 2;
             this.buttonBrowseProjectLocation.Text = "Browse...";
             this.buttonBrowseProjectLocation.UseVisualStyleBackColor = true;
             this.buttonBrowseProjectLocation.Click += new System.EventHandler(this.ButtonBrowseProjectLocationClick);
@@ -108,8 +112,9 @@ namespace CrcStudio.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxProjectLocation.Location = new System.Drawing.Point(168, 50);
             this.textBoxProjectLocation.Name = "textBoxProjectLocation";
-            this.textBoxProjectLocation.Size = new System.Drawing.Size(545, 25);
-            this.textBoxProjectLocation.TabIndex = 3;
+            this.textBoxProjectLocation.Size = new System.Drawing.Size(567, 25);
+            this.textBoxProjectLocation.TabIndex = 1;
+            this.textBoxProjectLocation.TextChanged += new System.EventHandler(this.textBoxProjectName_TextChanged);
             // 
             // label3
             // 
@@ -123,10 +128,11 @@ namespace CrcStudio.Forms
             // buttonCreate
             // 
             this.buttonCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCreate.Location = new System.Drawing.Point(605, 216);
+            this.buttonCreate.Enabled = false;
+            this.buttonCreate.Location = new System.Drawing.Point(627, 323);
             this.buttonCreate.Name = "buttonCreate";
             this.buttonCreate.Size = new System.Drawing.Size(108, 39);
-            this.buttonCreate.TabIndex = 7;
+            this.buttonCreate.TabIndex = 5;
             this.buttonCreate.Text = "OK";
             this.buttonCreate.UseVisualStyleBackColor = true;
             this.buttonCreate.Click += new System.EventHandler(this.ButtonCreateClick);
@@ -134,10 +140,10 @@ namespace CrcStudio.Forms
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Location = new System.Drawing.Point(729, 216);
+            this.buttonCancel.Location = new System.Drawing.Point(751, 323);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(108, 39);
-            this.buttonCancel.TabIndex = 8;
+            this.buttonCancel.TabIndex = 6;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.ButtonCancelClick);
@@ -151,11 +157,26 @@ namespace CrcStudio.Forms
             this.label4.TabIndex = 12;
             this.label4.Text = "Copies files from a android system base rom. (optional)";
             // 
+            // textBoxInfo
+            // 
+            this.textBoxInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxInfo.BackColor = System.Drawing.SystemColors.Control;
+            this.textBoxInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxInfo.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.textBoxInfo.Location = new System.Drawing.Point(16, 199);
+            this.textBoxInfo.Multiline = true;
+            this.textBoxInfo.Name = "textBoxInfo";
+            this.textBoxInfo.Size = new System.Drawing.Size(843, 107);
+            this.textBoxInfo.TabIndex = 13;
+            // 
             // ProjectWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(849, 270);
+            this.ClientSize = new System.Drawing.Size(871, 377);
+            this.Controls.Add(this.textBoxInfo);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonCreate);
@@ -193,5 +214,6 @@ namespace CrcStudio.Forms
         private System.Windows.Forms.Button buttonCreate;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBoxInfo;
     }
 }

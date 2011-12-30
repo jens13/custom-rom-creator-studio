@@ -1048,7 +1048,7 @@ namespace CrcStudio.Forms
 
         private bool CreateNewProject()
         {
-            var form = new ProjectWizard();
+            var form = new ProjectWizard(true);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 if (!CloseSolution()) return false;
@@ -1086,7 +1086,7 @@ namespace CrcStudio.Forms
 
         private bool AddNewProject()
         {
-            var form = new ProjectWizard();
+            var form = new ProjectWizard(false);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 try
