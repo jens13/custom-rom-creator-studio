@@ -861,6 +861,17 @@ namespace CrcStudio.Project
         private void FileSystemWatcherCreated(object sender, FileSystemEventArgs e)
         {
             var fileSystemPath = e.FullPath;
+            var extension = Path.GetExtension(fileSystemPath)??"";
+            if (extension.Equals(".tmpzipfile", StringComparison.OrdinalIgnoreCase))
+            {
+                var fileName = Path.GetFileNameWithoutExtension(fileSystemPath);
+                Guid guid;
+                if (Guid.TryParse(fileName, out guid)) return;
+            }
+            if (extension.Equals(".tmpzipalign", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
             if (fileSystemPath.IndexOf(_rsprojPathExclusion, StringComparison.OrdinalIgnoreCase) >= 0) return;
             IProjectFile file = GetProjectFile(fileSystemPath);
             if (file != null)
