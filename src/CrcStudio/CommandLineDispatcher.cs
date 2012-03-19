@@ -27,6 +27,7 @@ namespace CrcStudio
             return Process.GetCurrentProcess().Id;
         }
 
+
         public void Ping()
         {
         }
