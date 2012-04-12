@@ -45,7 +45,7 @@ namespace CrcStudio.BuildProcess
 
             var arguments = new StringBuilder();
 
-            arguments.Append("-jar ").Append(_signApkFile);
+            arguments.Append("-jar \"").Append(_signApkFile).Append("\"");
             arguments.Append(" \"").Append(_certificateFile).Append("\"");
             arguments.Append(" \"").Append(_certificateKeyFile).Append("\"");
             arguments.Append(" \"").Append(file.FileSystemPath).Append("\"");

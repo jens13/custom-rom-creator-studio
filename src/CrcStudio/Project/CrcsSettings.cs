@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using CrcStudio.BuildProcess;
 using CrcStudio.Forms;
+using CrcStudio.Messages;
 
 namespace CrcStudio.Project
 {
@@ -111,12 +112,12 @@ namespace CrcStudio.Project
 
         private string FindJava()
         {
+            var findJava = Properties.Settings.Default.JavaPath.Trim();
+            if (File.Exists(findJava)) return findJava;
             if (FindJavaInSystemPath())
             {
                 return "java";
             }
-            var findJava = Properties.Settings.Default.JavaPath.Trim();
-            if (File.Exists(findJava)) return findJava;
             string javaFolder = Environment.GetEnvironmentVariable("ProgramW6432");
             string javaFolderX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
             if (javaFolder == null) javaFolder = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);

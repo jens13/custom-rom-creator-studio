@@ -9,6 +9,7 @@ namespace CrcStudio.Messages
     [Flags]
     public enum MessageDisplayType
     {
+        Debug,
         Logging,
         MessageBox
     }

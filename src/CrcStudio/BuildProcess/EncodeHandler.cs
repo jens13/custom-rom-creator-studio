@@ -45,7 +45,7 @@ namespace CrcStudio.BuildProcess
             FileUtility.DeleteFile(file.UnsignedFile);
             var ep = new ExecuteProgram((message) => MessageEngine.AddInformation(this, message));
             var arguments = new StringBuilder();
-            arguments.Append("-jar ").Append(_apkToolFile);
+            arguments.Append("-jar \"").Append(_apkToolFile).Append("\"");
             if (_verbose) arguments.Append(" -v");
             arguments.Append(" b -f \"").Append(file.ResourceFolder).Append("\"");
             arguments.Append(" \"").Append(file.UnsignedFile).Append("\"");

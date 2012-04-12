@@ -110,6 +110,7 @@ namespace CrcStudio
                 var form = new MainForm(fileSystemPath);
                 MessageEngine.Initialize(form);
                 MessageEngine.AddInformation(null, "Application started");
+                MessageEngine.AddDebug(null, "Path to java.exe: " + CrcsSettings.Current.JavaFile);
                 Application.Run(form);
             }
             catch (Exception ex)

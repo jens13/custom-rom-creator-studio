@@ -80,9 +80,7 @@ namespace CrcStudio.BuildProcess
                 if (additionalDependencies.Length > 0) additionalDependencies = " -c " + additionalDependencies;
 
                 var arguments = new StringBuilder();
-                arguments.Append("-Xmx512m -jar");
-
-                arguments.Append(" ").Append(_baksmaliFile);
+                arguments.Append("-Xmx512m -jar \"").Append(_baksmaliFile).Append("\"");
                 arguments.Append(locationOfDependencies);
                 arguments.Append(" -o \"").Append(outputFolder).Append("\"");
                 if (useIgnoreDecompileErrorsFlag) arguments.Append(" -I");
@@ -250,8 +248,7 @@ namespace CrcStudio.BuildProcess
             var apiLevel = project.Properties.ApiLevel;
 
             var arguments = new StringBuilder();
-            arguments.Append("-jar");
-            arguments.Append(" ").Append(_smaliFile);
+            arguments.Append("-jar \"").Append(_smaliFile).Append("\"");
             arguments.Append(" \"").Append(inputFolder).Append("\"");
             string classesDexFile = Path.Combine(FolderUtility.CreateTempFolder(), "classes.dex");
             arguments.Append(" -o \"").Append(classesDexFile).Append("\"");

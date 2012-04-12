@@ -44,7 +44,7 @@ namespace CrcStudio.BuildProcess
 
             var ep = new ExecuteProgram((message) => MessageEngine.AddInformation(this, message));
             var arguments = new StringBuilder();
-            arguments.Append("-jar ").Append(_apkToolFile);
+            arguments.Append("-jar \"").Append(_apkToolFile).Append("\"");
             if (_verbose) arguments.Append(" -v");
             arguments.Append(" d -s -f -t ").Append(file.Project.Properties.ApkToolFrameWorkTag);
             arguments.Append(" \"").Append(file.FileSystemPath).Append("\"");
@@ -84,7 +84,7 @@ namespace CrcStudio.BuildProcess
             {
                 var arguments = new StringBuilder();
                 string apkToolFile = apkFile.Project.Solution.Properties.ApkToolFile;
-                arguments.Append("-jar ").Append(apkToolFile);
+                arguments.Append("-jar \"").Append(apkToolFile).Append("\"");
                 arguments.Append(" if \"").Append(file).Append("\"");
                 if (!string.IsNullOrWhiteSpace(apkToolFrameWorkTag))
                 {
@@ -92,8 +92,7 @@ namespace CrcStudio.BuildProcess
                 }
 
                 if (
-                    ep.Execute(CrcsSettings.Current.JavaFile, arguments.ToString(), Path.GetDirectoryName(apkToolFile)) !=
-                    0)
+                    ep.Execute(CrcsSettings.Current.JavaFile, arguments.ToString(), Path.GetDirectoryName(apkToolFile)) !=                    0)
                 {
                     throw new Exception(string.Format("Program {0} failed", Path.GetFileName(apkToolFile)));
                 }

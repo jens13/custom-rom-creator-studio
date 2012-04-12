@@ -512,9 +512,18 @@ namespace CrcStudio.Controls
 
         private void RemoveHighlighting(TreeNode node)
         {
-            TreeNodeColors originalColors = GetNodeOriginalColors(node);
-            node.BackColor = originalColors.BackColor;
-            node.ForeColor = originalColors.ForeColor;
+            var treeNodeEx = node as ITreeNodeEx;
+            if (treeNodeEx == null)
+            {
+                TreeNodeColors originalColors = GetNodeOriginalColors(node);
+                node.BackColor = originalColors.BackColor;
+                node.ForeColor = originalColors.ForeColor;
+            }
+            else
+            {
+                node.BackColor = treeNodeEx.OriginalBackColor;
+                node.ForeColor = treeNodeEx.OriginalForeColor;
+            }
 
             if (!ReferenceEquals(CursorPosition, node)) return;
 

@@ -115,6 +115,13 @@ namespace CrcStudio.Messages
 
         #endregion Show Information
 
+        #region Add Debug
+        public static void AddDebug(object source, string message)
+        {
+            AddMessage(source, message, null, null, MessageDisplayType.Debug, MessageSeverityType.Information);
+        }
+        #endregion
+
         #region Add Information
 
         public static void AddInformation(Exception exception)

@@ -102,6 +102,7 @@
     <Compile Include="BuildProcess\ZipAlignHandler.cs" />
     <Compile Include="CommandLineDispatcher.cs" />
     <Compile Include="Controls\ITabStripItemControl.cs" />
+    <Compile Include="Controls\ITreeNodeEx.cs" />
     <Compile Include="Controls\OutputWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -32,12 +32,15 @@ namespace CrcStudio.Controls
 
         public void HandleMessage(MessageContent message)
         {
+            if (message.DisplayType == MessageDisplayType.Debug) return;
             if (InvokeRequired)
             {
-                Invoke(new Action<MessageContent>(HandleMessage), message);
-                return;
+                Invoke((Action) (() => AddText(message.Message)));
             }
-            AddText(message.Message);
+            else
+            {
+                AddText(message.Message);
+            }
         }
 
         #endregion

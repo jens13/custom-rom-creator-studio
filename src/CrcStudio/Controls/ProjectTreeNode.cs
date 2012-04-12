@@ -11,7 +11,7 @@ using Etier.IconHelper;
 
 namespace CrcStudio.Controls
 {
-    public class ProjectTreeNode : TreeNode
+    public class ProjectTreeNode : TreeNode, ITreeNodeEx
     {
         private readonly IconListManager _iconListManager;
 
@@ -127,7 +127,30 @@ namespace CrcStudio.Controls
             SelectedImageIndex = imageIndex;
             if (!IsSelected)
             {
-                ForeColor = IsMissing ? Color.Red : IsIncluded || IsProject ? Color.Black : Color.Gray;
+                ForeColor = OriginalForeColor;
+            }
+        }
+        public Color OriginalForeColor
+        {
+            get
+            {
+                return IsMissing ? Color.Red : IsIncluded || IsProject ? Color.Black : Color.Gray;
+            }
+            set
+            {
+                
+            }
+        }
+
+        public Color OriginalBackColor
+        {
+            get
+            {
+                return Control.DefaultBackColor;
+            }
+            set
+            {
+
             }
         }
     }

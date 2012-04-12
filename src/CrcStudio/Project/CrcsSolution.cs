@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 using CrcStudio.Controls;
+using CrcStudio.Messages;
 using CrcStudio.TabControl;
 using CrcStudio.Utility;
 
@@ -271,6 +272,7 @@ namespace CrcStudio.Project
         public static CrcsSolution CreateSolution(string fileSystemPath)
         {
             var solution = new CrcsSolution(fileSystemPath);
+            MessageEngine.AddDebug(solution, "Solution created: " + fileSystemPath);
             solution.Properties.UpdateZipName = solution.FileNameWithoutExtension;
             solution._initialized = true;
             return solution;
@@ -279,6 +281,7 @@ namespace CrcStudio.Project
         public static CrcsSolution OpenSolution(string fileSystemPath)
         {
             var solution = new CrcsSolution(fileSystemPath);
+            MessageEngine.AddDebug(solution, "Solution opened: " + fileSystemPath);
             solution.Properties.UpdateZipName = solution.FileNameWithoutExtension;
             solution.LoadSolution();
             solution._initialized = true;

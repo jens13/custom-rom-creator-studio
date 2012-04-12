@@ -113,6 +113,7 @@
       <DependentUpon>ApkViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ITabStripItemControl.cs" />
+    <Compile Include="Controls\ITreeNodeEx.cs" />
     <Compile Include="Controls\TextEditorContainer.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -343,7 +344,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>md $(TargetDir)Tools
-copy $(SolutionDir)..\tools $(TargetDir)Tools
+copy $(SolutionDir)..\..\..\distribution\tools $(TargetDir)Tools
 copy $(SolutionDir)..\tools_win $(TargetDir)Tools
 copy $(SolutionDir)..\notice.txt $(TargetDir)
 </PostBuildEvent>
