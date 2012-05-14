@@ -84,6 +84,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="BuildProcess\BackupFilesHandler.cs" />
     <Compile Include="BuildProcess\BaksmaliHandler.cs" />
     <Compile Include="BuildProcess\DecodeHandler.cs" />

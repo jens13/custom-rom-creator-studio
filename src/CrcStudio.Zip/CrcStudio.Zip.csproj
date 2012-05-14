@@ -40,15 +40,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AndroidArchive.cs" />
     <Compile Include="CompressionType.cs" />
     <Compile Include="Crc32.cs" />
+    <Compile Include="Deflate\CRC32.cs" />
+    <Compile Include="Deflate\Deflate.cs" />
+    <Compile Include="Deflate\DeflateStream.cs" />
+    <Compile Include="Deflate\GZipStream.cs" />
+    <Compile Include="Deflate\Inflate.cs" />
+    <Compile Include="Deflate\InfTree.cs" />
+    <Compile Include="Deflate\Tree.cs" />
+    <Compile Include="Deflate\Zlib.cs" />
+    <Compile Include="Deflate\ZlibBaseStream.cs" />
+    <Compile Include="Deflate\ZlibCodec.cs" />
+    <Compile Include="Deflate\ZlibConstants.cs" />
     <Compile Include="GeneralPurposeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadOnlyZipFile.cs" />
     <Compile Include="ZipEntry.cs" />
     <Compile Include="ZipExtensions.cs" />
     <Compile Include="ZipFile.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Deflate\License.zlib.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

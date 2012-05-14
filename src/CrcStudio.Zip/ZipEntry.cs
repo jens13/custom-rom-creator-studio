@@ -4,8 +4,8 @@
 // http://www.opensource.org/licenses/bsd-license.php)
 using System;
 using System.IO;
-using System.IO.Compression;
 using System.Text;
+using CrcStudio.Zip.Deflate;
 
 namespace CrcStudio.Zip
 {
@@ -436,7 +436,7 @@ namespace CrcStudio.Zip
             Stream outStream = stream;
             if (CompressionMethod == (uint) CompressionType.Deflate)
             {
-                outStream = new DeflateStream(stream, CompressionMode.Compress, true);
+                outStream = new DeflateStream(stream, CompressionMode.Compress, CompressionLevel.BestCompression, true);
             }
 
             int bytesRead;

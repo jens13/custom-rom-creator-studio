@@ -72,7 +72,7 @@ namespace CrcStudio.BuildProcess
                     packageModified = true;
                 }
 
-                if ((ProcessingOptions.ReSignApkFiles & processingOptions) != 0 || packageModified)
+                if ((ProcessingOptions.ReSignApkFiles & processingOptions) != 0 && packageModified)
                 {
                     fileHandlers.Add(new SignApkHandler(properties));
                 }

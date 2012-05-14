@@ -23,6 +23,7 @@ namespace CrcStudio.BuildProcess
         {
             _javaFile = CrcsSettings.Current.JavaFile;
             _canSign = properties.CanSign;
+            if (!_canSign) return;
             _signApkFile = properties.SignApkFile;
             _certificateFile = properties.Certificate.CertificateFile;
             _certificateKeyFile = properties.Certificate.CertificateKeyFile;
